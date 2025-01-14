@@ -7,7 +7,8 @@ export const createBudget = async (req: Request, res: Response) => {
   if (error) return res.status(400).json({ error: error.details[0].message });
 
   try {
-    const budget = await BudgetService.createBudget(req.body);
+    const budgetData = { ...req.body, user: req.userId };
+    const budget = await BudgetService.createBudget(budgetData);
     res.status(201).json(budget);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
@@ -16,7 +17,10 @@ export const createBudget = async (req: Request, res: Response) => {
 
 export const getBudgetsByUser = async (req: Request, res: Response) => {
   try {
-    const budgets = await BudgetService.getBudgetsByUser(req.params.userId);
+    const id = req.userId;
+    if (!id) return res.status(401).json({ error: 'User not authorized' });
+    
+    const budgets = await BudgetService.getBudgetsByUser(id);
     res.status(200).json(budgets);
   } catch (error: any) {
     res.status(500).json({ error: error.message });
