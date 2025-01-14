@@ -2,10 +2,12 @@ import Report from '../models/Report';
 import Transaction from '../models/Transaction';
 import { IReport } from '../types/interfaces/IReport';
 import { ITransaction } from '../types/interfaces/ITransaction';
+import { getTransactionsSummary } from './TransactionService';
 
 export const createReport = async (reportData: IReport) => {
   const report = new Report(reportData);
-  return await report.save();
+  await report.save();
+  return report;
 };
 
 export const getReportsByUser = async (userId: string) => {
@@ -56,4 +58,18 @@ export const autoGenerateReports = async (userId: string) => {
 
   // Save the report
   return report.save();
+};
+
+export const generateReport = async ({ user, type, startDate, endDate }: any) => {
+  const transactionsSummary = await getTransactionsSummary(user);
+  const reportData = {
+    user,
+    type,
+    startDate,
+    endDate,
+    data: transactionsSummary
+  };
+  const report = new Report(reportData);
+  await report.save();
+  return report;
 };

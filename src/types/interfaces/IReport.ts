@@ -5,5 +5,5 @@ export interface IReport extends Document {
   type: 'SUMMARY' | 'CATEGORY_ANALYSIS' | 'BUDGET_STATUS';
   startDate: Date;
   endDate: Date;
-  data: object;
+  data?: object;
 }

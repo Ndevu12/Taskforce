@@ -1,14 +1,27 @@
 import { Request, Response } from 'express';
 import * as ReportService from '../services/ReportService';
 import { validateReportInput } from '../helpers/validators/ReportValidator';
+import logger from '../utils/logger';
 
 export const createReport = async (req: Request, res: Response) => {
   const { error } = validateReportInput(req.body);
   if (error) return res.status(400).json({ error: error.details[0].message });
 
   try {
-    const report = await ReportService.createReport(req.body);
-    res.status(201).json(report);
+    const { type, startDate, endDate } = req.body;
+    if (req.userId) {
+    const reportData = await ReportService.generateReport({
+      user: req.userId,
+      type,
+      startDate,
+      endDate,
+      data: {}
+    });
+    res.status(201).json(reportData);
+  } else {
+    logger.error('User not authorized.');
+    return res.status(401).json({ error: 'User not authorized' });
+  }
   } catch (error: any) {
     res.status(500).json({ error: error.message });
   }
@@ -48,7 +61,7 @@ export const deleteReportById = async (req: Request, res: Response) => {
 
 export const autoGenerateReports = async (req: Request, res: Response) => {
   try {
-    const userId = req.params.userId; // Assuming userId is passed as a URL parameter
+    const userId = req.params.userId;
     const reports = await ReportService.autoGenerateReports(userId);
     res.status(200).json(reports);
   } catch (error: any) {

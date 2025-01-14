@@ -6,6 +6,7 @@ export interface IBudget extends Document {
   amount: number;
   period: 'MONTHLY' | 'YEARLY';
   startDate: Date;
+  endDate: Date;
   currentSpent: number;
   notificationThreshold: number;
 }

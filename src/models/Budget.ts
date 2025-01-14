@@ -7,6 +7,7 @@ const budgetSchema = new mongoose.Schema({
   amount: { type: Number, required: true },
   period: { type: String, enum: ['MONTHLY', 'YEARLY'], required: true },
   startDate: { type: Date, required: true },
+  endDate: { type: Date, required: true },
   currentSpent: { type: Number, default: 0 },
   notificationThreshold: { type: Number, default: 80 },
 }, { timestamps: true });
