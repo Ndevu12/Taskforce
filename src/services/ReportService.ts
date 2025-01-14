@@ -1,5 +1,7 @@
 import Report from '../models/Report';
+import Transaction from '../models/Transaction';
 import { IReport } from '../types/interfaces/IReport';
+import { ITransaction } from '../types/interfaces/ITransaction';
 
 export const createReport = async (reportData: IReport) => {
   const report = new Report(reportData);
@@ -16,4 +18,42 @@ export const updateReportById = async (reportId: string, updateData: Partial<IRe
 
 export const deleteReportById = async (reportId: string) => {
   return await Report.findByIdAndDelete(reportId);
+};
+
+export const autoGenerateReports = async (userId: string) => {
+  const transactions = await Transaction.find({ user: userId });
+
+  interface ReportData {
+    user: string;
+    totalIncome: number;
+    totalExpense: number;
+    transactions: ITransaction[];
+  }
+
+  const reportData: ReportData = {
+    user: userId,
+    totalIncome: 0,
+    totalExpense: 0,
+    transactions: []
+  };
+
+  transactions.forEach(transaction => {
+    reportData.transactions.push(transaction);
+    if (transaction.type === 'INCOME') {
+      reportData.totalIncome += transaction.amount;
+    } else if (transaction.type === 'EXPENSE') {
+      reportData.totalExpense += transaction.amount;
+    }
+  });
+
+  // Create report for the user
+  const report = new Report({
+    user: reportData.user,
+    title: 'Monthly Financial Report',
+    content: `Total Income: ${reportData.totalIncome}, Total Expense: ${reportData.totalExpense}`,
+    date: new Date()
+  });
+
+  // Save the report
+  return report.save();
 };
