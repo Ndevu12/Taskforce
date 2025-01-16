@@ -6,6 +6,7 @@ import { getTransactionsSummary } from './TransactionService';
 import { ReportType } from '../types/enums/ReportType';
 import logger from '../utils/logger';
 import mongoose from 'mongoose';
+import { ReportData } from '../types/interfaces/ReportData';
 
 export const createReport = async (reportData: IReport) => {
   const report = new Report(reportData);
@@ -42,13 +43,6 @@ export const autoGenerateReports = async (userId: mongoose.Schema.Types.ObjectId
     return { error: 'No transactions found' };
   }
 
-  interface ReportData {
-    user: mongoose.Schema.Types.ObjectId;
-    totalIncome: number;
-    totalExpense: number;
-    transactions: ITransaction[];
-  }
-
   const reportData: ReportData = {
     user: userId,
     totalIncome: 0,
@@ -70,9 +64,11 @@ export const autoGenerateReports = async (userId: mongoose.Schema.Types.ObjectId
   const report = await createReport({
     user: userId,
     schedule: scheduleId,
-    title: title,
-    content: `Total Income: ${reportData.totalIncome}, Total Expense: ${reportData.totalExpense}`,
-    transactions: reportData.transactions
+    data: {
+      title: title,
+      content: `Total Income: ${reportData.totalIncome}, Total Expense: ${reportData.totalExpense}`,
+      transactions: reportData.transactions
+    }
   } as unknown as IReport);
 
   return report;

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import * as TransactionService from '../services/TransactionService';
 import * as BudgetService from '../services/BudgetService';
 import { validateTransactionInput, validateTransactionUpdateInput } from '../helpers/validators/TransactionValidator';
+import logger from '../utils/logger';
 
 export const createTransaction = async (req: Request, res: Response) => {
   const { error } = validateTransactionInput(req.body);
@@ -18,6 +19,7 @@ export const createTransaction = async (req: Request, res: Response) => {
     }
     res.status(201).json(transaction);
   } catch (error: any) {
+    logger.error(`Failed to create transaction: ${error.message}`);
     res.status(500).json({ error: error.message });
   }
 };

@@ -1,9 +1,17 @@
 import Transaction from '../models/Transaction';
 import { ITransaction } from '../types/interfaces/ITransaction';
+import { updateBudgetOnTransactionCreate, updateBudgetOnTransactionUpdate } from './BudgetService';
 
 export const createTransaction = async (transactionData: ITransaction) => {
   const transaction = new Transaction(transactionData);
-  return await transaction.save();
+  const savedTransaction = await transaction.save();
+
+  // Update total spent on related budget
+  if (transactionData.type === 'EXPENSE') {
+    await updateBudgetOnTransactionCreate(savedTransaction);
+  }
+
+  return savedTransaction;
 };
 
 export const getTransactionsByUser = async (userId: string) => {
@@ -11,7 +19,19 @@ export const getTransactionsByUser = async (userId: string) => {
 };
 
 export const updateTransactionById = async (transactionId: string, updateData: Partial<ITransaction>) => {
-  return await Transaction.findByIdAndUpdate(transactionId, updateData, { new: true });
+  const existingTransaction = await Transaction.findById(transactionId);
+  if (!existingTransaction) {
+    throw new Error('Transaction not found');
+  }
+
+  const updatedTransaction = await Transaction.findByIdAndUpdate(transactionId, updateData, { new: true });
+
+  if (updatedTransaction) {
+    // Update total spent on related budget
+    await updateBudgetOnTransactionUpdate(existingTransaction, updatedTransaction);
+  }
+
+  return updatedTransaction;
 };
 
 export const deleteTransactionById = async (transactionId: string) => {
