@@ -114,12 +114,7 @@ const checkBudgetExceed = async (budget: IBudget) => {
 export const checkBudgetExceedForTransaction = async (transaction: ITransaction) => {
   logger.info('Started checking budget exceed for transaction:', transaction);
 
-  const budgets = await Budget.find({
-    user: transaction.user,
-    category: transaction.category,
-    startDate: { $lte: transaction.date },
-    endDate: { $gte: transaction.date }
-  });
+  const budgets = await getBudgetsByUser(transaction.user);
 
   logger.info('Found budgets:', budgets);
 
