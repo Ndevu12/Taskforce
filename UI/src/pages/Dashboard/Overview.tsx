@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import StatCard from '../../components/cards/StatCard';
-import TransactionTable from '../../components/Dashboard/TransactionTable';
-import TransactionModal from '../../components/Dashboard/TransactionModal';
+import OverviewTransactionTable from '../../components/Dashboard/OverviewTransactionTable';
+import TransactionDetailsModal from '../../components/Dashboard/TransactionDetailsModal';
 import Charts from '../../components/Dashboard/Charts';
 import { ITransaction } from '../../interfaces/ITransaction';
 
@@ -68,7 +68,7 @@ const Overview: React.FC = () => {
       </section>
 
       {/* Recent Transactions Table */}
-      <TransactionTable
+      <OverviewTransactionTable
         transactions={transactions}
         onTransactionClick={setSelectedTransaction}
       />
@@ -76,8 +76,8 @@ const Overview: React.FC = () => {
       {/* Graphs/Charts Section */}
       <Charts transactions={transactions} />
 
-      {/* Transaction Modal */}
-      <TransactionModal
+      {/* Transaction Details Modal */}
+      <TransactionDetailsModal
         transaction={selectedTransaction}
         onClose={() => setSelectedTransaction(null)}
       />
