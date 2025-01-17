@@ -17,7 +17,7 @@ const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
       <div className="bg-white p-6 rounded shadow-md w-96">
         <h2 className="text-xl mb-4">Confirm Deletion</h2>
-        <p className="mb-4">Are you sure you want to delete this account?</p>
+        <p className="mb-4">Are you sure you want to delete this item?</p>
         <div className="flex justify-end">
           <button
             type="button"

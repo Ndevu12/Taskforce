@@ -10,5 +10,5 @@ export interface IBudget extends Document {
   endDate: Date;
   currentSpent: number;
   notificationThreshold: number;
-  description?: string; // New property
+  description?: string;
 }

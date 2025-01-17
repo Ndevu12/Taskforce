@@ -2,17 +2,13 @@ import React, { useState, useEffect } from 'react';
 import { ITransaction } from '../../interfaces/ITransaction';
 import Pagination from '../common/Pagination';
 
-interface TransactionTableProps {
+interface OverviewTransactionTableProps {
   transactions: ITransaction[];
-  onEdit: (transaction: ITransaction) => void;
-  onDelete: (transactionId: string) => void;
   onTransactionClick: (transaction: ITransaction) => void;
 }
 
-const TransactionTable: React.FC<TransactionTableProps> = ({
+const OverviewTransactionTable: React.FC<OverviewTransactionTableProps> = ({
   transactions,
-  onEdit,
-  onDelete,
   onTransactionClick,
 }) => {
   const [search, setSearch] = useState('');
@@ -79,7 +75,6 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
               <th className="border-b p-2 text-sm sm:text-base">Type</th>
               <th className="border-b p-2 text-sm sm:text-base">Category</th>
               <th className="border-b p-2 text-sm sm:text-base">Account</th>
-              <th className="border-b p-2 text-sm sm:text-base">Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -100,7 +95,11 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
                 </td>
                 <td className="border-b p-2 text-sm sm:text-base">
                   <span
-                    className={`px-2 py-1 rounded ${transaction.type === 'INCOME' ? 'bg-green-200' : 'bg-red-200'}`}
+                    className={`px-2 py-1 rounded ${
+                      transaction.type === 'INCOME'
+                        ? 'bg-green-200'
+                        : 'bg-red-200'
+                    }`}
                   >
                     {transaction.type}
                   </span>
@@ -110,26 +109,6 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
                 </td>
                 <td className="border-b p-2 text-sm sm:text-base">
                   {transaction.account}
-                </td>
-                <td className="border-b p-2 text-sm sm:text-base">
-                  <button
-                    className="text-blue-500 mr-2"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onEdit(transaction);
-                    }}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="text-red-500"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onDelete(transaction.id);
-                    }}
-                  >
-                    Delete
-                  </button>
                 </td>
               </tr>
             ))}
@@ -147,4 +126,4 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
   );
 };
 
-export default TransactionTable;
+export default OverviewTransactionTable;

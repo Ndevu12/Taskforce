@@ -10,6 +10,8 @@ import PrivacyPolicy from '../pages/PrivacyPolicy';
 import DashboardLayout from '../pages/Dashboard/DashboardLayout';
 import Overview from '../pages/Dashboard/Overview';
 import Accounts from '../pages/Dashboard/Accounts';
+import Budgets from '../pages/Dashboard/Budgets';
+import Transactions from '../pages/Dashboard/Transactions';
 
 function Router() {
   return (
@@ -19,6 +21,8 @@ function Router() {
         <Route path="/dashboard" element={<DashboardLayout />}>
           <Route index element={<Overview />} />
           <Route path="accounts" element={<Accounts />} />
+          <Route path="budgets" element={<Budgets />} />
+          <Route path="transactions" element={<Transactions />} />
           {/* <Route path="profile" element={<Profile />} /> */}
         </Route>
       </Routes>
