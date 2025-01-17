@@ -1,9 +1,11 @@
 # Project Name: Taskforce Server
 
 ## Description
+
 Taskforce Server is a backend service for managing tasks and projects. It provides APIs for creating, updating, deleting, and retrieving tasks and projects. The server is built using Node.js and Express, and it connects to a MongoDB database for data storage.
 
 ## Table of Contents
+
 - [Installation](#installation)
 - [Usage](#usage)
 - [API Endpoints](#api-endpoints)
@@ -12,17 +14,23 @@ Taskforce Server is a backend service for managing tasks and projects. It provid
 - [License](#license)
 
 ## Installation
+
 To install the project, follow these steps:
 
 1. Clone the repository:
+
     ```sh
     git clone https://github.com/yourusername/taskforce-server.git
     ```
+    
 2. Navigate to the project directory:
+
     ```sh
     cd taskforce-server
     ```
+
 3. Install the dependencies:
+
     ```sh
     npm install
     ```

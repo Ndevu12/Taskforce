@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { IReportSchedule } from '../types/interfaces/IReportSchedule';
 import { BudgetPeriod } from '../types/enums/BudgetPeriod';
 
 const reportScheduleSchema = new mongoose.Schema({
@@ -8,4 +9,4 @@ const reportScheduleSchema = new mongoose.Schema({
   endDate: { type: Date, default: null }
 }, { timestamps: true });
 
-export default mongoose.model('ReportSchedule', reportScheduleSchema);
+export default mongoose.model<IReportSchedule>('ReportSchedule', reportScheduleSchema);
