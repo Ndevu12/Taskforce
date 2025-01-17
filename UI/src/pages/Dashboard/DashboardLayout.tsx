@@ -13,7 +13,7 @@ function DashboardLayout() {
         className={`flex-1 flex flex-col transition-all duration-300 ${isCollapsed ? 'ml-16' : 'ml-64'}`}
       >
         <Header />
-        <main className="flex-1 mt-16 p-4 overflow-y-auto">
+        <main className="flex-1 mt-20 p-4 overflow-y-auto">
           <Outlet />
         </main>
       </div>
