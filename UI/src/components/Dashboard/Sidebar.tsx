@@ -56,7 +56,7 @@ function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
           {!isCollapsed && <span>Dashboard</span>}
         </NavLink>
         <NavLink
-          to="/accounts"
+          to="/dashboard/accounts"
           className={({ isActive }) =>
             `flex items-center p-4 hover:bg-gray-700 ${isActive ? 'bg-gray-700' : ''}`
           }
@@ -65,25 +65,7 @@ function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
           {!isCollapsed && <span>Accounts</span>}
         </NavLink>
         <NavLink
-          to="/transactions"
-          className={({ isActive }) =>
-            `flex items-center p-4 hover:bg-gray-700 ${isActive ? 'bg-gray-700' : ''}`
-          }
-        >
-          <FaExchangeAlt className="mr-4" />
-          {!isCollapsed && <span>Transactions</span>}
-        </NavLink>
-        <NavLink
-          to="/reports"
-          className={({ isActive }) =>
-            `flex items-center p-4 hover:bg-gray-700 ${isActive ? 'bg-gray-700' : ''}`
-          }
-        >
-          <FaChartLine className="mr-4" />
-          {!isCollapsed && <span>Reports</span>}
-        </NavLink>
-        <NavLink
-          to="/budgets"
+          to="/dashboard/budgets"
           className={({ isActive }) =>
             `flex items-center p-4 hover:bg-gray-700 ${isActive ? 'bg-gray-700' : ''}`
           }
@@ -92,7 +74,26 @@ function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
           {!isCollapsed && <span>Budgets</span>}
         </NavLink>
         <NavLink
-          to="/settings"
+          to="/dashboard/transactions"
+          className={({ isActive }) =>
+            `flex items-center p-4 hover:bg-gray-700 ${isActive ? 'bg-gray-700' : ''}`
+          }
+        >
+          <FaExchangeAlt className="mr-4" />
+          {!isCollapsed && <span>Transactions</span>}
+        </NavLink>
+
+        <NavLink
+          to="/dashboard/reports"
+          className={({ isActive }) =>
+            `flex items-center p-4 hover:bg-gray-700 ${isActive ? 'bg-gray-700' : ''}`
+          }
+        >
+          <FaChartLine className="mr-4" />
+          {!isCollapsed && <span>Reports</span>}
+        </NavLink>
+        <NavLink
+          to="/dashboard/settings"
           className={({ isActive }) =>
             `flex items-center p-4 hover:bg-gray-700 ${isActive ? 'bg-gray-700' : ''}`
           }
