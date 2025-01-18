@@ -46,12 +46,12 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
   );
 
   return (
-    <div className="border border-gray-300 rounded p-4">
+    <div className="border border-gray-300 dark:border-gray-700 rounded p-4 dark:bg-gray-800">
       <div className="flex justify-between mb-4">
         <input
           type="text"
           placeholder="Search transactions..."
-          className="p-2 border border-gray-300 rounded"
+          className="p-2 border border-gray-300 dark:border-gray-700 rounded dark:bg-gray-800 dark:text-white"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
         />
@@ -60,7 +60,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
         </label>
         <select
           id="filterType"
-          className="p-2 border border-gray-300 rounded"
+          className="p-2 border border-gray-300 dark:border-gray-700 rounded dark:bg-gray-800 dark:text-white"
           value={filterType}
           onChange={(e) => setFilterType(e.target.value)}
         >
@@ -70,50 +70,64 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
         </select>
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full text-left">
+        <table className="w-full text-left bg-white dark:bg-gray-800">
           <thead>
             <tr>
-              <th className="border-b p-2 text-sm sm:text-base">Date</th>
-              <th className="border-b p-2 text-sm sm:text-base">Description</th>
-              <th className="border-b p-2 text-sm sm:text-base">Amount</th>
-              <th className="border-b p-2 text-sm sm:text-base">Type</th>
-              <th className="border-b p-2 text-sm sm:text-base">Category</th>
-              <th className="border-b p-2 text-sm sm:text-base">Account</th>
-              <th className="border-b p-2 text-sm sm:text-base">Actions</th>
+              <th className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
+                Date
+              </th>
+              <th className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
+                Description
+              </th>
+              <th className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
+                Amount
+              </th>
+              <th className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
+                Type
+              </th>
+              <th className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
+                Category
+              </th>
+              <th className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
+                Account
+              </th>
+              <th className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
+                Actions
+              </th>
             </tr>
           </thead>
           <tbody>
             {currentTransactions.map((transaction) => (
               <tr
                 key={transaction.id}
-                className="hover:bg-gray-100 cursor-pointer"
+                className="hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
                 onClick={() => onTransactionClick(transaction)}
               >
-                <td className="border-b p-2 text-sm sm:text-base">
+                <td className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
                   {transaction.date.toDateString()}
                 </td>
-                <td className="border-b p-2 text-sm sm:text-base">
+                <td className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
                   {transaction.description}
                 </td>
-                <td className="border-b p-2 text-sm sm:text-base">
+                <td className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
                   {transaction.amount}
                 </td>
-                <td className="border-b p-2 text-sm sm:text-base">
+                <td className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
                   <span
-                    className={`px-2 py-1 rounded ${transaction.type === 'INCOME' ? 'bg-green-200' : 'bg-red-200'}`}
+                    className={`px-2 py-1 rounded ${transaction.type === 'INCOME' ? 'bg-green-200 dark:bg-green-700' : 'bg-red-200 dark:bg-red-700'}`}
                   >
                     {transaction.type}
                   </span>
                 </td>
-                <td className="border-b p-2 text-sm sm:text-base">
+                <td className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
                   {transaction.category}
                 </td>
-                <td className="border-b p-2 text-sm sm:text-base">
+                <td className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
                   {transaction.account}
                 </td>
-                <td className="border-b p-2 text-sm sm:text-base">
+                <td className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
                   <button
-                    className="text-blue-500 mr-2"
+                    className="text-blue-500 dark:text-blue-300 mr-2"
                     onClick={(e) => {
                       e.stopPropagation();
                       onEdit(transaction);
@@ -122,7 +136,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
                     Edit
                   </button>
                   <button
-                    className="text-red-500"
+                    className="text-red-500 dark:text-red-300"
                     onClick={(e) => {
                       e.stopPropagation();
                       onDelete(transaction.id);

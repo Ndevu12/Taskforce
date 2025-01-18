@@ -12,6 +12,10 @@ import Overview from '../pages/Dashboard/Overview';
 import Accounts from '../pages/Dashboard/Accounts';
 import Budgets from '../pages/Dashboard/Budgets';
 import Transactions from '../pages/Dashboard/Transactions';
+import Reports from '../pages/Dashboard/Reports';
+import Settings from '../pages/Dashboard/Settings';
+import Profile from '../pages/Dashboard/Profile';
+import Notifications from '../pages/Dashboard/Notifications';
 
 function Router() {
   return (
@@ -23,7 +27,10 @@ function Router() {
           <Route path="accounts" element={<Accounts />} />
           <Route path="budgets" element={<Budgets />} />
           <Route path="transactions" element={<Transactions />} />
-          {/* <Route path="profile" element={<Profile />} /> */}
+          <Route path="reports" element={<Reports />} />
+          <Route path="settings" element={<Settings />} />
+          <Route path="profile" element={<Profile />} />
+          <Route path="notifications" element={<Notifications />} />
         </Route>
       </Routes>
 

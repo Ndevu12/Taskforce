@@ -23,7 +23,7 @@ const Pagination: React.FC<PaginationProps> = ({
       pageNumbers.push(
         <button
           key={i}
-          className={`p-2 ${currentPage === i ? 'bg-blue-500 text-white' : 'bg-gray-300'} rounded mx-1`}
+          className={`p-2 ${currentPage === i ? 'bg-blue-500 text-white' : 'bg-gray-300 dark:bg-gray-700 dark:text-white'} rounded mx-1`}
           onClick={() => onPageChange(i)}
         >
           {i}
@@ -36,7 +36,7 @@ const Pagination: React.FC<PaginationProps> = ({
   return (
     <div className="flex justify-between mt-4 items-center">
       <button
-        className="p-2 bg-gray-300 rounded"
+        className="p-2 bg-gray-300 dark:bg-blue-200 dark:text-white rounded"
         onClick={() => onPageChange(currentPage - 1)}
         disabled={currentPage === 1}
       >
@@ -48,7 +48,7 @@ const Pagination: React.FC<PaginationProps> = ({
       </label>
       <select
         id="itemsPerPage"
-        className="p-2 border border-gray-300 rounded"
+        className="p-2 border border-gray-300 rounded dark:bg-blue-200 dark:border-gray-700 dark:text-white"
         value={itemsPerPage}
         onChange={(e) => onItemsPerPageChange(Number(e.target.value))}
       >
@@ -58,7 +58,7 @@ const Pagination: React.FC<PaginationProps> = ({
         <option value={20}>20</option>
       </select>
       <button
-        className="p-2 bg-gray-300 rounded"
+        className="p-2 bg-gray-300 dark:bg-blue-200 dark:text-white rounded"
         onClick={() => onPageChange(currentPage + 1)}
         disabled={currentPage >= totalPages}
       >

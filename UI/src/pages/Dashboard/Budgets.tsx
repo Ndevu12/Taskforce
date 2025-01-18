@@ -64,9 +64,7 @@ const Budgets: React.FC = () => {
 
   const handleSaveBudget = (budget: Budget) => {
     if (budgetToEdit) {
-      setBudgets((prev) =>
-        prev.map((b) => (b.id === budget.id ? budget : b)),
-      );
+      setBudgets((prev) => prev.map((b) => (b.id === budget.id ? budget : b)));
     } else {
       setBudgets((prev) => [...prev, { ...budget, id: prev.length + 1 }]);
     }
@@ -81,11 +79,17 @@ const Budgets: React.FC = () => {
   };
 
   const totalBudgets = budgets.length;
-  const totalAllocated = budgets.reduce((sum, budget) => sum + budget.amount, 0);
-  const totalSpent = budgets.reduce((sum, budget) => sum + budget.currentSpent, 0);
+  const totalAllocated = budgets.reduce(
+    (sum, budget) => sum + budget.amount,
+    0,
+  );
+  const totalSpent = budgets.reduce(
+    (sum, budget) => sum + budget.currentSpent,
+    0,
+  );
 
   return (
-    <div className="p-4">
+    <div className="p-4 dark:bg-gray-900 dark:text-white">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Budgets</h1>
         <button
@@ -96,15 +100,15 @@ const Budgets: React.FC = () => {
         </button>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
-        <div className="p-4 bg-blue-100 text-blue-800 shadow rounded">
+        <div className="p-4 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-300 shadow rounded">
           <h2 className="text-lg font-bold">Total Budgets</h2>
           <p className="text-2xl">{totalBudgets}</p>
         </div>
-        <div className="p-4 bg-green-100 text-green-800 shadow rounded">
+        <div className="p-4 bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-300 shadow rounded">
           <h2 className="text-lg font-bold">Total Allocated</h2>
           <p className="text-2xl">${totalAllocated}</p>
         </div>
-        <div className="p-4 bg-red-100 text-red-800 shadow rounded">
+        <div className="p-4 bg-red-100 dark:bg-red-800 text-red-800 dark:text-red-300 shadow rounded">
           <h2 className="text-lg font-bold">Total Spent</h2>
           <p className="text-2xl">${totalSpent}</p>
         </div>
@@ -122,8 +126,8 @@ const Budgets: React.FC = () => {
       />
       <ConfirmDeleteModal
         isOpen={isDeleteModalOpen}
-        onClose={() => setIsDeleteModalOpen(false)}
         onConfirm={handleConfirmDelete}
+        onCancel={() => setIsDeleteModalOpen(false)}
       />
     </div>
   );

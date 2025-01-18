@@ -52,46 +52,52 @@ const BudgetFormModal: React.FC<BudgetFormModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-6 rounded shadow-md w-full max-w-4xl">
-        <h2 className="text-xl mb-4">
+      <div className="bg-white dark:bg-gray-800 p-6 rounded shadow-md w-full max-w-4xl">
+        <h2 className="text-xl mb-4 text-gray-700 dark:text-gray-300">
           {budgetToEdit ? 'Edit Budget' : 'Add Budget'}
         </h2>
         <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="mb-4">
-              <label className="block mb-1">Budget Name</label>
+              <label className="block mb-1 text-gray-700 dark:text-gray-300">
+                Budget Name
+              </label>
               <input
                 type="text"
                 name="name"
                 value={budget.name}
                 onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded"
+                className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
                 placeholder="Enter budget name"
                 title="Budget Name"
                 required
               />
             </div>
             <div className="mb-4">
-              <label className="block mb-1">Category</label>
+              <label className="block mb-1 text-gray-700 dark:text-gray-300">
+                Category
+              </label>
               <input
                 type="text"
                 name="category"
                 value={budget.category}
                 onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded"
+                className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
                 placeholder="Enter category"
                 title="Category"
                 required
               />
             </div>
             <div className="mb-4">
-              <label className="block mb-1">Amount Allocated</label>
+              <label className="block mb-1 text-gray-700 dark:text-gray-300">
+                Amount Allocated
+              </label>
               <input
                 type="number"
                 name="amount"
                 value={budget.amount}
                 onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded"
+                className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
                 required
                 min="0"
                 title="Amount Allocated"
@@ -99,12 +105,14 @@ const BudgetFormModal: React.FC<BudgetFormModalProps> = ({
               />
             </div>
             <div className="mb-4">
-              <label className="block mb-1">Period</label>
+              <label className="block mb-1 text-gray-700 dark:text-gray-300">
+                Period
+              </label>
               <select
                 name="period"
                 value={budget.period}
                 onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded"
+                className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
                 required
                 title="Period"
               >
@@ -116,37 +124,43 @@ const BudgetFormModal: React.FC<BudgetFormModalProps> = ({
               </select>
             </div>
             <div className="mb-4">
-              <label className="block mb-1">Start Date</label>
+              <label className="block mb-1 text-gray-700 dark:text-gray-300">
+                Start Date
+              </label>
               <input
                 type="date"
                 name="startDate"
                 value={budget.startDate.toISOString().split('T')[0]}
                 onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded"
+                className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
                 required
                 title="Start Date"
               />
             </div>
             <div className="mb-4">
-              <label className="block mb-1">End Date</label>
+              <label className="block mb-1 text-gray-700 dark:text-gray-300">
+                End Date
+              </label>
               <input
                 type="date"
                 name="endDate"
                 value={budget.endDate.toISOString().split('T')[0]}
                 onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded"
+                className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
                 required
                 title="End Date"
               />
             </div>
             <div className="mb-4">
-              <label className="block mb-1">Current Spent</label>
+              <label className="block mb-1 text-gray-700 dark:text-gray-300">
+                Current Spent
+              </label>
               <input
                 type="number"
                 name="currentSpent"
                 value={budget.currentSpent}
                 onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded"
+                className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
                 required
                 min="0"
                 title="Current Spent"
@@ -154,13 +168,15 @@ const BudgetFormModal: React.FC<BudgetFormModalProps> = ({
               />
             </div>
             <div className="mb-4">
-              <label className="block mb-1">Notification Threshold (%)</label>
+              <label className="block mb-1 text-gray-700 dark:text-gray-300">
+                Notification Threshold (%)
+              </label>
               <input
                 type="number"
                 name="notificationThreshold"
                 value={budget.notificationThreshold}
                 onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded"
+                className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
                 required
                 min="0"
                 max="100"
@@ -169,12 +185,14 @@ const BudgetFormModal: React.FC<BudgetFormModalProps> = ({
               />
             </div>
             <div className="mb-4 sm:col-span-3">
-              <label className="block mb-1">Description</label>
+              <label className="block mb-1 text-gray-700 dark:text-gray-300">
+                Description
+              </label>
               <textarea
                 name="description"
                 value={budget.description}
                 onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded"
+                className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
                 placeholder="Enter description (optional)"
                 title="Description"
               />
@@ -183,7 +201,7 @@ const BudgetFormModal: React.FC<BudgetFormModalProps> = ({
           <div className="flex justify-end">
             <button
               type="button"
-              className="mr-2 p-2 bg-gray-300 rounded"
+              className="mr-2 p-2 bg-gray-300 rounded dark:bg-gray-700 dark:text-white"
               onClick={onClose}
             >
               Cancel

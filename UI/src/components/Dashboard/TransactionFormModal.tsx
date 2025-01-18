@@ -49,43 +49,49 @@ const TransactionFormModal: React.FC<TransactionFormModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-6 rounded shadow-md w-full max-w-lg">
+      <div className="bg-white dark:bg-gray-800 p-6 rounded shadow-md w-full max-w-lg">
         <h2 className="text-xl mb-4">
           {transactionToEdit ? 'Edit Transaction' : 'Add Transaction'}
         </h2>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block mb-1">Date</label>
+            <label className="block mb-1 text-gray-700 dark:text-gray-300">
+              Date
+            </label>
             <input
               type="date"
               name="date"
               value={transaction.date.toISOString().split('T')[0]}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
               required
               title="Date"
             />
           </div>
           <div className="mb-4">
-            <label className="block mb-1">Description</label>
+            <label className="block mb-1 text-gray-700 dark:text-gray-300">
+              Description
+            </label>
             <input
               type="text"
               name="description"
               value={transaction.description}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
               placeholder="Enter description"
               required
             />
           </div>
           <div className="mb-4">
-            <label className="block mb-1">Amount</label>
+            <label className="block mb-1 text-gray-700 dark:text-gray-300">
+              Amount
+            </label>
             <input
               type="number"
               name="amount"
               value={transaction.amount}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
               required
               min="0"
               title="Amount"
@@ -93,12 +99,14 @@ const TransactionFormModal: React.FC<TransactionFormModalProps> = ({
             />
           </div>
           <div className="mb-4">
-            <label className="block mb-1">Type</label>
+            <label className="block mb-1 text-gray-700 dark:text-gray-300">
+              Type
+            </label>
             <select
               name="type"
               value={transaction.type}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
               required
               title="Type"
             >
@@ -107,39 +115,45 @@ const TransactionFormModal: React.FC<TransactionFormModalProps> = ({
             </select>
           </div>
           <div className="mb-4">
-            <label className="block mb-1">Category</label>
+            <label className="block mb-1 text-gray-700 dark:text-gray-300">
+              Category
+            </label>
             <input
               type="text"
               name="category"
               value={transaction.category}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
               placeholder="Enter category"
               required
               title="Category"
             />
           </div>
           <div className="mb-4">
-            <label className="block mb-1">Account</label>
+            <label className="block mb-1 text-gray-700 dark:text-gray-300">
+              Account
+            </label>
             <input
               type="text"
               name="account"
               value={transaction.account}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
               placeholder="Enter account"
               required
               title="Account"
             />
           </div>
           <div className="mb-4">
-            <label className="block mb-1">Subcategory (optional)</label>
+            <label className="block mb-1 text-gray-700 dark:text-gray-300">
+              Subcategory (optional)
+            </label>
             <input
               type="text"
               name="subcategory"
               value={transaction.subcategory || ''}
               onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded"
+              className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
               placeholder="Enter subcategory"
               title="Subcategory"
             />

@@ -3311,3 +3311,4 @@
 {"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-17 09:04:11"}
 {"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-17 09:04:11"}
 {"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-17 18:20:49"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-17 20:42:58"}

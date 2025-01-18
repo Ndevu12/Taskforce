@@ -26,16 +26,24 @@ const BudgetTable: React.FC<BudgetTableProps> = ({
   const currentBudgets = budgets.slice(indexOfFirstBudget, indexOfLastBudget);
 
   return (
-    <div className="overflow-x-auto mt-7 border border-gray-200 p-4 rounded shadow">
-      <table className="min-w-full bg-white">
+    <div className="overflow-x-auto mt-7 border border-gray-200 dark:border-gray-700 p-4 rounded shadow dark:bg-gray-800">
+      <table className="min-w-full bg-white dark:bg-gray-800">
         <thead>
           <tr>
-            <th className="py-2 px-4 border-b">Budget Name</th>
-            <th className="py-2 px-4 border-b">Category</th>
-            <th className="py-2 px-4 border-b">Allocated</th>
-            <th className="py-2 px-4 border-b">Spent</th>
-            <th className="py-2 px-4 border-b">Progress</th>
-            <th className="py-2 px-4 border-b">Actions</th>
+            <th className="py-2 px-4 border-b dark:border-gray-700">
+              Budget Name
+            </th>
+            <th className="py-2 px-4 border-b dark:border-gray-700">
+              Category
+            </th>
+            <th className="py-2 px-4 border-b dark:border-gray-700">
+              Allocated
+            </th>
+            <th className="py-2 px-4 border-b dark:border-gray-700">Spent</th>
+            <th className="py-2 px-4 border-b dark:border-gray-700">
+              Progress
+            </th>
+            <th className="py-2 px-4 border-b dark:border-gray-700">Actions</th>
           </tr>
         </thead>
         <tbody>
@@ -44,34 +52,42 @@ const BudgetTable: React.FC<BudgetTableProps> = ({
               budget.currentSpent,
               budget.amount,
             );
-            let progressColor = 'bg-green-500';
+            let progressColor = 'bg-green-500 dark:bg-green-700';
             if (progress >= 80 && progress < 100) {
-              progressColor = 'bg-yellow-500';
+              progressColor = 'bg-yellow-500 dark:bg-yellow-700';
             } else if (progress >= 100) {
-              progressColor = 'bg-red-500';
+              progressColor = 'bg-red-500 dark:bg-red-700';
             }
 
             return (
               <tr
                 key={budget.id}
-                className="hover:bg-gray-100 cursor-pointer"
+                className="hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
                 onClick={() => setSelectedBudget(budget)}
               >
-                <td className="py-2 px-4 border-b">{budget.name}</td>
-                <td className="py-2 px-4 border-b">{budget.category}</td>
-                <td className="py-2 px-4 border-b">{budget.amount}</td>
-                <td className="py-2 px-4 border-b">{budget.currentSpent}</td>
-                <td className="py-2 px-4 border-b">
-                  <div className="relative w-full h-4 bg-gray-200 rounded">
+                <td className="py-2 px-4 border-b dark:border-gray-700">
+                  {budget.name}
+                </td>
+                <td className="py-2 px-4 border-b dark:border-gray-700">
+                  {budget.category}
+                </td>
+                <td className="py-2 px-4 border-b dark:border-gray-700">
+                  {budget.amount}
+                </td>
+                <td className="py-2 px-4 border-b dark:border-gray-700">
+                  {budget.currentSpent}
+                </td>
+                <td className="py-2 px-4 border-b dark:border-gray-700">
+                  <div className="relative w-full h-4 bg-gray-200 dark:bg-gray-700 rounded">
                     <div
                       className={`absolute top-0 left-0 h-4 rounded ${progressColor}`}
                       style={{ width: `${progress}%` }}
                     ></div>
                   </div>
                 </td>
-                <td className="py-2 px-4 border-b">
+                <td className="py-2 px-4 border-b dark:border-gray-700">
                   <button
-                    className="text-blue-500 mr-2"
+                    className="text-blue-500 dark:text-blue-300 mr-2"
                     onClick={(e) => {
                       e.stopPropagation();
                       onEdit(budget);
@@ -80,7 +96,7 @@ const BudgetTable: React.FC<BudgetTableProps> = ({
                     Edit
                   </button>
                   <button
-                    className="text-red-500"
+                    className="text-red-500 dark:text-red-300"
                     onClick={(e) => {
                       e.stopPropagation();
                       onDelete(budget.id);
