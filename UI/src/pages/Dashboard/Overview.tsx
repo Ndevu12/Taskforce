@@ -52,7 +52,7 @@ const Overview: React.FC = () => {
   return (
     <div className="space-y-8">
       {/* Welcome Banner */}
-      <section className="bg-blue-500 text-white p-6 rounded-lg shadow-md">
+      <section className="bg-blue-500 text-white p-6 rounded-lg shadow-md dark:bg-blue-800 dark:text-gray-300">
         <h1 className="text-3xl font-bold">Welcome, User!</h1>
         <p className="mt-2">
           Here&apos;s a quick overview of your financial status.

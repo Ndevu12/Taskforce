@@ -7,7 +7,7 @@ export const authenticateUser = async (email: string, password: string) => {
     const user = await User.findOne({ email });
     if (!user) {
         logger.info(`User with email ${email} not found.`);
-        throw new Error('Invalid creadentials.');
+        throw new Error('Invalid credentials.');
     }
 
     const isPasswordValid = await comparePassword(password, user.password);
@@ -16,10 +16,11 @@ export const authenticateUser = async (email: string, password: string) => {
         throw new Error('Invalid credentials.');
     }
 
-    const token = await generateToken({ userId: user._id, role: user.role });
+    const token = await generateToken({ userId: user._id, email: user.email, name: user.name, role: user.role });
     if (!token) {
         logger.error(`Error generating token for user with email ${email}.`);
-    return    }
+        return;
+    }
     return { token };
 };
 
