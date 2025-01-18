@@ -32,7 +32,7 @@ function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
 
   return (
     <div
-      className={`fixed top-10 left-0 h-full bg-gray-800 text-white transition-all duration-300 ${isCollapsed ? 'w-16' : 'w-64'}`}
+      className={`fixed top-10 left-0 h-full bg-gray-800 dark:bg-gray-800 text-white transition-all duration-300 ${isCollapsed ? 'w-16' : 'w-64'}`}
     >
       <div className="flex mt-2 items-center justify-between p-4">
         <span

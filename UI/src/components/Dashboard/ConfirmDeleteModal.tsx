@@ -2,33 +2,37 @@ import React from 'react';
 
 interface ConfirmDeleteModalProps {
   isOpen: boolean;
-  onClose: () => void;
   onConfirm: () => void;
+  onCancel: () => void;
 }
 
 const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
   isOpen,
-  onClose,
   onConfirm,
+  onCancel,
 }) => {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-6 rounded shadow-md w-96">
-        <h2 className="text-xl mb-4">Confirm Deletion</h2>
-        <p className="mb-4">Are you sure you want to delete this item?</p>
-        <div className="flex justify-end">
+    <div
+      className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center"
+      onClick={onCancel}
+    >
+      <div
+        className="bg-white p-4 rounded-lg shadow-lg w-1/3"
+        onClick={(e) => e.stopPropagation()}
+      >
+        <h2 className="text-2xl font-bold mb-4">Confirm Deletion</h2>
+        <p>Are you sure you want to delete this item?</p>
+        <div className="flex justify-end mt-4">
           <button
-            type="button"
-            className="mr-2 p-2 bg-gray-300 rounded"
-            onClick={onClose}
+            className="bg-gray-500 text-white p-2 rounded-lg mr-2"
+            onClick={onCancel}
           >
             Cancel
           </button>
           <button
-            type="button"
-            className="p-2 bg-red-500 text-white rounded"
+            className="bg-red-500 text-white p-2 rounded-lg"
             onClick={onConfirm}
           >
             Delete

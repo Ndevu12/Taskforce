@@ -14,7 +14,7 @@ const TransactionDetailsModal: React.FC<TransactionDetailsModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-6 rounded shadow-md w-full max-w-lg">
+      <div className="bg-white dark:bg-gray-800 p-6 rounded shadow-md w-full max-w-lg">
         <h2 className="text-xl font-bold mb-4">Transaction Details</h2>
         <p>
           <strong>Date:</strong> {transaction.date.toDateString()}
@@ -42,7 +42,7 @@ const TransactionDetailsModal: React.FC<TransactionDetailsModalProps> = ({
         <div className="flex justify-end mt-4">
           <button
             type="button"
-            className="p-2 bg-gray-300 rounded"
+            className="p-2 bg-gray-300 dark:bg-gray-700 dark:text-white rounded"
             onClick={onClose}
           >
             Close

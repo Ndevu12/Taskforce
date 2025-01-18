@@ -95,7 +95,7 @@ const Transactions: React.FC = () => {
     .reduce((sum, t) => sum + t.amount, 0);
 
   return (
-    <div className="p-4">
+    <div className="p-4 dark:bg-gray-900 dark:text-white">
       <div className="flex justify-between items-center mb-4">
         <h1 className="text-2xl font-bold">Transactions</h1>
         <button
@@ -106,15 +106,15 @@ const Transactions: React.FC = () => {
         </button>
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
-        <div className="p-4 bg-blue-100 text-blue-800 shadow rounded">
+        <div className="p-4 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-300 shadow rounded">
           <h2 className="text-lg font-bold">Total Transactions</h2>
           <p className="text-2xl">{totalTransactions}</p>
         </div>
-        <div className="p-4 bg-green-100 text-green-800 shadow rounded">
+        <div className="p-4 bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-300 shadow rounded">
           <h2 className="text-lg font-bold">Total Income</h2>
           <p className="text-2xl">${totalIncome}</p>
         </div>
-        <div className="p-4 bg-red-100 text-red-800 shadow rounded">
+        <div className="p-4 bg-red-100 dark:bg-red-800 text-red-800 dark:text-red-300 shadow rounded">
           <h2 className="text-lg font-bold">Total Expenses</h2>
           <p className="text-2xl">${totalExpenses}</p>
         </div>
@@ -133,7 +133,7 @@ const Transactions: React.FC = () => {
       />
       <ConfirmDeleteModal
         isOpen={isDeleteModalOpen}
-        onClose={() => setIsDeleteModalOpen(false)}
+        onCancel={() => setIsDeleteModalOpen(false)}
         onConfirm={handleConfirmDelete}
       />
       <TransactionDetailsModal

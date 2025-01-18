@@ -24,39 +24,50 @@ const AccountTable: React.FC<AccountTableProps> = ({
   );
 
   return (
-    <div className="overflow-x-auto mt-7 border border-gray-200 p-4 rounded shadow">
-      <table className="min-w-full bg-white">
+    <div className="overflow-x-auto mt-7 border border-gray-200 dark:border-gray-700 p-4 rounded shadow dark:bg-gray-800">
+      <table className="min-w-full bg-white dark:bg-gray-800">
         <thead>
           <tr>
-            <th className="py-2 px-4 border-b">Account Name</th>
-            <th className="py-2 px-4 border-b">Type</th>
-            <th className="py-2 px-4 border-b">Balance</th>
-            <th className="py-2 px-4 border-b">Status</th>
-            <th className="py-2 px-4 border-b">Actions</th>
+            <th className="py-2 px-4 border-b dark:border-gray-700">
+              Account Name
+            </th>
+            <th className="py-2 px-4 border-b dark:border-gray-700">Type</th>
+            <th className="py-2 px-4 border-b dark:border-gray-700">Balance</th>
+            <th className="py-2 px-4 border-b dark:border-gray-700">Status</th>
+            <th className="py-2 px-4 border-b dark:border-gray-700">Actions</th>
           </tr>
         </thead>
         <tbody>
           {currentAccounts.map((account) => (
-            <tr key={account.id} className="hover:bg-gray-100">
-              <td className="py-2 px-4 border-b">{account.name}</td>
-              <td className="py-2 px-4 border-b">{account.type}</td>
-              <td className="py-2 px-4 border-b">{account.balance}</td>
-              <td className="py-2 px-4 border-b">
+            <tr
+              key={account.id}
+              className="hover:bg-gray-100 dark:hover:bg-gray-700"
+            >
+              <td className="py-2 px-4 border-b dark:border-gray-700">
+                {account.name}
+              </td>
+              <td className="py-2 px-4 border-b dark:border-gray-700">
+                {account.type}
+              </td>
+              <td className="py-2 px-4 border-b dark:border-gray-700">
+                {account.balance}
+              </td>
+              <td className="py-2 px-4 border-b dark:border-gray-700">
                 <span
-                  className={`px-2 py-1 rounded ${account.isActive ? 'bg-green-200' : 'bg-red-200'}`}
+                  className={`px-2 py-1 rounded ${account.isActive ? 'bg-green-200 dark:bg-green-700' : 'bg-red-200 dark:bg-red-700'}`}
                 >
                   {account.isActive ? 'Active' : 'Inactive'}
                 </span>
               </td>
-              <td className="py-2 px-4 border-b">
+              <td className="py-2 px-4 border-b dark:border-gray-700">
                 <button
-                  className="text-blue-500 mr-2"
+                  className="text-blue-500 dark:text-blue-300 mr-2"
                   onClick={() => onEdit(account)}
                 >
                   Edit
                 </button>
                 <button
-                  className="text-red-500"
+                  className="text-red-500 dark:text-red-300"
                   onClick={() => onDelete(account.id)}
                 >
                   Delete

@@ -14,8 +14,10 @@ const BudgetDetailModal: React.FC<BudgetDetailModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-6 rounded shadow-md w-full max-w-lg">
-        <h2 className="text-xl font-bold mb-4">Budget Details</h2>
+      <div className="bg-white dark:bg-gray-800 p-6 rounded shadow-md w-full max-w-lg">
+        <h2 className="text-xl font-bold mb-4 text-gray-700 dark:text-gray-300">
+          Budget Details
+        </h2>
         <p>
           <strong>Name:</strong> {budget.name}
         </p>
