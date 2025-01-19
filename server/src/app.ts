@@ -8,6 +8,7 @@ import router from "./routes";
 import http from 'http';
 import { Server } from 'socket.io';
 import logger from './utils/logger';
+import { swaggerDocs } from "./startups/swaggerSetup";
 
 dotenv.config();
 const client_url = process.env.CLIENT_URL;
@@ -39,6 +40,9 @@ app.use(express.json());
 const morganFormat = ':method :url :status :response-time ms - :res[content-length]';
 app.use(morgan(morganFormat));
 
+// Setup Swagger
+swaggerDocs(app);
+
 app.get('/', (req, res) => {
     res.json({ status: 'API is running' });
 });
@@ -47,9 +51,9 @@ app.use(router);
 
 // WebSocket connection
 io.on('connection', (socket) => {
-  logger.info('A user connected');
+  logger.info('Client connected');
   socket.on('disconnect', () => {
-    logger.info('User disconnected');
+    logger.info('Client disconnected');
   });
 });
 
