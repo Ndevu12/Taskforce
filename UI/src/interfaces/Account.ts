@@ -15,3 +15,12 @@ export interface Account {
   isActive: boolean;
   accountNumber?: string;
 }
+
+export interface AccountRequestData {
+  name: string;
+  type: AccountType;
+  balance: number;
+  currency: string;
+  isActive: boolean;
+  accountNumber?: string;
+}

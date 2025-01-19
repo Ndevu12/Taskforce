@@ -1,5 +1,5 @@
 import React from 'react';
-import { ITransaction } from '../../interfaces/ITransaction';
+import { ITransaction } from '../../../interfaces/ITransaction';
 
 interface TransactionModalProps {
   transaction: ITransaction | null;
@@ -31,6 +31,11 @@ const TransactionModal: React.FC<TransactionModalProps> = ({
         <p>
           <strong>Category:</strong> {transaction.category}
         </p>
+        {transaction.subcategory && (
+          <p>
+            <strong>Subcategory:</strong> {transaction.subcategory.join(', ')}
+          </p>
+        )}
         <p>
           <strong>Description:</strong> {transaction.description}
         </p>

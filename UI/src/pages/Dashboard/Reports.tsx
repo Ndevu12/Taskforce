@@ -1,58 +1,22 @@
-import React, { useState } from 'react';
-import QuickStatistics from '../../components/Dashboard/QuickStatistics';
+import React, { useState, useEffect } from 'react';
 import { IReport, IReportSchedule } from '../../interfaces/Report';
-import ReportTable from '../../components/Dashboard/ReportTable';
-import ScheduleTable from '../../components/Dashboard/ScheduleTable';
-import ReportDetailsModal from '../../components/Dashboard/ReportDetailsModal';
-import ScheduleFormModal from '../../components/Dashboard/ScheduleFormModal';
-import ConfirmDeleteModal from '../../components/Dashboard/ConfirmDeleteModal';
-import { BudgetPeriod } from '../../interfaces/Budget';
-
-const dummyReports: IReport[] = [
-  {
-    id: '1',
-    schedule: BudgetPeriod.DAILY,
-    status: 'Completed',
-    data: { content: 'Report data 1' },
-  },
-  {
-    id: '2',
-    schedule: BudgetPeriod.WEEKLY,
-    status: 'Failed',
-    data: { content: 'Report data 2' },
-  },
-  {
-    id: '3',
-    schedule: BudgetPeriod.MONTHLY,
-    status: 'Completed',
-    data: { content: 'Report data 3' },
-  },
-];
-
-const dummySchedules: IReportSchedule[] = [
-  {
-    id: '1',
-    type: BudgetPeriod.DAILY,
-    startDate: new Date('2023-01-01'),
-    endDate: new Date('2023-01-31'),
-  },
-  {
-    id: '2',
-    type: BudgetPeriod.WEEKLY,
-    startDate: new Date('2023-01-01'),
-    endDate: new Date('2023-01-31'),
-  },
-  {
-    id: '3',
-    type: BudgetPeriod.MONTHLY,
-    startDate: new Date('2023-01-01'),
-    endDate: new Date('2023-01-31'),
-  },
-];
+import ReportTable from '../../components/Dashboard/Reports/ReportTable';
+import ScheduleTable from '../../components/Dashboard/Reports/ScheduleTable';
+import ReportDetailsModal from '../../components/Dashboard/Reports/ReportDetailsModal';
+import ScheduleFormModal from '../../components/Dashboard/Reports/ScheduleFormModal';
+import ConfirmDeleteModal from '../../components/pop-ups/ConfirmDeleteModal';
+import QuickStatistics from '../../components/Dashboard/Reports/QuickStatistics';
+import {
+  fetchReports,
+  fetchSchedules,
+  ScheduleReport,
+  updateSchedule,
+  deleteSchedule,
+} from '../../actions/reportActions';
 
 const Reports: React.FC = () => {
-  const [reports] = useState<IReport[]>(dummyReports);
-  const [schedules, setSchedules] = useState<IReportSchedule[]>(dummySchedules);
+  const [reports, setReports] = useState<IReport[]>([]);
+  const [schedules, setSchedules] = useState<IReportSchedule[]>([]);
   const [selectedReport, setSelectedReport] = useState<IReport | null>(null);
   const [selectedSchedule, setSelectedSchedule] =
     useState<IReportSchedule | null>(null);
@@ -62,6 +26,65 @@ const Reports: React.FC = () => {
   const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] =
     useState(false);
 
+  useEffect(() => {
+    const loadReports = async () => {
+      try {
+        const data = await fetchReports();
+        setReports(data);
+      } catch (err) {
+        console.error('Failed to load reports');
+      }
+    };
+
+    const loadSchedules = async () => {
+      try {
+        const data = await fetchSchedules();
+        const filteredSchedules = data.filter(
+          (schedule) => schedule.type !== 'EXCEEDED',
+        );
+        setSchedules(filteredSchedules);
+      } catch (err) {
+        console.error('Failed to load schedules');
+      }
+    };
+
+    loadReports();
+    loadSchedules();
+  }, []);
+
+  const handleSaveSchedule = async (schedule: IReportSchedule) => {
+    try {
+      if (schedule.id) {
+        await updateSchedule(schedule);
+      } else {
+        await ScheduleReport(schedule);
+      }
+      const updatedSchedules = await fetchSchedules();
+      const filteredSchedules = updatedSchedules.filter(
+        (schedule) => schedule.type !== 'EXCEEDED',
+      );
+      setSchedules(filteredSchedules);
+    } catch (err) {
+      console.error('Failed to save schedule');
+    }
+  };
+
+  const handleDeleteSchedule = async () => {
+    if (selectedSchedule) {
+      try {
+        await deleteSchedule(selectedSchedule.id);
+        const updatedSchedules = await fetchSchedules();
+        const filteredSchedules = updatedSchedules.filter(
+          (schedule) => schedule.type !== 'EXCEEDED',
+        );
+        setSchedules(filteredSchedules);
+        setIsConfirmDeleteModalOpen(false);
+      } catch (err) {
+        console.error('Failed to delete schedule');
+      }
+    }
+  };
+
   return (
     <div className="p-4 dark:bg-gray-900 dark:text-white">
       <div className="flex justify-between items-center mb-4">
@@ -70,7 +93,7 @@ const Reports: React.FC = () => {
           className="bg-blue-500 text-white p-2 rounded-lg"
           onClick={() => setIsScheduleFormModalOpen(true)}
         >
-          Create Scheduled Report
+          Schedule new Reporting time
         </button>
       </div>
       <QuickStatistics reports={reports} />
@@ -110,18 +133,13 @@ const Reports: React.FC = () => {
         <ScheduleFormModal
           schedule={selectedSchedule}
           onClose={() => setIsScheduleFormModalOpen(false)}
-          onSave={(newSchedule) => {
-            setSchedules([...schedules, newSchedule]);
-            setIsScheduleFormModalOpen(false);
-          }}
+          onSave={handleSaveSchedule}
         />
       )}
       {isConfirmDeleteModalOpen && (
         <ConfirmDeleteModal
           isOpen={isConfirmDeleteModalOpen}
-          onConfirm={() => {
-            setIsConfirmDeleteModalOpen(false);
-          }}
+          onConfirm={handleDeleteSchedule}
           onCancel={() => setIsConfirmDeleteModalOpen(false)}
         />
       )}

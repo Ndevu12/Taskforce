@@ -1,43 +1,18 @@
-import React, { useState } from 'react';
-import TransactionTable from '../../components/Dashboard/TransactionTable';
-import TransactionDetailsModal from '../../components/Dashboard/TransactionDetailsModal';
-import TransactionFormModal from '../../components/Dashboard/TransactionFormModal';
-import ConfirmDeleteModal from '../../components/Dashboard/ConfirmDeleteModal';
+import React, { useState, useEffect } from 'react';
+import TransactionTable from '../../components/Dashboard/Transactions/TransactionTable';
+import TransactionDetailsModal from '../../components/Dashboard/Transactions/TransactionDetailsModal';
+import TransactionFormModal from '../../components/Dashboard/Transactions/TransactionFormModal';
+import ConfirmDeleteModal from '../../components/pop-ups/ConfirmDeleteModal';
 import { ITransaction } from '../../interfaces/ITransaction';
-
-const initialTransactions: ITransaction[] = [
-  {
-    id: '1',
-    date: new Date('2025-01-01'),
-    description: 'Groceries',
-    amount: 50,
-    type: 'EXPENSE',
-    category: 'Food',
-    account: 'Debit Card',
-  },
-  {
-    id: '2',
-    date: new Date('2025-01-02'),
-    description: 'Salary',
-    amount: 1500,
-    type: 'INCOME',
-    category: 'Work',
-    account: 'Bank Account',
-  },
-  {
-    id: '3',
-    date: new Date('2025-01-03'),
-    description: 'Movie Tickets',
-    amount: 30,
-    type: 'EXPENSE',
-    category: 'Entertainment',
-    account: 'Credit Card',
-  },
-];
+import {
+  fetchTransactionsByUser,
+  deleteTransaction,
+} from '../../actions/transactionActions';
+import { fetchCategories } from '../../actions/categoryActions';
 
 const Transactions: React.FC = () => {
-  const [transactions, setTransactions] =
-    useState<ITransaction[]>(initialTransactions);
+  const [transactions, setTransactions] = useState<ITransaction[]>([]);
+  const [categories, setCategories] = useState([]);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedTransaction, setSelectedTransaction] =
@@ -47,6 +22,25 @@ const Transactions: React.FC = () => {
   const [transactionToDelete, setTransactionToDelete] = useState<string | null>(
     null,
   );
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        const data = await fetchTransactionsByUser('userId'); // Replace 'userId' with actual user ID
+        setTransactions(data);
+        const categoriesData = await fetchCategories();
+        setCategories(categoriesData);
+        setLoading(false);
+      } catch (err) {
+        setError('There was an error getting your transactions');
+        setLoading(false);
+      }
+    };
+    fetchData();
+  }, []);
 
   const handleAddTransaction = () => {
     setTransactionToEdit(null);
@@ -66,20 +60,21 @@ const Transactions: React.FC = () => {
   const handleSaveTransaction = (transaction: ITransaction) => {
     if (transactionToEdit) {
       setTransactions((prev) =>
-        prev.map((t) => (t.id === transaction.id ? transaction : t)),
+        prev.map((t) => (t._id === transaction._id ? transaction : t)),
       );
     } else {
       setTransactions((prev) => [
         ...prev,
-        { ...transaction, id: (prev.length + 1).toString() },
+        { ...transaction, _id: (prev.length + 1).toString() },
       ]);
     }
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     if (transactionToDelete !== null) {
+      await deleteTransaction(transactionToDelete);
       setTransactions((prev) =>
-        prev.filter((t) => t.id !== transactionToDelete),
+        prev.filter((t) => t._id !== transactionToDelete),
       );
       setTransactionToDelete(null);
     }
@@ -108,19 +103,31 @@ const Transactions: React.FC = () => {
       <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-4">
         <div className="p-4 bg-blue-100 dark:bg-blue-800 text-blue-800 dark:text-blue-300 shadow rounded">
           <h2 className="text-lg font-bold">Total Transactions</h2>
-          <p className="text-2xl">{totalTransactions}</p>
+          {loading ? (
+            <div className="animate-pulse h-8 bg-gray-200 dark:bg-gray-700 rounded"></div>
+          ) : (
+            <p className="text-2xl">{error ? 0 : totalTransactions}</p>
+          )}
         </div>
         <div className="p-4 bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-300 shadow rounded">
           <h2 className="text-lg font-bold">Total Income</h2>
-          <p className="text-2xl">${totalIncome}</p>
+          {loading ? (
+            <div className="animate-pulse h-8 bg-gray-200 dark:bg-gray-700 rounded"></div>
+          ) : (
+            <p className="text-2xl">${error ? 0 : totalIncome}</p>
+          )}
         </div>
         <div className="p-4 bg-red-100 dark:bg-red-800 text-red-800 dark:text-red-300 shadow rounded">
           <h2 className="text-lg font-bold">Total Expenses</h2>
-          <p className="text-2xl">${totalExpenses}</p>
+          {loading ? (
+            <div className="animate-pulse h-8 bg-gray-200 dark:bg-gray-700 rounded"></div>
+          ) : (
+            <p className="text-2xl">${error ? 0 : totalExpenses}</p>
+          )}
         </div>
       </div>
       <TransactionTable
-        transactions={transactions}
+        userId="userId"
         onEdit={handleEditTransaction}
         onDelete={handleDeleteTransaction}
         onTransactionClick={setSelectedTransaction}
@@ -130,6 +137,7 @@ const Transactions: React.FC = () => {
         onClose={() => setIsFormModalOpen(false)}
         onSave={handleSaveTransaction}
         transactionToEdit={transactionToEdit}
+        categories={categories}
       />
       <ConfirmDeleteModal
         isOpen={isDeleteModalOpen}

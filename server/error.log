@@ -3315,3 +3315,103 @@
 {"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 10:36:18"}
 {"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 10:37:17"}
 {"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 10:41:54"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 13:18:18"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 13:30:59"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 13:42:41"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 14:06:53"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 14:10:48"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 14:12:33"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 14:13:13"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 14:14:23"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 14:16:57"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 14:25:03"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 14:30:52"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-18 14:50:57"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-18 14:50:57"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-18 15:00:20"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-18 15:00:20"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-18 15:00:22"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-18 15:00:24"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-18 15:00:26"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-18 15:00:28"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-18 15:00:30"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 16:29:00"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 16:31:03"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 16:41:43"}
+{"level":"error","message":"Failed to create user: \"role\" is required","service":"user-service","timestamp":"2025-01-18 16:50:04"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 16:57:57"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 17:04:32"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 17:05:38"}
+{"level":"error","message":"Failed to create user: \"password\" length must be at least 6 characters long","service":"user-service","timestamp":"2025-01-18 17:15:44"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 17:38:31"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 17:41:16"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-18 20:02:47"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-18 20:03:03"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-18 20:03:03"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-18 20:03:20"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-18 20:03:20"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-18 20:03:38"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-18 20:03:38"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-18 20:03:55"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-18 20:03:55"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-18 20:04:13"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-18 20:04:13"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-18 20:04:30"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-18 20:04:30"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 20:05:18"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-18 20:05:35"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-18 20:05:35"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-18 20:05:55"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-18 20:05:55"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-18 20:06:13"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-18 20:06:13"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-18 20:06:31"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-18 20:06:31"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-18 20:06:48"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-18 20:48:08"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 21:07:01"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 21:07:45"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 21:13:45"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 21:15:48"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 21:21:13"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-18 21:22:06"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-19 00:37:15"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-19 00:37:15"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-19 00:37:17"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-19 00:37:19"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-19 00:37:21"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 01:14:39"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 01:25:24"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 08:05:29"}
+{"expiredAt":"2025-01-17T15:30:58.000Z","level":"error","message":"jwt expired","name":"TokenExpiredError","service":"user-service","stack":"TokenExpiredError: jwt expired\n    at C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\server\\node_modules\\jsonwebtoken\\verify.js:190:21\n    at getSecret (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\server\\node_modules\\jsonwebtoken\\verify.js:97:14)\n    at Object.module.exports [as verify] (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\server\\node_modules\\jsonwebtoken\\verify.js:101:10)\n    at C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\server\\src\\helpers\\token.ts:30:35\n    at Generator.next (<anonymous>)\n    at C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\server\\src\\helpers\\token.ts:8:71\n    at new Promise (<anonymous>)\n    at __awaiter (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\server\\src\\helpers\\token.ts:4:12)\n    at verifyToken (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\server\\src\\helpers\\token.ts:28:49)\n    at C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\server\\src\\middleware\\isAuth.ts:29:47","timestamp":"2025-01-19 08:06:06"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 09:11:48"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 09:21:14"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 09:21:52"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 09:23:17"}
+{"expiredAt":"2025-01-14T21:50:28.000Z","level":"error","message":"jwt expired","name":"TokenExpiredError","service":"user-service","stack":"TokenExpiredError: jwt expired\n    at C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\server\\node_modules\\jsonwebtoken\\verify.js:190:21\n    at getSecret (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\server\\node_modules\\jsonwebtoken\\verify.js:97:14)\n    at Object.module.exports [as verify] (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\server\\node_modules\\jsonwebtoken\\verify.js:101:10)\n    at C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\server\\src\\helpers\\token.ts:30:35\n    at Generator.next (<anonymous>)\n    at C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\server\\src\\helpers\\token.ts:8:71\n    at new Promise (<anonymous>)\n    at __awaiter (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\server\\src\\helpers\\token.ts:4:12)\n    at verifyToken (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\server\\src\\helpers\\token.ts:28:49)\n    at C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\server\\src\\middleware\\isAuth.ts:29:47","timestamp":"2025-01-19 09:25:40"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 09:30:34"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 09:37:02"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 09:39:01"}
+{"level":"error","message":"Failed to fetch category: Cast to ObjectId failed for value \"user\" (type string) at path \"_id\" for model \"Category\"","service":"user-service","timestamp":"2025-01-19 10:39:42"}
+{"level":"error","message":"Failed to fetch category: Cast to ObjectId failed for value \"user\" (type string) at path \"_id\" for model \"Category\"","service":"user-service","timestamp":"2025-01-19 10:39:44"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 11:10:28"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 11:13:38"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 11:19:49"}
+{"level":"error","message":"Failed to fetch subcategories: Can't use $regex","service":"user-service","timestamp":"2025-01-19 11:20:09"}
+{"level":"error","message":"Failed to fetch subcategories: Can't use $regex","service":"user-service","timestamp":"2025-01-19 11:24:08"}
+{"level":"error","message":"Failed to fetch subcategories: Cast to ObjectId failed for value \"EXPENSE\" (type string) at path \"category\" for model \"SubCategory\"","service":"user-service","timestamp":"2025-01-19 11:29:04"}
+{"level":"error","message":"Failed to create transaction: Transaction validation failed: category: Cast to ObjectId failed for value \"INCOME\" (type string) at path \"category\" because of \"BSONError\"","service":"user-service","timestamp":"2025-01-19 11:55:12"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 13:27:17"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-19 13:59:19"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-19 13:59:19"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-19 13:59:21"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-19 13:59:23"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-19 13:59:25"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 14:32:06"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 14:37:57"}
+{"kind":"ObjectId","level":"error","message":"deleteReportScheduleById error: Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"ReportSchedule\"","path":"_id","reason":{},"service":"user-service","stack":"CastError: Cast to ObjectId failed for value \"undefined\" (type string) at path \"_id\" for model \"ReportSchedule\"\n    at SchemaObjectId.cast (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\server\\node_modules\\mongoose\\lib\\schema\\objectId.js:250:11)\n    at SchemaObjectId.SchemaType.applySetters (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\server\\node_modules\\mongoose\\lib\\schemaType.js:1255:12)\n    at SchemaObjectId.SchemaType.castForQuery (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\server\\node_modules\\mongoose\\lib\\schemaType.js:1673:17)\n    at cast (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\server\\node_modules\\mongoose\\lib\\cast.js:390:32)\n    at model.Query.Query.cast (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\server\\node_modules\\mongoose\\lib\\query.js:4889:12)\n    at model.Query.Query._castConditions (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\server\\node_modules\\mongoose\\lib\\query.js:2306:10)\n    at model.Query._findOneAndDelete (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\server\\node_modules\\mongoose\\lib\\query.js:3537:8)\n    at model.Query.exec (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\server\\node_modules\\mongoose\\lib\\query.js:4438:80)\n    at processTicksAndRejections (node:internal/process/task_queues:105:5)","stringValue":"\"undefined\"","timestamp":"2025-01-19 14:53:30","value":"undefined","valueType":"string"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-19 15:01:35"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-19 15:01:35"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 15:39:03"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 15:50:02"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 17:00:39"}

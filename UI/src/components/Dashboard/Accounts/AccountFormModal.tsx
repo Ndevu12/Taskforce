@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Account, AccountType } from '../../interfaces/Account';
+import { Account, AccountType } from '../../../interfaces/Account';
 
 interface AccountFormModalProps {
   isOpen: boolean;
@@ -19,8 +19,9 @@ const AccountFormModal: React.FC<AccountFormModalProps> = ({
     name: '',
     type: AccountType.BANK,
     balance: 0,
-    currency: 'USD',
-    isActive: true, // Auto-filled as true
+    currency: 'RWF',
+    isActive: true,
+    accountNumber: '',
   });
 
   useEffect(() => {
@@ -33,7 +34,10 @@ const AccountFormModal: React.FC<AccountFormModalProps> = ({
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>,
   ) => {
     const { name, value } = e.target;
-    setAccount((prev) => ({ ...prev, [name]: value }));
+    if (name !== 'currency') {
+      // Prevent changes to currency
+      setAccount((prev) => ({ ...prev, [name]: value }));
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -101,7 +105,49 @@ const AccountFormModal: React.FC<AccountFormModalProps> = ({
               placeholder="Enter initial balance"
             />
           </div>
-          {/* Removed Status field */}
+          <div className="mb-4">
+            <label className="block mb-1 text-gray-700 dark:text-gray-300">
+              Currency
+            </label>
+            <input
+              type="text"
+              name="currency"
+              value={account.currency}
+              readOnly
+              className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
+              title="Currency"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block mb-1 text-gray-700 dark:text-gray-300">
+              Account Number
+            </label>
+            <input
+              type="text"
+              name="accountNumber"
+              value={account.accountNumber}
+              onChange={handleChange}
+              className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
+              placeholder="Enter account number"
+              title="Account Number"
+            />
+          </div>
+          <div className="mb-4">
+            <label className="block mb-1 text-gray-700 dark:text-gray-300">
+              Status
+            </label>
+            <select
+              name="isActive"
+              value={account.isActive ? 'true' : 'false'}
+              onChange={handleChange}
+              className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
+              required
+              title="Status"
+            >
+              <option value="true">Active</option>
+              <option value="false">Inactive</option>
+            </select>
+          </div>
           <div className="flex justify-end">
             <button
               type="button"

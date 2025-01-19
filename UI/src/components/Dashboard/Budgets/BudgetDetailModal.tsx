@@ -1,5 +1,5 @@
 import React from 'react';
-import { Budget } from '../../interfaces/Budget';
+import { Budget } from '../../../interfaces/Budget';
 
 interface BudgetDetailModalProps {
   budget: Budget | null;
@@ -19,10 +19,7 @@ const BudgetDetailModal: React.FC<BudgetDetailModalProps> = ({
           Budget Details
         </h2>
         <p>
-          <strong>Name:</strong> {budget.name}
-        </p>
-        <p>
-          <strong>Category:</strong> {budget.category}
+          <strong>Category:</strong> {budget.category?.name}
         </p>
         <p>
           <strong>Amount Allocated:</strong> ${budget.amount}
@@ -34,14 +31,11 @@ const BudgetDetailModal: React.FC<BudgetDetailModalProps> = ({
           <strong>Period:</strong> {budget.period}
         </p>
         <p>
-          <strong>Start Date:</strong> {budget.startDate.toDateString()}
+          <strong>Start Date:</strong>{' '}
+          {new Date(budget.startDate).toDateString()}
         </p>
         <p>
-          <strong>End Date:</strong> {budget.endDate.toDateString()}
-        </p>
-        <p>
-          <strong>Notification Threshold:</strong>{' '}
-          {budget.notificationThreshold}%
+          <strong>End Date:</strong> {new Date(budget.endDate).toDateString()}
         </p>
         {budget.description && (
           <p>

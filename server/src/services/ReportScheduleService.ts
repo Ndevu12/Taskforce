@@ -17,6 +17,7 @@ export const getReportScheduleById = async (scheduleId: string) => {
 
 export const updateReportScheduleById = async (scheduleId: string, updateData: any) => {
   try {
+    console.log('updateData', updateData);
     const schedule = await ReportSchedule.findByIdAndUpdate(scheduleId, updateData, { new: true });
     if (!schedule) {
       throw new Error(`Schedule not found with ID: ${scheduleId}`);

@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { Budget, BudgetPeriod } from '../../interfaces/Budget';
+import { Budget, BudgetPeriod } from '../../../interfaces/Budget';
 
 interface BudgetFormModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (budget: Budget) => void;
   budgetToEdit?: Budget | null;
+  categories: { name: string; _id: string }[];
 }
 
 const BudgetFormModal: React.FC<BudgetFormModalProps> = ({
@@ -13,23 +14,30 @@ const BudgetFormModal: React.FC<BudgetFormModalProps> = ({
   onClose,
   onSave,
   budgetToEdit,
+  categories,
 }) => {
   const [budget, setBudget] = useState<Budget>({
-    id: 0,
-    name: '',
+    id: '',
     category: '',
     amount: 0,
     period: BudgetPeriod.MONTHLY,
     startDate: new Date(),
     endDate: new Date(),
     currentSpent: 0,
-    notificationThreshold: 80,
     description: '',
   });
 
   useEffect(() => {
     if (budgetToEdit) {
-      setBudget(budgetToEdit);
+      try {
+        setBudget({
+          ...budgetToEdit,
+          startDate: new Date(budgetToEdit.startDate),
+          endDate: new Date(budgetToEdit.endDate),
+        });
+      } catch (error) {
+        console.error('Invalid date format in budgetToEdit:', error);
+      }
     }
   }, [budgetToEdit]);
 
@@ -44,8 +52,18 @@ const BudgetFormModal: React.FC<BudgetFormModalProps> = ({
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    onSave(budget);
-    onClose();
+    try {
+      const updatedBudget: Budget = {
+        ...budget,
+        startDate: new Date(budget.startDate),
+        endDate: new Date(budget.endDate),
+      };
+      onSave(updatedBudget);
+      onClose();
+      alert('Budget saved successfully');
+    } catch (error) {
+      console.error('Error converting dates:', error);
+    }
   };
 
   if (!isOpen) return null;
@@ -60,33 +78,22 @@ const BudgetFormModal: React.FC<BudgetFormModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="mb-4">
               <label className="block mb-1 text-gray-700 dark:text-gray-300">
-                Budget Name
-              </label>
-              <input
-                type="text"
-                name="name"
-                value={budget.name}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
-                placeholder="Enter budget name"
-                title="Budget Name"
-                required
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block mb-1 text-gray-700 dark:text-gray-300">
                 Category
               </label>
-              <input
-                type="text"
+              <select
                 name="category"
                 value={budget.category}
                 onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
-                placeholder="Enter category"
-                title="Category"
                 required
-              />
+                title="Category"
+              >
+                {categories.map((category) => (
+                  <option key={category._id} value={category._id}>
+                    {category.name}
+                  </option>
+                ))}
+              </select>
             </div>
             <div className="mb-4">
               <label className="block mb-1 text-gray-700 dark:text-gray-300">
@@ -130,7 +137,16 @@ const BudgetFormModal: React.FC<BudgetFormModalProps> = ({
               <input
                 type="date"
                 name="startDate"
-                value={budget.startDate.toISOString().split('T')[0]}
+                value={(() => {
+                  try {
+                    return new Date(budget.startDate)
+                      .toISOString()
+                      .split('T')[0];
+                  } catch (error) {
+                    console.error('Invalid start date:', error);
+                    return '';
+                  }
+                })()}
                 onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
                 required
@@ -144,7 +160,14 @@ const BudgetFormModal: React.FC<BudgetFormModalProps> = ({
               <input
                 type="date"
                 name="endDate"
-                value={budget.endDate.toISOString().split('T')[0]}
+                value={(() => {
+                  try {
+                    return new Date(budget.endDate).toISOString().split('T')[0];
+                  } catch (error) {
+                    console.error('Invalid end date:', error);
+                    return '';
+                  }
+                })()}
                 onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
                 required
@@ -165,23 +188,6 @@ const BudgetFormModal: React.FC<BudgetFormModalProps> = ({
                 min="0"
                 title="Current Spent"
                 placeholder="Enter current spent amount"
-              />
-            </div>
-            <div className="mb-4">
-              <label className="block mb-1 text-gray-700 dark:text-gray-300">
-                Notification Threshold (%)
-              </label>
-              <input
-                type="number"
-                name="notificationThreshold"
-                value={budget.notificationThreshold}
-                onChange={handleChange}
-                className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
-                required
-                min="0"
-                max="100"
-                title="Notification Threshold"
-                placeholder="Enter notification threshold"
               />
             </div>
             <div className="mb-4 sm:col-span-3">

@@ -1,50 +1,40 @@
-import React, { useState } from 'react';
-import AccountTable from '../../components/Dashboard/AccountTable';
-import AccountFormModal from '../../components/Dashboard/AccountFormModal';
-import ConfirmDeleteModal from '../../components/Dashboard/ConfirmDeleteModal';
-import { Account, AccountType } from '../../interfaces/Account';
-
-const initialAccounts: Account[] = [
-  {
-    id: 1,
-    name: 'Saving account',
-    type: AccountType.BANK,
-    balance: 5000,
-    currency: 'USD',
-    isActive: true,
-  },
-  {
-    id: 2,
-    name: 'Checking Account',
-    type: AccountType.BANK,
-    balance: 2000,
-    currency: 'USD',
-    isActive: true,
-  },
-  {
-    id: 3,
-    name: 'Credit Card',
-    type: AccountType.CREDIT,
-    balance: -1500,
-    currency: 'USD',
-    isActive: false,
-  },
-  {
-    id: 4,
-    name: 'MOBILE MONEY',
-    type: AccountType.MOBILE_MONEY,
-    balance: -1500,
-    currency: 'USD',
-    isActive: false,
-  },
-];
+import React, { useState, useEffect } from 'react';
+import AccountTable from '../../components/Dashboard/Accounts/AccountTable';
+import AccountFormModal from '../../components/Dashboard/Accounts/AccountFormModal';
+import ConfirmDeleteModal from '../../components/pop-ups/ConfirmDeleteModal';
+import AccountDetailsModal from '../../components/Dashboard/Accounts/AccountDetailsModal';
+import { Account } from '../../interfaces/Account';
+import {
+  fetchAccounts,
+  createAccount,
+  updateAccount,
+  deleteAccount,
+} from '../../actions/accountActions';
 
 const Accounts: React.FC = () => {
-  const [accounts, setAccounts] = useState<Account[]>(initialAccounts);
+  const [accounts, setAccounts] = useState<Account[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
   const [accountToEdit, setAccountToEdit] = useState<Account | null>(null);
-  const [accountToDelete, setAccountToDelete] = useState<number | null>(null);
+  const [accountToDelete, setAccountToDelete] = useState<string | null>(null);
+  const [accountToView, setAccountToView] = useState<Account | null>(null);
+
+  useEffect(() => {
+    const loadAccounts = async () => {
+      try {
+        const data = await fetchAccounts();
+        setAccounts(data);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    loadAccounts();
+  }, []);
 
   const handleAddAccount = () => {
     setAccountToEdit(null);
@@ -56,25 +46,50 @@ const Accounts: React.FC = () => {
     setIsFormModalOpen(true);
   };
 
-  const handleDeleteAccount = (accountId: number) => {
+  const handleDeleteAccount = (accountId: string) => {
     setAccountToDelete(accountId);
     setIsDeleteModalOpen(true);
   };
 
-  const handleSaveAccount = (account: Account) => {
-    if (accountToEdit) {
-      setAccounts((prev) =>
-        prev.map((acc) => (acc.id === account.id ? account : acc)),
-      );
-    } else {
-      setAccounts((prev) => [...prev, { ...account, id: prev.length + 1 }]);
+  const handleViewAccount = (account: Account) => {
+    setAccountToView(account);
+    setIsDetailsModalOpen(true);
+  };
+
+  const handleSaveAccount = async (account: Account) => {
+    try {
+      if (accountToEdit) {
+        const updatedAccount = await updateAccount(account);
+        setAccounts((prev) =>
+          prev.map((acc) =>
+            acc._id === updatedAccount._id ? updatedAccount : acc,
+          ),
+        );
+      } else {
+        const newAccount = await createAccount(account);
+        setAccounts((prev) => [...prev, newAccount]);
+        alert('Account created successfully');
+      }
+      setIsFormModalOpen(false);
+    } catch (error: any) {
+      console.error(error);
+      alert(error.message);
     }
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     if (accountToDelete !== null) {
-      setAccounts((prev) => prev.filter((acc) => acc.id !== accountToDelete));
-      setAccountToDelete(null);
+      try {
+        await deleteAccount(accountToDelete);
+        setAccounts((prev) =>
+          prev.filter((acc) => acc._id !== accountToDelete),
+        );
+        setAccountToDelete(null);
+        alert('Account deleted successfully');
+      } catch (error) {
+        console.error(error);
+        alert('Failed to delete account');
+      }
     }
     setIsDeleteModalOpen(false);
   };
@@ -112,6 +127,8 @@ const Accounts: React.FC = () => {
         accounts={accounts}
         onEdit={handleEditAccount}
         onDelete={handleDeleteAccount}
+        onView={handleViewAccount}
+        isLoading={isLoading}
       />
       <AccountFormModal
         isOpen={isFormModalOpen}
@@ -123,6 +140,11 @@ const Accounts: React.FC = () => {
         isOpen={isDeleteModalOpen}
         onCancel={() => setIsDeleteModalOpen(false)}
         onConfirm={handleConfirmDelete}
+      />
+      <AccountDetailsModal
+        isOpen={isDetailsModalOpen}
+        onClose={() => setIsDetailsModalOpen(false)}
+        account={accountToView}
       />
     </div>
   );
