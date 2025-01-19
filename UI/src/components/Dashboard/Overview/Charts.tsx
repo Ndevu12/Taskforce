@@ -1,9 +1,9 @@
 import React from 'react';
 import ChartCard from '../../cards/ChartCard';
-import { ITransaction } from '../../../interfaces/ITransaction';
+import { TransactionResponse } from '../../../interfaces/ITransaction';
 
 interface ChartsProps {
-  transactions: ITransaction[];
+  transactions: TransactionResponse[];
 }
 
 const Charts: React.FC<ChartsProps> = ({ transactions }) => {
@@ -11,7 +11,7 @@ const Charts: React.FC<ChartsProps> = ({ transactions }) => {
     .filter((transaction) => transaction.type === 'EXPENSE')
     .reduce(
       (acc, curr) => {
-        acc[curr.category] = (acc[curr.category] || 0) + curr.amount;
+        acc[curr.category.name] = (acc[curr.category.name] || 0) + curr.amount;
         return acc;
       },
       {} as Record<string, number>,

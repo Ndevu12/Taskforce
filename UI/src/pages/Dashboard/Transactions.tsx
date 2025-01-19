@@ -3,22 +3,28 @@ import TransactionTable from '../../components/Dashboard/Transactions/Transactio
 import TransactionDetailsModal from '../../components/Dashboard/Transactions/TransactionDetailsModal';
 import TransactionFormModal from '../../components/Dashboard/Transactions/TransactionFormModal';
 import ConfirmDeleteModal from '../../components/pop-ups/ConfirmDeleteModal';
-import { ITransaction } from '../../interfaces/ITransaction';
+import {
+  ITransaction,
+  TransactionResponse,
+} from '../../interfaces/ITransaction';
 import {
   fetchTransactionsByUser,
   deleteTransaction,
 } from '../../actions/transactionActions';
 import { fetchCategories } from '../../actions/categoryActions';
+import formatMoney from '../../utils/formatMoney';
 
 const Transactions: React.FC = () => {
   const [transactions, setTransactions] = useState<ITransaction[]>([]);
-  const [categories, setCategories] = useState([]);
+  const [categories, setCategories] = useState<{ name: string; _id: string }[]>(
+    [],
+  );
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [selectedTransaction, setSelectedTransaction] =
-    useState<ITransaction | null>(null);
+    useState<TransactionResponse | null>(null);
   const [transactionToEdit, setTransactionToEdit] =
-    useState<ITransaction | null>(null);
+    useState<TransactionResponse | null>(null);
   const [transactionToDelete, setTransactionToDelete] = useState<string | null>(
     null,
   );
@@ -29,7 +35,7 @@ const Transactions: React.FC = () => {
     const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await fetchTransactionsByUser('userId'); // Replace 'userId' with actual user ID
+        const data = await fetchTransactionsByUser();
         setTransactions(data);
         const categoriesData = await fetchCategories();
         setCategories(categoriesData);
@@ -47,7 +53,7 @@ const Transactions: React.FC = () => {
     setIsFormModalOpen(true);
   };
 
-  const handleEditTransaction = (transaction: ITransaction) => {
+  const handleEditTransaction = (transaction: TransactionResponse) => {
     setTransactionToEdit(transaction);
     setIsFormModalOpen(true);
   };
@@ -114,7 +120,9 @@ const Transactions: React.FC = () => {
           {loading ? (
             <div className="animate-pulse h-8 bg-gray-200 dark:bg-gray-700 rounded"></div>
           ) : (
-            <p className="text-2xl">${error ? 0 : totalIncome}</p>
+            <p className="text-2xl">
+              {error ? 0 : formatMoney(totalIncome, 'RWF')}
+            </p>
           )}
         </div>
         <div className="p-4 bg-red-100 dark:bg-red-800 text-red-800 dark:text-red-300 shadow rounded">
@@ -122,12 +130,15 @@ const Transactions: React.FC = () => {
           {loading ? (
             <div className="animate-pulse h-8 bg-gray-200 dark:bg-gray-700 rounded"></div>
           ) : (
-            <p className="text-2xl">${error ? 0 : totalExpenses}</p>
+            <p className="text-2xl">
+              {error ? 0 : formatMoney(totalExpenses, 'RWF')}
+            </p>
           )}
         </div>
       </div>
+
+      <h3 className="text-lg font-bold mt-4 mb-4">Recently Transactions</h3>
       <TransactionTable
-        userId="userId"
         onEdit={handleEditTransaction}
         onDelete={handleDeleteTransaction}
         onTransactionClick={setSelectedTransaction}

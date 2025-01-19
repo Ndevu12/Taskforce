@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { Budget } from '../../../interfaces/Budget';
+import { BudgetResponse } from '../../../interfaces/Budget';
 import Pagination from '../../common/Pagination';
 import BudgetDetailModal from './BudgetDetailModal';
 
 interface BudgetTableProps {
-  budgets: Budget[];
-  onEdit: (budget: Budget) => void;
+  budgets: BudgetResponse[];
+  onEdit: (budget: BudgetResponse) => void;
   onDelete: (budgetId: string) => void;
 }
 
@@ -19,7 +19,9 @@ const BudgetTable: React.FC<BudgetTableProps> = ({
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
   const [budgetsPerPage, setBudgetsPerPage] = useState(3);
-  const [selectedBudget, setSelectedBudget] = useState<Budget | null>(null);
+  const [selectedBudget, setSelectedBudget] = useState<BudgetResponse | null>(
+    null,
+  );
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -97,7 +99,7 @@ const BudgetTable: React.FC<BudgetTableProps> = ({
 
               return (
                 <tr
-                  key={budget.id}
+                  key={budget._id}
                   className="hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
                   onClick={() => setSelectedBudget(budget)}
                 >
@@ -135,7 +137,7 @@ const BudgetTable: React.FC<BudgetTableProps> = ({
                       className="text-red-500 dark:text-red-300"
                       onClick={(e) => {
                         e.stopPropagation();
-                        onDelete(budget.id);
+                        onDelete(budget._id);
                       }}
                     >
                       Delete

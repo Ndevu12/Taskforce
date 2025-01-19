@@ -8,7 +8,10 @@ export const createReportSchedule = async (req: Request, res: Response) => {
     if (!req.userId) return res.status(401).json({ error: 'User not authorized' });
 
     const { error } = await validateScheduleReportInput(req.body);
-    if (error) return res.status(400).json({ error: error.details[0].message });
+    if (error) {
+      logger.error('createReportSchedule error:', error);
+      return res.status(400).json({ error: error.details[0].message });
+    }
     
     const { startDate, endDate, type, title } = req.body;
     if (req.userId) {

@@ -1,28 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { ITransaction } from '../../../interfaces/ITransaction';
+import { TransactionResponse } from '../../../interfaces/ITransaction';
 import Pagination from '../../common/Pagination';
 import { fetchTransactionsByUser } from '../../../actions/transactionActions';
 
 interface TransactionTableProps {
-  userId: string;
-  onEdit: (transaction: ITransaction) => void;
+  onEdit: (transaction: TransactionResponse) => void;
   onDelete: (transactionId: string) => void;
-  onTransactionClick: (transaction: ITransaction) => void;
+  onTransactionClick: (transaction: TransactionResponse) => void;
 }
 
 const TransactionTable: React.FC<TransactionTableProps> = ({
-  userId,
   onEdit,
   onDelete,
   onTransactionClick,
 }) => {
-  const [transactions, setTransactions] = useState<ITransaction[]>([]);
+  const [transactions, setTransactions] = useState<TransactionResponse[]>([]);
   const [search, setSearch] = useState('');
   const [filterType, setFilterType] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [transactionsPerPage, setTransactionsPerPage] = useState(5);
   const [filteredTransactions, setFilteredTransactions] = useState<
-    ITransaction[]
+    TransactionResponse[]
   >([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -31,7 +29,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
     const fetchData = async () => {
       try {
         setLoading(true);
-        const data = await fetchTransactionsByUser(userId);
+        const data = await fetchTransactionsByUser();
         setTransactions(data);
         setLoading(false);
       } catch (err) {
@@ -40,7 +38,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
       }
     };
     fetchData();
-  }, [userId]);
+  }, []);
 
   useEffect(() => {
     const filtered = transactions
@@ -144,7 +142,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
             ) : (
               currentTransactions.map((transaction) => (
                 <tr
-                  key={transaction.id}
+                  key={transaction._id}
                   className="hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
                   onClick={() => onTransactionClick(transaction)}
                 >
@@ -181,7 +179,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
                       className="text-red-500 dark:text-red-300"
                       onClick={(e) => {
                         e.stopPropagation();
-                        onDelete(transaction.id);
+                        onDelete(transaction._id);
                       }}
                     >
                       Delete

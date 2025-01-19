@@ -1,29 +1,27 @@
 import React from 'react';
-import { IReport } from '../../../interfaces/Report';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 interface QuickStatisticsProps {
-  reports: IReport[];
+  totalReports: number;
+  exceededReports: number;
 }
 
-const QuickStatistics: React.FC<QuickStatisticsProps> = ({ reports }) => {
-  const totalReports = reports.length;
-  const exceededReports = reports.filter(
-    (report) => report.schedule.name === 'EXCEEDED',
-  ).length;
-
+const QuickStatistics: React.FC<QuickStatisticsProps> = ({
+  totalReports,
+  exceededReports,
+}) => {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
-      <div className="p-4 bg-white dark:bg-gray-800 text-blue-800 dark:text-blue-300 shadow rounded">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="p-6 bg-gradient-to-r dark:from-green from-green-300 dark:to-green-900 to-green-400 text-white shadow-lg rounded-lg flex flex-col items-center justify-center">
         <h3 className="text-lg font-bold">Total Reports</h3>
-        <p className="text-2xl">
+        <p className="text-3xl mt-2">
           {totalReports !== undefined ? totalReports : <Skeleton />}
         </p>
       </div>
-      <div className="p-4 bg-white dark:bg-gray-800 text-red-800 dark:text-red-300 shadow rounded">
-        <h2 className="text-lg sm:text-l font-bold">Budget Exceeded Reports</h2>
-        <p className="text-2xl">
+      <div className="p-6 bg-gradient-to-r from-red-300 dark:from-red-700 dark:to-red-900 to-red-400 text-white shadow-lg rounded-lg flex flex-col items-center justify-center">
+        <h3 className="text-lg font-bold">Budget Exceeded Reports</h3>
+        <p className="text-3xl mt-2">
           {exceededReports !== undefined ? exceededReports : <Skeleton />}
         </p>
       </div>

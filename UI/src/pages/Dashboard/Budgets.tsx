@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import BudgetTable from '../../components/Dashboard/Budgets/BudgetTable';
 import BudgetFormModal from '../../components/Dashboard/Budgets/BudgetFormModal';
 import ConfirmDeleteModal from '../../components/pop-ups/ConfirmDeleteModal';
-import { Budget } from '../../interfaces/Budget';
+import { BudgetResponse } from '../../interfaces/Budget';
 import {
   fetchBudgets,
   createBudget,
@@ -10,15 +10,16 @@ import {
   deleteBudget,
 } from '../../actions/budgetActions';
 import { fetchCategories } from '../../actions/categoryActions';
+import formatMoney from '../../utils/formatMoney';
 
 const Budgets: React.FC = () => {
-  const [budgets, setBudgets] = useState<Budget[]>([]);
+  const [budgets, setBudgets] = useState<BudgetResponse[]>([]);
   const [categories, setCategories] = useState<{ name: string; _id: string }[]>(
     [],
   );
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [budgetToEdit, setBudgetToEdit] = useState<Budget | null>(null);
+  const [budgetToEdit, setBudgetToEdit] = useState<BudgetResponse | null>(null);
   const [budgetToDelete, setBudgetToDelete] = useState<string | null>(null);
 
   useEffect(() => {
@@ -39,7 +40,7 @@ const Budgets: React.FC = () => {
     setIsFormModalOpen(true);
   };
 
-  const handleEditBudget = (budget: Budget) => {
+  const handleEditBudget = (budget: BudgetResponse) => {
     setBudgetToEdit(budget);
     setIsFormModalOpen(true);
   };
@@ -49,11 +50,15 @@ const Budgets: React.FC = () => {
     setIsDeleteModalOpen(true);
   };
 
-  const handleSaveBudget = async (budget: Budget) => {
+  const handleSaveBudget = async (budget: BudgetResponse) => {
     if (budgetToEdit) {
       const updatedBudget = await updateBudget(budget);
       setBudgets((prev) =>
-        prev.map((b) => (b.id === updatedBudget.id ? updatedBudget : b)),
+        prev.map((b) =>
+          b._id === updatedBudget._id
+            ? { ...updatedBudget, category: b.category, _id: updatedBudget._id }
+            : b,
+        ),
       );
     } else {
       const newBudget = await createBudget(budget);
@@ -65,7 +70,7 @@ const Budgets: React.FC = () => {
   const handleConfirmDelete = async () => {
     if (budgetToDelete !== null) {
       await deleteBudget(budgetToDelete);
-      setBudgets((prev) => prev.filter((b) => b.id !== budgetToDelete));
+      setBudgets((prev) => prev.filter((b) => b._id !== budgetToDelete));
       setBudgetToDelete(null);
       alert('Budget deleted successfully');
     }
@@ -100,13 +105,14 @@ const Budgets: React.FC = () => {
         </div>
         <div className="p-4 bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-300 shadow rounded">
           <h2 className="text-lg font-bold">Total Allocated</h2>
-          <p className="text-2xl">${totalAllocated}</p>
+          <p className="text-2xl">{formatMoney(totalAllocated)}</p>
         </div>
         <div className="p-4 bg-red-100 dark:bg-red-800 text-red-800 dark:text-red-300 shadow rounded">
           <h2 className="text-lg font-bold">Total Spent</h2>
-          <p className="text-2xl">${totalSpent}</p>
+          <p className="text-2xl">{formatMoney(totalSpent)}</p>
         </div>
       </div>
+      <h2 className="text-xl font-bold mt-4 mb-4">Budgets List</h2>
       <BudgetTable
         budgets={budgets}
         onEdit={handleEditBudget}

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { Account, AccountRequestData } from '../interfaces/Account';
+import { AccountRequestData } from '../interfaces/Account';
 import { getAuthHeaders } from './APIHeader';
 
 const API_URL = import.meta.env.VITE_BASE_URL;
@@ -23,7 +23,6 @@ export const fetchAccountById = async (accountId: string) => {
     const response = await axios.get(`${API_URL}/accounts/${accountId}`, getAuthHeaders());
     return response.data;
   } catch (error) {
-    console.log({ error });
     const err = error as any;
     throw new Error(err.response?.data?.message || 'Failed to fetch account');
   }
@@ -42,13 +41,12 @@ export const createAccount = async (account: AccountRequestData) => {
 
     return response.data;
   } catch (error) {
-    console.log({ error });
     const err = error as any;
     throw new Error(err.response?.data?.message || err.response?.data?.error || 'Failed to create account');
   }
 };
 
-export const updateAccount = async (account: Account) => {
+export const updateAccount = async (account: any) => {
   try {
     const response = await axios.put(`${API_URL}/accounts/${account._id}`, 
         {

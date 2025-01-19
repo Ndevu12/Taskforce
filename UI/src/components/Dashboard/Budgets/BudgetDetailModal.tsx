@@ -1,8 +1,8 @@
 import React from 'react';
-import { Budget } from '../../../interfaces/Budget';
+import { BudgetResponse } from '../../../interfaces/Budget';
 
 interface BudgetDetailModalProps {
-  budget: Budget | null;
+  budget: BudgetResponse | null;
   onClose: () => void;
 }
 
