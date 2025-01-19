@@ -4,5 +4,6 @@ export interface INotification extends Document {
   user: string;
   type: 'BUDGET_THRESHOLD' | 'TRANSACTION_ALERT';
   message: string;
+  link?: string;
   read: boolean;
 }

@@ -1,11 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import { ITransaction } from '../../interfaces/ITransaction';
+import { ITransaction } from '../../../interfaces/ITransaction';
+import {
+  createTransaction,
+  updateTransaction,
+} from '../../../actions/transactionActions';
+import { fetchAccounts } from '../../../actions/accountActions';
+import { fetchSubcategories } from '../../../actions/subcategoryActions';
 
 interface TransactionFormModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (transaction: ITransaction) => void;
   transactionToEdit?: ITransaction | null;
+  categories: any[];
 }
 
 const TransactionFormModal: React.FC<TransactionFormModalProps> = ({
@@ -13,6 +20,7 @@ const TransactionFormModal: React.FC<TransactionFormModalProps> = ({
   onClose,
   onSave,
   transactionToEdit,
+  categories,
 }) => {
   const [transaction, setTransaction] = useState<ITransaction>({
     id: '',
@@ -23,12 +31,34 @@ const TransactionFormModal: React.FC<TransactionFormModalProps> = ({
     description: '',
     date: new Date(),
   });
+  const [subcategories, setSubcategories] = useState<
+    { name: string; _id: string }[]
+  >([]);
+  const [accounts, setAccounts] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
 
   useEffect(() => {
     if (transactionToEdit) {
       setTransaction(transactionToEdit);
+      setSelectedCategory(transactionToEdit.category);
+      fetchSubcategories(transactionToEdit.category);
     }
   }, [transactionToEdit]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const accountsData = await fetchAccounts();
+      setAccounts(accountsData);
+      if (accountsData.length === 1) {
+        setTransaction((prev) => ({ ...prev, account: accountsData[0]._id }));
+      } else if (accountsData.length === 0) {
+        alert('Please create an account first.');
+        onClose();
+      }
+    };
+    fetchData();
+  }, [onClose]);
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -39,9 +69,40 @@ const TransactionFormModal: React.FC<TransactionFormModalProps> = ({
     setTransaction((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleCategoryChange = async (
+    e: React.ChangeEvent<HTMLSelectElement>,
+  ) => {
+    const categoryId = e.target.value;
+    setSelectedCategory(categoryId);
+    setTransaction((prev) => ({
+      ...prev,
+      category: categoryId,
+      type: categoryId,
+    }));
+    const subcategoriesData = await fetchSubcategories(categoryId);
+    setSubcategories(subcategoriesData);
+  };
+
+  const validateForm = () => {
+    const newErrors: { [key: string]: string } = {};
+    if (!transaction.description) newErrors.description = 'Description is required';
+    if (!transaction.amount || transaction.amount <= 0) newErrors.amount = 'Amount must be greater than zero';
+    if (!transaction.date) newErrors.date = 'Date is required';
+    if (accounts.length < 2) newErrors.accounts = 'You must have at least two accounts to save a transaction';
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    onSave(transaction);
+    if (!validateForm()) return;
+    const transactionData = { ...transaction, id: undefined };
+    if (transactionToEdit) {
+      await updateTransaction(transaction._id, transactionData);
+    } else {
+      await createTransaction(transactionData);
+    }
+    onSave(transactionData);
     onClose();
   };
 
@@ -49,11 +110,14 @@ const TransactionFormModal: React.FC<TransactionFormModalProps> = ({
 
   return (
     <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white dark:bg-gray-800 p-6 rounded shadow-md w-full max-w-lg">
+      <div className="bg-white dark:bg-gray-800 p-6 rounded shadow-md w-full max-w-3xl">
         <h2 className="text-xl mb-4">
           {transactionToEdit ? 'Edit Transaction' : 'Add Transaction'}
         </h2>
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={handleSubmit}
+          className="grid grid-cols-1 md:grid-cols-3 gap-4"
+        >
           <div className="mb-4">
             <label className="block mb-1 text-gray-700 dark:text-gray-300">
               Date
@@ -61,12 +125,15 @@ const TransactionFormModal: React.FC<TransactionFormModalProps> = ({
             <input
               type="date"
               name="date"
-              value={transaction.date.toISOString().split('T')[0]}
+              value={new Date(transaction.date).toISOString().split('T')[0]}
               onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
               required
               title="Date"
             />
+            {errors.date && (
+              <p className="text-red-500 text-sm">{errors.date}</p>
+            )}
           </div>
           <div className="mb-4">
             <label className="block mb-1 text-gray-700 dark:text-gray-300">
@@ -81,6 +148,9 @@ const TransactionFormModal: React.FC<TransactionFormModalProps> = ({
               placeholder="Enter description"
               required
             />
+            {errors.description && (
+              <p className="text-red-500 text-sm">{errors.description}</p>
+            )}
           </div>
           <div className="mb-4">
             <label className="block mb-1 text-gray-700 dark:text-gray-300">
@@ -97,68 +167,70 @@ const TransactionFormModal: React.FC<TransactionFormModalProps> = ({
               title="Amount"
               placeholder="Enter amount"
             />
-          </div>
-          <div className="mb-4">
-            <label className="block mb-1 text-gray-700 dark:text-gray-300">
-              Type
-            </label>
-            <select
-              name="type"
-              value={transaction.type}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
-              required
-              title="Type"
-            >
-              <option value="INCOME">Income</option>
-              <option value="EXPENSE">Expense</option>
-            </select>
+            {errors.amount && (
+              <p className="text-red-500 text-sm">{errors.amount}</p>
+            )}
           </div>
           <div className="mb-4">
             <label className="block mb-1 text-gray-700 dark:text-gray-300">
               Category
             </label>
-            <input
-              type="text"
+            <select
               name="category"
-              value={transaction.category}
-              onChange={handleChange}
+              value={selectedCategory}
+              onChange={handleCategoryChange}
               className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
-              placeholder="Enter category"
               required
               title="Category"
-            />
+            >
+              {categories.map((category) => (
+                <option key={category.id} value={category.id}>
+                  {category.name}
+                </option>
+              ))}
+            </select>
           </div>
           <div className="mb-4">
             <label className="block mb-1 text-gray-700 dark:text-gray-300">
               Account
             </label>
-            <input
-              type="text"
+            <select
               name="account"
               value={transaction.account}
               onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
-              placeholder="Enter account"
               required
               title="Account"
-            />
+            >
+              {accounts.map((account) => (
+                <option key={account._id} value={account._id}>
+                  {account.name}
+                </option>
+              ))}
+            </select>
           </div>
-          <div className="mb-4">
+          <div className="mb-4 md:col-span-3">
             <label className="block mb-1 text-gray-700 dark:text-gray-300">
               Subcategory (optional)
             </label>
-            <input
-              type="text"
+            <select
               name="subcategory"
               value={transaction.subcategory || ''}
               onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
-              placeholder="Enter subcategory"
               title="Subcategory"
-            />
+            >
+              {subcategories.map((subcategory) => (
+                <option key={subcategory._id} value={subcategory._id}>
+                  {subcategory.name}
+                </option>
+              ))}
+            </select>
           </div>
-          <div className="flex justify-end">
+          {errors.accounts && (
+            <p className="text-red-500 text-sm mb-4">{errors.accounts}</p>
+          )}
+          <div className="flex justify-end md:col-span-3">
             <button
               type="button"
               className="mr-2 p-2 bg-gray-300 rounded"

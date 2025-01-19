@@ -1,9 +1,6 @@
 import Report from '../models/Report';
 import Transaction from '../models/Transaction';
 import { IReport } from '../types/interfaces/IReport';
-import { ITransaction } from '../types/interfaces/ITransaction';
-import { getTransactionsSummary } from './TransactionService';
-import { ReportType } from '../types/enums/ReportType';
 import logger from '../utils/logger';
 import mongoose from 'mongoose';
 import { ReportData } from '../types/interfaces/ReportData';
@@ -15,7 +12,7 @@ export const createReport = async (reportData: IReport) => {
 };
 
 export const getReportsByUser = async (userId: string) => {
-  return await Report.find({ user: userId });
+  return await Report.find({ user: userId }).populate('schedule');
 };
 
 export const updateReportById = async (reportId: string, updateData: Partial<IReport>) => {
@@ -63,9 +60,9 @@ export const autoGenerateReports = async (userId: mongoose.Schema.Types.ObjectId
 
   const report = await createReport({
     user: userId,
+    title: title,
     schedule: scheduleId,
     data: {
-      title: title,
       content: `Total Income: ${reportData.totalIncome}, Total Expense: ${reportData.totalExpense}`,
       transactions: reportData.transactions
     }

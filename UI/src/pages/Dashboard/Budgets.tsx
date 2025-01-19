@@ -1,51 +1,38 @@
-import React, { useState } from 'react';
-import BudgetTable from '../../components/Dashboard/BudgetTable';
-import BudgetFormModal from '../../components/Dashboard/BudgetFormModal';
-import ConfirmDeleteModal from '../../components/Dashboard/ConfirmDeleteModal';
-import { Budget, BudgetPeriod } from '../../interfaces/Budget';
-
-const initialBudgets: Budget[] = [
-  {
-    id: 1,
-    name: 'Groceries',
-    category: 'Food',
-    amount: 500,
-    period: BudgetPeriod.MONTHLY,
-    startDate: new Date('2023-01-01'),
-    endDate: new Date('2023-01-31'),
-    currentSpent: 300,
-    notificationThreshold: 80,
-  },
-  {
-    id: 2,
-    name: 'Rent',
-    category: 'Housing',
-    amount: 1000,
-    period: BudgetPeriod.MONTHLY,
-    startDate: new Date('2023-01-01'),
-    endDate: new Date('2023-01-31'),
-    currentSpent: 1000,
-    notificationThreshold: 80,
-  },
-  {
-    id: 3,
-    name: 'Entertainment',
-    category: 'Leisure',
-    amount: 200,
-    period: BudgetPeriod.MONTHLY,
-    startDate: new Date('2023-01-01'),
-    endDate: new Date('2023-01-31'),
-    currentSpent: 150,
-    notificationThreshold: 80,
-  },
-];
+import React, { useState, useEffect } from 'react';
+import BudgetTable from '../../components/Dashboard/Budgets/BudgetTable';
+import BudgetFormModal from '../../components/Dashboard/Budgets/BudgetFormModal';
+import ConfirmDeleteModal from '../../components/pop-ups/ConfirmDeleteModal';
+import { Budget } from '../../interfaces/Budget';
+import {
+  fetchBudgets,
+  createBudget,
+  updateBudget,
+  deleteBudget,
+} from '../../actions/budgetActions';
+import { fetchCategories } from '../../actions/categoryActions';
 
 const Budgets: React.FC = () => {
-  const [budgets, setBudgets] = useState<Budget[]>(initialBudgets);
+  const [budgets, setBudgets] = useState<Budget[]>([]);
+  const [categories, setCategories] = useState<{ name: string; _id: string }[]>(
+    [],
+  );
   const [isFormModalOpen, setIsFormModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [budgetToEdit, setBudgetToEdit] = useState<Budget | null>(null);
-  const [budgetToDelete, setBudgetToDelete] = useState<number | null>(null);
+  const [budgetToDelete, setBudgetToDelete] = useState<string | null>(null);
+
+  useEffect(() => {
+    const loadBudgets = async () => {
+      const fetchedBudgets = await fetchBudgets();
+      setBudgets(fetchedBudgets);
+    };
+    const loadCategories = async () => {
+      const fetchedCategories = await fetchCategories();
+      setCategories(fetchedCategories);
+    };
+    loadBudgets();
+    loadCategories();
+  }, []);
 
   const handleAddBudget = () => {
     setBudgetToEdit(null);
@@ -57,23 +44,30 @@ const Budgets: React.FC = () => {
     setIsFormModalOpen(true);
   };
 
-  const handleDeleteBudget = (budgetId: number) => {
+  const handleDeleteBudget = (budgetId: string) => {
     setBudgetToDelete(budgetId);
     setIsDeleteModalOpen(true);
   };
 
-  const handleSaveBudget = (budget: Budget) => {
+  const handleSaveBudget = async (budget: Budget) => {
     if (budgetToEdit) {
-      setBudgets((prev) => prev.map((b) => (b.id === budget.id ? budget : b)));
+      const updatedBudget = await updateBudget(budget);
+      setBudgets((prev) =>
+        prev.map((b) => (b.id === updatedBudget.id ? updatedBudget : b)),
+      );
     } else {
-      setBudgets((prev) => [...prev, { ...budget, id: prev.length + 1 }]);
+      const newBudget = await createBudget(budget);
+      setBudgets((prev) => [...prev, newBudget]);
     }
+    setIsFormModalOpen(false);
   };
 
-  const handleConfirmDelete = () => {
+  const handleConfirmDelete = async () => {
     if (budgetToDelete !== null) {
+      await deleteBudget(budgetToDelete);
       setBudgets((prev) => prev.filter((b) => b.id !== budgetToDelete));
       setBudgetToDelete(null);
+      alert('Budget deleted successfully');
     }
     setIsDeleteModalOpen(false);
   };
@@ -123,6 +117,7 @@ const Budgets: React.FC = () => {
         onClose={() => setIsFormModalOpen(false)}
         onSave={handleSaveBudget}
         budgetToEdit={budgetToEdit}
+        categories={categories}
       />
       <ConfirmDeleteModal
         isOpen={isDeleteModalOpen}

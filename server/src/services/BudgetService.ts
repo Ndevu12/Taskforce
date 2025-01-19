@@ -15,24 +15,27 @@ import mongoose from 'mongoose';
 import { findUserById } from './UserService';
 import { INotification } from '../types/interfaces/INotification';
 import { createReportSchedule } from './ReportScheduleService';
+import { io } from '../app';
 
 export const createBudget = async (budgetData: IBudget) => {
   const budget = new Budget(budgetData);
-  await budget.save();
-  await checkBudgetExceed(budget);
-  return budget;
+  const savedBudget = await budget.save();
+  io.emit('budgetCreated', savedBudget);
+  await checkBudgetExceed(savedBudget);
+  return savedBudget;
 };
 
 export const getBudgetsByUser = async (userId: string) => {
-  return await Budget.find({ user: userId });
+  return await Budget.find({ user: userId }).populate('category');
 };
 
 export const updateBudgetById = async (budgetId: string, updateData: Partial<IBudget>) => {
-  const budget = await Budget.findByIdAndUpdate(budgetId, updateData, { new: true });
-  if (budget) {
-    await checkBudgetExceed(budget);
+  const updatedBudget = await Budget.findByIdAndUpdate(budgetId, updateData, { new: true });
+  io.emit('budgetUpdated', updatedBudget);
+  if (updatedBudget) {
+    await checkBudgetExceed(updatedBudget);
   }
-  return budget;
+  return updatedBudget;
 };
 
 export const findExceededReportScheduleByUser = async (userId: string) => {
@@ -49,7 +52,9 @@ export const findExceededReportScheduleByUser = async (userId: string) => {
 };
 
 export const deleteBudgetById = async (budgetId: string) => {
-  return await Budget.findByIdAndDelete(budgetId);
+  const deletedBudget = await Budget.findByIdAndDelete(budgetId);
+  io.emit('budgetDeleted', budgetId);
+  return deletedBudget;
 };
 
 const checkBudgetExceed = async (budget: IBudget) => {
@@ -115,27 +120,38 @@ const checkBudgetExceed = async (budget: IBudget) => {
       logger.error(`Failed to create notification for user ${userId}: ${error.message}`);
       return null;
     }
+
+    io.emit('budgetExceeded', budget);
   }
 };
 
 export const checkBudgetExceedForTransaction = async (transaction: ITransaction) => {
+  logger.info('Checking budget exceed for transaction...');
 
+  console.log('Transaction:', transaction);
   const budgets = await getBudgetsByUser(transaction.user);
   if (budgets.length === 0) {
-    logger.warn('No budgets found for the transaction');
+    logger.warn(`No budgets found for user ${transaction.user}`);
     return;
   }
 
-  // Further filter the budgets based on category and date range
-  const filteredBudgets = budgets.filter(budget => 
-    budget.startDate <= transaction.date &&
-    budget.endDate >= transaction.date
-  );
+  logger.info(`Found ${budgets.length} budgets before filters for user ${transaction.user}`);
+
+  // Further filter the budgets based on date range
+  const filteredBudgets = budgets.filter(budget => {
+    const isWithinDateRange = budget.startDate <= transaction.date && budget.endDate >= transaction.date;
+    logger.info(`Budget ID: ${budget._id}, isWithinDateRange: ${isWithinDateRange}`);
+    return isWithinDateRange;
+  });
+
+  logger.info(`Budgets after date filter: ${filteredBudgets.length}`);
 
   if (filteredBudgets.length === 0) {
-    logger.warn('No budget filtered with all criteria for the transaction.');
+    logger.warn(`No budget filtered with all criteria for the transaction for user ${transaction.user}.`);
     return;
   }
+
+  logger.info(`Found ${filteredBudgets.length} budgets after filters applied for user ${transaction.user}`);
 
   for (const budget of filteredBudgets) {
     const transactions = await Transaction.find({
@@ -175,7 +191,7 @@ export const checkBudgetExceedForTransaction = async (transaction: ITransaction)
       }
 
       const category = await Category.findById(budget.category);
-      const categoryName = category ? category.name : 'Expense';
+      const categoryName = category ? category.name : 'EXPENSE';
 
       const notificationData: Partial<INotification> = {
         user: budget.user,
@@ -190,6 +206,8 @@ export const checkBudgetExceedForTransaction = async (transaction: ITransaction)
           logger.error(`Failed to create notification for user ${userId}: ${error.message}`);
           return null
         }
+
+      io.emit('budgetExceeded', budget);
     }
   }
 };

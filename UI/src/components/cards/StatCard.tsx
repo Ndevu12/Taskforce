@@ -3,13 +3,20 @@ import React from 'react';
 interface StatCardProps {
   title: string;
   value: string;
+  color: string;
 }
 
-const StatCard: React.FC<StatCardProps> = ({ title, value }) => {
+const StatCard: React.FC<StatCardProps> = ({ title, value, color }) => {
   return (
-    <div className="bg-white p-6 rounded-lg shadow-md flex-1 min-w-[220px] dark:bg-gray-800 dark:text-gray-300">
-      <h2 className="text-xl font-semibold">{title}</h2>
-      <p className="text-2xl mt-2">{value}</p>
+    <div
+      className={`p-4 rounded-lg shadow-md flex flex-col items-center justify-center ${color}`}
+    >
+      <h3 className="text-base sm:text-l font-semibold text-gray-700 dark:text-gray-300">
+        {title}
+      </h3>
+      <p className="mt-2 text-md sm:text-xl font-bold text-gray-900 dark:text-white">
+        {value}
+      </p>
     </div>
   );
 };

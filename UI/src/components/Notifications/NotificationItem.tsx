@@ -4,14 +4,10 @@ import { Notification } from '../../interfaces/Notification';
 
 interface NotificationItemProps {
   notification: Notification;
-  onToggleRead: (id: string) => void;
-  onDelete: (id: string) => void;
 }
 
 const NotificationItem: React.FC<NotificationItemProps> = ({
   notification,
-  onToggleRead,
-  onDelete,
 }) => {
   const navigate = useNavigate();
 
@@ -37,26 +33,6 @@ const NotificationItem: React.FC<NotificationItemProps> = ({
           <p className="text-gray-500 text-sm">
             {new Date(notification.timestamp).toLocaleString()}
           </p>
-        </div>
-        <div className="flex space-x-2">
-          <button
-            className="text-blue-500"
-            onClick={(e) => {
-              e.stopPropagation();
-              onToggleRead(notification.id);
-            }}
-          >
-            {notification.read ? 'Mark as Unread' : 'Mark as Read'}
-          </button>
-          <button
-            className="text-red-500"
-            onClick={(e) => {
-              e.stopPropagation();
-              onDelete(notification.id);
-            }}
-          >
-            Delete
-          </button>
         </div>
       </div>
     </div>

@@ -9,8 +9,7 @@ export enum BudgetPeriod {
 }
 
 export interface Budget {
-  id: number;
-  name: string;
+  id: string;
   category: string;
   amount: number;
   period: BudgetPeriod;
@@ -18,5 +17,20 @@ export interface Budget {
   endDate: Date;
   description?: string;
   currentSpent: number;
-  notificationThreshold: number;
+}
+
+export interface BudgetResponse {
+  _id: string;
+  category: {
+    _id: string;
+    name: string;
+    createdAt: Date;
+    updatedAt: Date;
+  };
+  amount: number;
+  period: BudgetPeriod;
+  startDate: Date;
+  endDate: Date;
+  description?: string;
+  currentSpent: number;
 }

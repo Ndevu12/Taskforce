@@ -10,10 +10,15 @@ export const getSubCategoriesByCategory = async (categoryId: string) => {
   return await SubCategory.find({ category: categoryId });
 };
 
+export const getSubCategoriesByCategoryName = async (categoryName: string) => {
+  return await SubCategory.find({ category: { $regex: new RegExp(`^${categoryName}$`, 'i') } });
+};
+
+export const getSubCategoryById = async (subCategoryId: string) => {
+  return await SubCategory.findById(subCategoryId);
+};
+
 export const updateSubCategoryById = async (subCategoryId: string, updateData: Partial<ISubCategory>) => {
-  if (updateData.type) {
-    return await SubCategory.findByIdAndUpdate(subCategoryId, { $set: { type: updateData.type } }, { new: true });
-  }
   return await SubCategory.findByIdAndUpdate(subCategoryId, updateData, { new: true });
 };
 

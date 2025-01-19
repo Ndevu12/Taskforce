@@ -5,7 +5,7 @@ const transactionSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   account: { type: mongoose.Schema.Types.ObjectId, ref: 'Account', required: true },
   category: { type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true },
-  subcategory: { type: mongoose.Schema.Types.ObjectId, ref: 'SubCategory', required: false },
+  subCategory: [{ type: mongoose.Schema.Types.ObjectId, ref: 'SubCategory' }],
   type: { type: String, enum: ['INCOME', 'EXPENSE'], required: true },
   amount: { type: Number, required: true },
   description: { type: String },

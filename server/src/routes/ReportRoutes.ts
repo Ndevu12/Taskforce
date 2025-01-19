@@ -4,8 +4,7 @@ import { isAuth } from '../middleware/isAuth';
 
 const router = Router();
 
-router.get('/user/:userId', isAuth, ReportController.getReportsByUser);
-router.put('/:reportId', isAuth, ReportController.updateReportById);
+router.get('/user', isAuth, ReportController.getReportsByUser);
 router.delete('/:reportId', isAuth, ReportController.deleteReportById);
 router.post('/auto-generate/:userId', isAuth, ReportController.autoGenerateReports);
 

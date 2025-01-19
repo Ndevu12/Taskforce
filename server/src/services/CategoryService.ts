@@ -6,9 +6,18 @@ export const createCategory = async (categoryData: ICategory) => {
   return await category.save();
 };
 
-export const getCategoriesByUser = async (userId: string) => {
-  return await Category.find({ user: userId });
+export const getCategoryById = async (categoryId: string) => {
+  return await Category.findById(categoryId);
+}
+
+export const getCategoryByName = async (categoryName: string) => {
+  return await Category.findOne({ name: { $regex: new RegExp(`^${categoryName}$`, 'i') } });
 };
+
+export const getCategories = async () => {
+  return await Category.find();
+};
+
 
 export const updateCategoryById = async (categoryId: string, updateData: Partial<ICategory>) => {
   return await Category.findByIdAndUpdate(categoryId, updateData, { new: true });

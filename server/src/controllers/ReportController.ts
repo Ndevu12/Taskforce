@@ -1,6 +1,5 @@
 import { Request, Response } from 'express';
 import * as ReportService from '../services/ReportService';
-import { validateReportInput } from '../helpers/validators/ReportValidator';
 import logger from '../utils/logger';
 import * as UserService from '../services/UserService';
 import * as ScheduleService from '../services/ReportScheduleService';
@@ -8,7 +7,10 @@ import mongoose from 'mongoose';
 
 export const getReportsByUser = async (req: Request, res: Response) => {
   try {
-    const reports = await ReportService.getReportsByUser(req.params.userId);
+    const userId = req.userId;
+    if (!userId) return res.status(401).json({ error: 'User not authorized' });
+
+    const reports = await ReportService.getReportsByUser(userId);
     res.status(200).json(reports);
   } catch (error: any) {
     logger.error('getReportsByUser error:', error);
@@ -16,19 +18,6 @@ export const getReportsByUser = async (req: Request, res: Response) => {
   }
 };
 
-export const updateReportById = async (req: Request, res: Response) => {
-  const { error } = validateReportInput(req.body);
-  if (error) return res.status(400).json({ error: error.details[0].message });
-
-  try {
-    const report = await ReportService.updateReportById(req.params.reportId, req.body);
-    if (!report) return res.status(404).json({ error: 'Report not found' });
-    res.status(200).json(report);
-  } catch (error: any) {
-    logger.error('updateReportById error:', error);
-    res.status(500).json({ error: error.message });
-  }
-};
 
 export const deleteReportById = async (req: Request, res: Response) => {
   try {
@@ -50,6 +39,7 @@ export const autoGenerateReports = async (req: Request, res: Response) => {
     const user = await UserService.findUserById(userId);
     if (!user) return res.status(404).json({ error: 'User not found' });
 
+    if (!scheduleId) return res.status(400).json({ error: 'Schedule ID is required' });
     const schedule = await ScheduleService.getReportScheduleById(scheduleId);
     if (!schedule) return res.status(404).json({ error: 'Schedule not found' });
 

@@ -1,18 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { ITransaction } from '../../interfaces/ITransaction';
-import Pagination from '../common/Pagination';
+import { ITransaction } from '../../../interfaces/ITransaction';
+import Pagination from '../../common/Pagination';
 
-interface TransactionTableProps {
+interface OverviewTransactionTableProps {
   transactions: ITransaction[];
-  onEdit: (transaction: ITransaction) => void;
-  onDelete: (transactionId: string) => void;
   onTransactionClick: (transaction: ITransaction) => void;
 }
 
-const TransactionTable: React.FC<TransactionTableProps> = ({
+const OverviewTransactionTable: React.FC<OverviewTransactionTableProps> = ({
   transactions,
-  onEdit,
-  onDelete,
   onTransactionClick,
 }) => {
   const [search, setSearch] = useState('');
@@ -29,8 +25,10 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
           transaction.description
             ?.toLowerCase()
             .includes(search.toLowerCase()) ||
-          transaction.category.toLowerCase().includes(search.toLowerCase()) ||
-          transaction.account.toLowerCase().includes(search.toLowerCase()),
+          transaction.category.name
+            .toLowerCase()
+            .includes(search.toLowerCase()) ||
+          transaction.account.name.toLowerCase().includes(search.toLowerCase()),
       )
       .filter((transaction) =>
         filterType ? transaction.type === filterType : true,
@@ -46,7 +44,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
   );
 
   return (
-    <div className="border border-gray-300 dark:border-gray-700 rounded p-4 dark:bg-gray-800">
+    <div className="border border-gray-300 rounded p-4 dark:bg-gray-800 dark:text-gray-300">
       <div className="flex justify-between mb-4">
         <input
           type="text"
@@ -70,41 +68,26 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
         </select>
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full text-left bg-white dark:bg-gray-800">
+        <table className="w-full text-left">
           <thead>
             <tr>
-              <th className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
-                Date
-              </th>
-              <th className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
-                Description
-              </th>
-              <th className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
-                Amount
-              </th>
-              <th className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
-                Type
-              </th>
-              <th className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
-                Category
-              </th>
-              <th className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
-                Account
-              </th>
-              <th className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
-                Actions
-              </th>
+              <th className="border-b p-2 text-sm sm:text-base">Date</th>
+              <th className="border-b p-2 text-sm sm:text-base">Description</th>
+              <th className="border-b p-2 text-sm sm:text-base">Amount</th>
+              <th className="border-b p-2 text-sm sm:text-base">Type</th>
+              <th className="border-b p-2 text-sm sm:text-base">Category</th>
+              <th className="border-b p-2 text-sm sm:text-base">Account</th>
             </tr>
           </thead>
           <tbody>
             {currentTransactions.map((transaction) => (
               <tr
-                key={transaction.id}
+                key={transaction._id}
                 className="hover:bg-gray-100 dark:hover:bg-gray-700 cursor-pointer"
                 onClick={() => onTransactionClick(transaction)}
               >
                 <td className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
-                  {transaction.date.toDateString()}
+                  {new Date(transaction.date).toDateString()}
                 </td>
                 <td className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
                   {transaction.description}
@@ -119,31 +102,11 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
                     {transaction.type}
                   </span>
                 </td>
-                <td className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
-                  {transaction.category}
+                <td className="border-b p-2 text-sm sm:text-base">
+                  {transaction.category.name}
                 </td>
-                <td className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
-                  {transaction.account}
-                </td>
-                <td className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
-                  <button
-                    className="text-blue-500 dark:text-blue-300 mr-2"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onEdit(transaction);
-                    }}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    className="text-red-500 dark:text-red-300"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onDelete(transaction.id);
-                    }}
-                  >
-                    Delete
-                  </button>
+                <td className="border-b p-2 text-sm sm:text-base">
+                  {transaction.account.name}
                 </td>
               </tr>
             ))}
@@ -161,4 +124,4 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
   );
 };
 
-export default TransactionTable;
+export default OverviewTransactionTable;

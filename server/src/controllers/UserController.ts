@@ -2,14 +2,18 @@ import { Request, Response } from 'express';
 import * as UserService from '../services/UserService';
 import { validateUserInput } from '../helpers/validators/UserValidator';
 import { validateUserUpdateInput } from '../helpers/validators/UserUpdateValidator';
+import logger from '../utils/logger';
 
 export const createUser = async (req: Request, res: Response) => {
   const { error } = validateUserInput(req.body);
-  if (error) return res.status(400).json({ error: error.details[0].message });
+  if (error) {
+    logger.error(`Failed to create user: ${error.details[0].message}`);
+    return res.status(400).json({ error: error.details[0].message });
+  }
 
   try {
     const { email, name } = req.body;
-    const existingUser = await UserService.findUserByEmail(email) || await UserService.findUserByName(name);
+    const existingUser = await UserService.findUserByEmail(email);
     if (existingUser) {
       return res.status(409).json({ error: 'User with this email or name already exists' });
     }
