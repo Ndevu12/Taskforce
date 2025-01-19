@@ -3,7 +3,6 @@ import LandingPage from '../pages/LandingPage';
 import About from '../pages/About';
 import LearnMore from '../pages/LearnMore';
 import NotAllowed from './NotAllowed';
-import NotFound from './NotFound';
 import PublicLayout from '../layouts/PublicLayout';
 import TermsOfService from '../pages/TermsOfService';
 import PrivacyPolicy from '../pages/PrivacyPolicy';
@@ -57,7 +56,6 @@ function Router() {
         {/* NOT ALLOWED AND NOT FOUND */}
         <Routes>
           <Route path="/not-allowed" element={<NotAllowed />} />
-          <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

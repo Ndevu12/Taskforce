@@ -10,8 +10,25 @@ const Register: React.FC = () => {
   const { register } = useAuth();
   const navigate = useNavigate();
 
+  const validateEmail = (email: string) => {
+    const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return re.test(String(email).toLowerCase());
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (name.length < 3 || name.length > 30) {
+      alert('Name must be between 3 and 30 characters');
+      return;
+    }
+    if (!validateEmail(email)) {
+      alert('Invalid email address');
+      return;
+    }
+    if (password.length < 6) {
+      alert('Password must be at least 6 characters');
+      return;
+    }
     if (password !== confirmPassword) {
       alert('Passwords do not match');
       return;

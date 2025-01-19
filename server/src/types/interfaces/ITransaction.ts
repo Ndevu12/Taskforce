@@ -4,7 +4,7 @@ export interface ITransaction extends Document {
   user: string;
   account: string;
   category: string;
-  subcategory?: string;
+  subCategory?: string[];
   type: 'INCOME' | 'EXPENSE';
   amount: number;
   description?: string;

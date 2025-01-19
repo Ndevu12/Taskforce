@@ -5,7 +5,7 @@ import { isAuth }from '../middleware/isAuth';
 const router = Router();
 
 router.post('/', isAuth, BudgetController.createBudget);
-router.get('/user/:userId', isAuth, BudgetController.getBudgetsByUser);
+router.get('/user', isAuth, BudgetController.getBudgetsByUser);
 router.put('/:budgetId', isAuth, BudgetController.updateBudgetById);
 router.delete('/:budgetId', isAuth, BudgetController.deleteBudgetById);
 

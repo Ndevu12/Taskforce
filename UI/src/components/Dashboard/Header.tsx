@@ -1,9 +1,32 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { FaBell, FaUserCircle } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
+import { io } from 'socket.io-client';
 
 function Header() {
-  const unreadCount = 5; // Static value for unread notifications
+  const [unreadCount, setUnreadCount] = useState(0);
+  const BASE_URL = import.meta.env.VITE_BASE_URL as string;
+  if (!BASE_URL) {
+    throw new Error('VITE_BASE_URL is not defined');
+  }
+
+  useEffect(() => {
+    const socket = io(BASE_URL);
+
+    const incrementUnreadCount = () => {
+      setUnreadCount((prevCount) => prevCount + 1);
+    };
+
+    socket.on('notification', incrementUnreadCount);
+    socket.on('budgetCreated', incrementUnreadCount);
+    socket.on('budgetUpdated', incrementUnreadCount);
+    socket.on('budgetDeleted', incrementUnreadCount);
+    socket.on('accountBalanceUpdated', incrementUnreadCount);
+
+    return () => {
+      socket.disconnect();
+    };
+  }, []);
 
   return (
     <header className="fixed top-0 left-0 w-full bg-white dark:bg-gray-800 shadow-md flex justify-between items-center p-4 z-10">

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ITransaction } from '../../interfaces/ITransaction';
+import { ITransaction } from '../../../interfaces/ITransaction';
 
 interface TransactionDetailsModalProps {
   transaction: ITransaction | null;
@@ -17,7 +17,7 @@ const TransactionDetailsModal: React.FC<TransactionDetailsModalProps> = ({
       <div className="bg-white dark:bg-gray-800 p-6 rounded shadow-md w-full max-w-lg">
         <h2 className="text-xl font-bold mb-4">Transaction Details</h2>
         <p>
-          <strong>Date:</strong> {transaction.date.toDateString()}
+          <strong>Date:</strong> {new Date(transaction.date).toDateString()}
         </p>
         <p>
           <strong>Description:</strong> {transaction.description}
@@ -29,14 +29,14 @@ const TransactionDetailsModal: React.FC<TransactionDetailsModalProps> = ({
           <strong>Type:</strong> {transaction.type}
         </p>
         <p>
-          <strong>Category:</strong> {transaction.category}
+          <strong>Category:</strong> {transaction.category.name}
         </p>
         <p>
-          <strong>Account:</strong> {transaction.account}
+          <strong>Account:</strong> {transaction.account.name}
         </p>
         {transaction.subcategory && (
           <p>
-            <strong>Subcategory:</strong> {transaction.subcategory}
+            <strong>Subcategory:</strong> {transaction.subcategory.join(', ')}
           </p>
         )}
         <div className="flex justify-end mt-4">

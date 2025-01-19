@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
-import { IReportSchedule } from '../../interfaces/Report';
-import { BudgetPeriod } from '../../interfaces/Budget';
+import { IReportSchedule } from '../../../interfaces/Report';
+import { BudgetPeriod } from '../../../interfaces/Budget';
 
 interface ScheduleFormModalProps {
   schedule: IReportSchedule | null;
@@ -13,27 +13,44 @@ const ScheduleFormModal: React.FC<ScheduleFormModalProps> = ({
   onClose,
   onSave,
 }) => {
+  const [title, setTitle] = useState<string>(schedule?.title || '');
   const [type, setType] = useState<BudgetPeriod>(
     () => schedule?.type || BudgetPeriod.DAILY,
   );
   const [startDate, setStartDate] = useState<string>(
-    schedule?.startDate?.toISOString().split('T')[0] || '',
+    schedule?.startDate
+      ? new Date(schedule.startDate).toISOString().split('T')[0]
+      : '',
   );
   const [endDate, setEndDate] = useState<string>(
-    schedule?.endDate?.toISOString().split('T')[0] || '',
+    schedule?.endDate
+      ? new Date(schedule.endDate).toISOString().split('T')[0]
+      : '',
   );
+  const [errors, setErrors] = useState<{ [key: string]: string }>({});
+
+  const validateForm = () => {
+    const newErrors: { [key: string]: string } = {};
+    if (!title) newErrors.title = 'Title is required';
+    if (!startDate) newErrors.startDate = 'Start date is required';
+    if (!endDate) newErrors.endDate = 'End date is required';
+    if (new Date(startDate) >= new Date(endDate)) {
+      newErrors.endDate = 'End date must be after start date';
+    }
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
 
   const handleSave = () => {
-    if (new Date(startDate) >= new Date(endDate)) {
-      alert('End date must be after start date');
-      return;
-    }
+    if (!validateForm()) return;
     onSave({
-      id: schedule?.id || Math.random().toString(36).substr(2, 9),
+      id: schedule?._id || '',
+      title,
       type,
       startDate: new Date(startDate),
       endDate: new Date(endDate),
     });
+    onClose();
   };
 
   return (
@@ -42,6 +59,22 @@ const ScheduleFormModal: React.FC<ScheduleFormModalProps> = ({
         <h2 className="text-2xl font-bold mb-4">
           {schedule ? 'Edit Schedule' : 'Create Schedule'}
         </h2>
+        <div className="mb-4">
+          <label className="block mb-2 text-gray-700 dark:text-gray-300">
+            Title
+          </label>
+          <input
+            type="text"
+            className="p-2 border border-gray-300 rounded w-full dark:bg-gray-700 dark:text-gray-300"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter title"
+            title="Title"
+          />
+          {errors.title && (
+            <p className="text-red-500 text-sm">{errors.title}</p>
+          )}
+        </div>
         <div className="mb-4">
           <label
             className="block mb-2 text-gray-700 dark:text-gray-300"
@@ -55,11 +88,13 @@ const ScheduleFormModal: React.FC<ScheduleFormModalProps> = ({
             value={type}
             onChange={(e) => setType(e.target.value as BudgetPeriod)}
           >
-            {Object.values(BudgetPeriod).map((period) => (
-              <option key={period} value={period}>
-                {period}
-              </option>
-            ))}
+            {Object.values(BudgetPeriod)
+              .filter((period) => period !== 'EXCEEDED')
+              .map((period) => (
+                <option key={period} value={period}>
+                  {period}
+                </option>
+              ))}
           </select>
         </div>
         <div className="mb-4">
@@ -74,6 +109,9 @@ const ScheduleFormModal: React.FC<ScheduleFormModalProps> = ({
             placeholder="Select start date"
             title="Start Date"
           />
+          {errors.startDate && (
+            <p className="text-red-500 text-sm">{errors.startDate}</p>
+          )}
         </div>
         <div className="mb-4">
           <label className="block mb-2 text-gray-700 dark:text-gray-300">
@@ -86,6 +124,9 @@ const ScheduleFormModal: React.FC<ScheduleFormModalProps> = ({
             onChange={(e) => setEndDate(e.target.value)}
             title="End Date"
           />
+          {errors.endDate && (
+            <p className="text-red-500 text-sm">{errors.endDate}</p>
+          )}
         </div>
         <div className="flex justify-end">
           <button

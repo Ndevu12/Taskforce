@@ -110,14 +110,9 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
         userData.email,
         userData.password,
       );
-      if (data && data.token) {
-        const user = decodeToken(data.token);
-        setUser(user);
-        localStorage.setItem('token', data.token);
-        setIsAuthenticated(true);
+      if (data) {
+        alert('Registrated successful');
         navigate('/login');
-      } else {
-        throw new Error('Invalid registration response');
       }
     } catch (error: any) {
       alert(error.message);

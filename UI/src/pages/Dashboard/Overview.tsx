@@ -1,70 +1,93 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import StatCard from '../../components/cards/StatCard';
-import OverviewTransactionTable from '../../components/Dashboard/OverviewTransactionTable';
-import TransactionDetailsModal from '../../components/Dashboard/TransactionDetailsModal';
-import Charts from '../../components/Dashboard/Charts';
+import OverviewTransactionTable from '../../components/Dashboard/Overview/OverviewTransactionTable';
+import TransactionDetailsModal from '../../components/Dashboard/Transactions/TransactionDetailsModal';
+import Charts from '../../components/Dashboard/Overview/Charts';
 import { ITransaction } from '../../interfaces/ITransaction';
-
-const transactions: ITransaction[] = [
-  {
-    id: '1',
-    date: new Date('2023-10-01'),
-    amount: 500,
-    type: 'INCOME',
-    account: 'Bank',
-    category: 'Salary',
-    description: 'Monthly salary',
-  },
-  {
-    id: '2',
-    date: new Date('2023-10-02'),
-    amount: 50,
-    type: 'EXPENSE',
-    account: 'Credit Card',
-    category: 'Groceries',
-    description: 'Grocery shopping',
-  },
-  {
-    id: '3',
-    date: new Date('2025-10-02'),
-    amount: 500,
-    type: 'INCOME',
-    account: 'Bank',
-    category: 'Salary',
-    description: 'Monthly salary',
-  },
-  {
-    id: '4',
-    date: new Date('2025-12-02'),
-    amount: 150,
-    type: 'EXPENSE',
-    account: 'Credit Card',
-    category: 'House rent',
-    description: 'Grocery shopping',
-  },
-  // ...more dummy transactions
-];
+import { fetchTransactionsByUser } from '../../actions/transactionActions';
 
 const Overview: React.FC = () => {
+  const [transactions, setTransactions] = useState<ITransaction[]>([]);
   const [selectedTransaction, setSelectedTransaction] =
     useState<ITransaction | null>(null);
+  const [totalBalance, setTotalBalance] = useState(0);
+  const [monthlyIncome, setMonthlyIncome] = useState(0);
+  const [monthlyExpenses, setMonthlyExpenses] = useState(0);
+  const [savingsProgress, setSavingsProgress] = useState(0);
+
+  useEffect(() => {
+    const loadTransactions = async () => {
+      const userId = 'user-id';
+      const fetchedTransactions = await fetchTransactionsByUser(userId);
+      setTransactions(fetchedTransactions);
+
+      const currentMonth = new Date().getMonth();
+      const currentYear = new Date().getFullYear();
+
+      let income = 0;
+      let expenses = 0;
+      let balance = 0;
+
+      fetchedTransactions.forEach((transaction) => {
+        if (transaction.type === 'INCOME') {
+          income += transaction.amount;
+        } else if (transaction.type === 'EXPENSE') {
+          expenses += transaction.amount;
+        }
+
+        if (
+          new Date(transaction.date).getMonth() === currentMonth &&
+          new Date(transaction.date).getFullYear() === currentYear
+        ) {
+          if (transaction.type === 'INCOME') {
+            balance += transaction.amount;
+          } else if (transaction.type === 'EXPENSE') {
+            balance -= transaction.amount;
+          }
+        }
+      });
+
+      setTotalBalance(balance);
+      setMonthlyIncome(income);
+      setMonthlyExpenses(expenses);
+      setSavingsProgress(income - expenses);
+    };
+
+    loadTransactions();
+  }, []);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-8 p-6 bg-gray-100 dark:bg-gray-900 min-h-screen">
       {/* Welcome Banner */}
-      <section className="bg-blue-500 text-white p-6 rounded-lg shadow-md dark:bg-blue-800 dark:text-gray-300">
-        <h1 className="text-3xl font-bold">Welcome, User!</h1>
-        <p className="mt-2">
+      <section className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-lg shadow-md dark:bg-gradient-to-r dark:from-blue-800 dark:to-indigo-900">
+        <h1 className="text-4xl font-bold">Welcome, User!</h1>
+        <p className="mt-2 text-lg">
           Here&apos;s a quick overview of your financial status.
         </p>
       </section>
 
       {/* Quick Stats Section */}
-      <section className="flex flex-wrap gap-4">
-        <StatCard title="Total Balance" value="$10,000" />
-        <StatCard title="Monthly Income" value="$5,000" />
-        <StatCard title="Monthly Expenses" value="$2,000" />
-        <StatCard title="Savings Progress" value="$3,000" />
+      <section className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <StatCard
+          title="Total Balance"
+          value={`FRW-${totalBalance}`}
+          color="bg-green-200 dark:bg-green-700"
+        />
+        <StatCard
+          title="Monthly Income"
+          value={`FRW-${monthlyIncome}`}
+          color="bg-blue-200 dark:bg-blue-700"
+        />
+        <StatCard
+          title="Monthly Expenses"
+          value={`FRW-${monthlyExpenses}`}
+          color="bg-red-200 dark:bg-red-700"
+        />
+        <StatCard
+          title="Savings Progress"
+          value={`FRW-${savingsProgress}`}
+          color="bg-yellow-200 dark:bg-yellow-700"
+        />
       </section>
 
       {/* Recent Transactions Table */}

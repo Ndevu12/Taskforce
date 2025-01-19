@@ -1,5 +1,5 @@
 import React from 'react';
-import { IReport } from '../../interfaces/Report';
+import { IReport } from '../../../interfaces/Report';
 
 interface ReportDetailsModalProps {
   report: IReport;
@@ -16,6 +16,9 @@ const ReportDetailsModal: React.FC<ReportDetailsModalProps> = ({
         <h2 className="text-2xl font-bold mb-4 text-gray-700 dark:text-gray-300">
           Report Details
         </h2>
+        <h3 className="text-xl font-semibold mb-2 text-gray-700 dark:text-gray-300">
+          {report.title}
+        </h3>
         <pre className="bg-gray-100 dark:bg-gray-700 p-4 rounded-lg text-gray-700 dark:text-gray-300">
           {JSON.stringify(report.data, null, 2)}
         </pre>

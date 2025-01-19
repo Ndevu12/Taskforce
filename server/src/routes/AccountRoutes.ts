@@ -5,7 +5,7 @@ import { isAuth } from '../middleware/isAuth';
 const router = Router();
 
 router.post('/', isAuth, AccountController.createAccount);
-router.get('/user/:userId', isAuth, AccountController.getAccountsByUser);
+router.get('/user', isAuth, AccountController.getAccountsByUser);
 router.put('/:accountId/balance', isAuth, AccountController.updateAccountBalance);
 router.put('/:accountId', isAuth, AccountController.updateAccountById);
 router.delete('/:accountId', isAuth, AccountController.deleteAccountById);

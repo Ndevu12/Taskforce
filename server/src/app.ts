@@ -5,12 +5,25 @@ import morgan from 'morgan';
 import path from 'path';
 import connectDB from "./mongooseConfig";
 import router from "./routes";
+import http from 'http';
+import { Server } from 'socket.io';
+import logger from './utils/logger';
 
 dotenv.config();
+const client_url = process.env.CLIENT_URL;
+if (!client_url) {
+    console.error('CLIENT_URL is not set in .env file');
+    process.exit(1);
+}
 
 const app: Application = express();
+const server = http.createServer(app);
+const io = new Server(server, {
+  cors: {
+    origin: client_url,
+  },
+});
 
-const client_url = process.env.CLIENT_URL || 'https://remotewor.netlify.app';
 const corsOptions = {
     origin: client_url,
     credentials: true,
@@ -32,8 +45,18 @@ app.get('/', (req, res) => {
 
 app.use(router);
 
+// WebSocket connection
+io.on('connection', (socket) => {
+  logger.info('A user connected');
+  socket.on('disconnect', () => {
+    logger.info('User disconnected');
+  });
+});
+
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Server is running on http://localhost:${PORT}`);
 });
+
+export { server, io };

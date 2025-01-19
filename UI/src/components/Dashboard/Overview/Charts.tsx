@@ -1,6 +1,6 @@
 import React from 'react';
-import ChartCard from '../../components/cards/ChartCard';
-import { ITransaction } from '../../interfaces/ITransaction';
+import ChartCard from '../../cards/ChartCard';
+import { ITransaction } from '../../../interfaces/ITransaction';
 
 interface ChartsProps {
   transactions: ITransaction[];
