@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import Pagination from '../../common/Pagination';
-import { IReport } from '../../../interfaces/Report';
+import { IReportSummary } from '../../../interfaces/Report';
 import { BudgetPeriod } from '../../../interfaces/Budget';
 import Skeleton from 'react-loading-skeleton';
 import 'react-loading-skeleton/dist/skeleton.css';
 
 interface ReportTableProps {
-  reports: IReport[];
-  onView: (report: IReport) => void;
-  onDelete: (report: IReport) => void;
+  reports: IReportSummary[];
+  onView: (report: IReportSummary) => void;
+  onDelete: (report: IReportSummary) => void;
 }
 
 const ReportTable: React.FC<ReportTableProps> = ({
@@ -20,14 +20,15 @@ const ReportTable: React.FC<ReportTableProps> = ({
   const [itemsPerPage, setItemsPerPage] = useState(5);
   const [searchTerm, setSearchTerm] = useState('');
   const [filterSchedule, setFilterSchedule] = useState<BudgetPeriod | ''>('');
-  const [filteredReports, setFilteredReports] = useState<IReport[]>(reports);
+  const [filteredReports, setFilteredReports] =
+    useState<IReportSummary[]>(reports);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const filtered = reports.filter((report) => {
       return (
         report.title.toLowerCase().includes(searchTerm.toLowerCase()) &&
-        (filterSchedule ? report.schedule === filterSchedule : true)
+        (filterSchedule ? report.scheduleType === filterSchedule : true)
       );
     });
     setFilteredReports(filtered);
@@ -76,7 +77,19 @@ const ReportTable: React.FC<ReportTableProps> = ({
                 Title
               </th>
               <th className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
-                Schedule
+                Created At
+              </th>
+              <th className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
+                Total Transactions
+              </th>
+              <th className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
+                Total Income
+              </th>
+              <th className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
+                Total Expense
+              </th>
+              <th className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
+                Schedule Type
               </th>
               <th className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
                 Actions
@@ -96,25 +109,49 @@ const ReportTable: React.FC<ReportTableProps> = ({
                   <td className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
                     <Skeleton />
                   </td>
+                  <td className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
+                    <Skeleton />
+                  </td>
+                  <td className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
+                    <Skeleton />
+                  </td>
+                  <td className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
+                    <Skeleton />
+                  </td>
+                  <td className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
+                    <Skeleton />
+                  </td>
                 </tr>
               ))
             ) : currentReports.length === 0 ? (
               <tr>
-                <td colSpan={3} className="text-center p-4">
+                <td colSpan={7} className="text-center p-4">
                   No available report at the moment!
                 </td>
               </tr>
             ) : (
               currentReports.map((report) => (
                 <tr
-                  key={report.id}
+                  key={report._id}
                   className="hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   <td className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
                     {report.title}
                   </td>
                   <td className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
-                    {report.schedule}
+                    {new Date(report.createdAt).toLocaleDateString()}
+                  </td>
+                  <td className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
+                    {report.totalTransactions}
+                  </td>
+                  <td className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
+                    {report.totalIncome}
+                  </td>
+                  <td className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
+                    {report.totalExpense}
+                  </td>
+                  <td className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
+                    {report.scheduleType}
                   </td>
                   <td className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
                     <button

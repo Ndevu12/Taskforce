@@ -4,7 +4,8 @@ import { isAuth } from '../middleware/isAuth';
 
 const router = Router();
 
-router.get('/user/:userId/unread', isAuth, NotificationController.getUnreadNotificationsByUser);
+router.get('/user', isAuth, NotificationController.getNotificationsByUser);
+router.get('/user/unread', isAuth, NotificationController.getUnreadNotificationsByUser);
 router.put('/:notificationId/read', isAuth, NotificationController.markNotificationAsRead);
 router.delete('/:notificationId', isAuth, NotificationController.deleteNotificationById);
 router.put('/user/:userId/read-all', isAuth, NotificationController.markAllNotificationsAsRead);

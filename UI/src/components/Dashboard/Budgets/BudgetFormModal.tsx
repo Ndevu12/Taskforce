@@ -1,11 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { Budget, BudgetPeriod } from '../../../interfaces/Budget';
+import {
+  Budget,
+  BudgetPeriod,
+  BudgetResponse,
+} from '../../../interfaces/Budget';
 
 interface BudgetFormModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onSave: (budget: Budget) => void;
-  budgetToEdit?: Budget | null;
+  onSave: (budget: BudgetResponse) => void;
+  budgetToEdit?: BudgetResponse | null;
   categories: { name: string; _id: string }[];
 }
 
@@ -31,9 +35,14 @@ const BudgetFormModal: React.FC<BudgetFormModalProps> = ({
     if (budgetToEdit) {
       try {
         setBudget({
-          ...budgetToEdit,
+          id: budgetToEdit._id,
+          category: budgetToEdit.category._id,
+          amount: budgetToEdit.amount,
+          period: budgetToEdit.period,
           startDate: new Date(budgetToEdit.startDate),
           endDate: new Date(budgetToEdit.endDate),
+          currentSpent: budgetToEdit.currentSpent,
+          description: budgetToEdit.description || '',
         });
       } catch (error) {
         console.error('Invalid date format in budgetToEdit:', error);
@@ -53,8 +62,22 @@ const BudgetFormModal: React.FC<BudgetFormModalProps> = ({
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const updatedBudget: Budget = {
+      const categoryObject = categories.find(
+        (cat) => cat._id === budget.category,
+      );
+      if (!categoryObject) {
+        throw new Error('Invalid category');
+      }
+
+      const updatedBudget: BudgetResponse = {
         ...budget,
+        _id: budget.id,
+        category: {
+          _id: categoryObject._id,
+          name: categoryObject.name,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
         startDate: new Date(budget.startDate),
         endDate: new Date(budget.endDate),
       };

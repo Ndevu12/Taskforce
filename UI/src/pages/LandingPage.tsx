@@ -1,9 +1,42 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import backgroundImage from '../assets/images/web1.jpg';
+import { createMessage } from '../actions/messageActions';
 
 function LandingPage() {
+  const navigate = useNavigate();
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    message: '',
+  });
+  const [formStatus, setFormStatus] = useState('');
+
+  const handleRegisterClick = () => {
+    navigate('/register');
+  };
+
+  const handleInputChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    const { name, value } = e.target;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    try {
+      await createMessage(formData);
+      alert('Message sent successfully!');
+      setFormStatus('Message sent successfully!');
+      setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      alert('Failed to send message. Please try again.');
+      setFormStatus('Failed to send message. Please try again.');
+    }
+  };
+
   return (
     <div className="landing-page">
       {/* Hero Section */}
@@ -37,6 +70,7 @@ function LandingPage() {
             className="bg-blue-500 text-white py-2 px-4 rounded animate-pulse"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
+            onClick={handleRegisterClick}
           >
             Register Now
           </motion.button>
@@ -142,24 +176,33 @@ function LandingPage() {
             We would love to hear from you! Please fill out the form below to
             get in touch with us.
           </p>
-          <form className="max-w-lg mx-auto">
+          <form className="max-w-lg mx-auto" onSubmit={handleSubmit}>
             <div className="mb-4">
               <input
                 type="text"
+                name="name"
                 placeholder="Your Name"
+                value={formData.name}
+                onChange={handleInputChange}
                 className="w-full p-3 border border-gray-300 rounded"
               />
             </div>
             <div className="mb-4">
               <input
                 type="email"
+                name="email"
                 placeholder="Your Email"
+                value={formData.email}
+                onChange={handleInputChange}
                 className="w-full p-3 border border-gray-300 rounded"
               />
             </div>
             <div className="mb-4">
               <textarea
+                name="message"
                 placeholder="Your Message"
+                value={formData.message}
+                onChange={handleInputChange}
                 className="w-full p-3 border border-gray-300 rounded"
                 rows={4}
               ></textarea>
@@ -171,6 +214,7 @@ function LandingPage() {
               Send Message
             </button>
           </form>
+          {formStatus && <p className="mt-4">{formStatus}</p>}
         </div>
       </section>
 
@@ -188,6 +232,7 @@ function LandingPage() {
           className="bg-blue-500 text-white py-2 px-4 rounded animate-pulse"
           whileHover={{ scale: 1.1 }}
           whileTap={{ scale: 0.9 }}
+          onClick={handleRegisterClick}
         >
           Sign Up Now
         </motion.button>

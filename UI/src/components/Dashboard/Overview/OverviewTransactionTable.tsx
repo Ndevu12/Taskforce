@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { ITransaction } from '../../../interfaces/ITransaction';
+import { TransactionResponse } from '../../../interfaces/ITransaction';
 import Pagination from '../../common/Pagination';
 
 interface OverviewTransactionTableProps {
-  transactions: ITransaction[];
-  onTransactionClick: (transaction: ITransaction) => void;
+  transactions: TransactionResponse[];
+  onTransactionClick: (transaction: TransactionResponse) => void;
 }
 
 const OverviewTransactionTable: React.FC<OverviewTransactionTableProps> = ({
@@ -16,7 +16,7 @@ const OverviewTransactionTable: React.FC<OverviewTransactionTableProps> = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [transactionsPerPage, setTransactionsPerPage] = useState(5);
   const [filteredTransactions, setFilteredTransactions] =
-    useState<ITransaction[]>(transactions);
+    useState<TransactionResponse[]>(transactions);
 
   useEffect(() => {
     const filtered = transactions
@@ -25,7 +25,7 @@ const OverviewTransactionTable: React.FC<OverviewTransactionTableProps> = ({
           transaction.description
             ?.toLowerCase()
             .includes(search.toLowerCase()) ||
-          transaction.category.name
+          transaction.category?.name
             .toLowerCase()
             .includes(search.toLowerCase()) ||
           transaction.account.name.toLowerCase().includes(search.toLowerCase()),

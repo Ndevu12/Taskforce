@@ -15,7 +15,7 @@ const AccountFormModal: React.FC<AccountFormModalProps> = ({
   accountToEdit,
 }) => {
   const [account, setAccount] = useState<Account>({
-    id: 0,
+    _id: '',
     name: '',
     type: AccountType.BANK,
     balance: 0,

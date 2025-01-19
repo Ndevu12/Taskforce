@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import { FaArrowDown } from 'react-icons/fa';
 import backgroundImage from '../assets/images/web1.jpg';
 
 function LearnMore() {
@@ -33,13 +34,13 @@ function LearnMore() {
           financial health.
         </motion.p>
         <Link to="#features">
-          <motion.button
-            className="bg-blue-500 text-white py-3 px-6 rounded-lg hover:bg-blue-600 relative z-10"
+          <motion.div
+            className="text-blue-500 text-4xl relative z-10"
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
           >
-            Explore Features
-          </motion.button>
+            <FaArrowDown />
+          </motion.div>
         </Link>
       </section>
 

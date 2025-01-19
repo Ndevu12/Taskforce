@@ -36,8 +36,7 @@ export const ScheduleReport = async (scheduleData: IReportSchedule): Promise<IRe
 }
 
 export const updateSchedule = async (scheduleData: IReportSchedule): Promise<IReportSchedule> => {
-    console.log('scheduleData', scheduleData);
-    const response = await axios.put(`${API_URL}/report/schedule/${scheduleData.id}`, {
+    const response = await axios.put(`${API_URL}/report/schedule/${scheduleData._id}`, {
         type: scheduleData.type,
         title: scheduleData.title,
         startDate: scheduleData.startDate,

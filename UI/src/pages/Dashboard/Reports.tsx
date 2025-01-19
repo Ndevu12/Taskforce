@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { IReport, IReportSchedule } from '../../interfaces/Report';
+import { IReportSchedule, IReportSummary } from '../../interfaces/Report';
 import ReportTable from '../../components/Dashboard/Reports/ReportTable';
 import ScheduleTable from '../../components/Dashboard/Reports/ScheduleTable';
 import ReportDetailsModal from '../../components/Dashboard/Reports/ReportDetailsModal';
@@ -15,9 +15,11 @@ import {
 } from '../../actions/reportActions';
 
 const Reports: React.FC = () => {
-  const [reports, setReports] = useState<IReport[]>([]);
+  const [reports, setReports] = useState<IReportSummary[]>([]);
   const [schedules, setSchedules] = useState<IReportSchedule[]>([]);
-  const [selectedReport, setSelectedReport] = useState<IReport | null>(null);
+  const [selectedReport, setSelectedReport] = useState<IReportSummary | null>(
+    null,
+  );
   const [selectedSchedule, setSelectedSchedule] =
     useState<IReportSchedule | null>(null);
   const [isReportDetailsModalOpen, setIsReportDetailsModalOpen] =
@@ -25,12 +27,46 @@ const Reports: React.FC = () => {
   const [isScheduleFormModalOpen, setIsScheduleFormModalOpen] = useState(false);
   const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] =
     useState(false);
+  const [totalReports, setTotalReports] = useState(0);
+  const [exceededReports, setExceededReports] = useState(0);
 
   useEffect(() => {
     const loadReports = async () => {
       try {
         const data = await fetchReports();
-        setReports(data);
+        const reportSummaries = data.map((report) => {
+          const transactions = (report.data as any)?.transactions || [];
+          const totalTransactions = transactions.length;
+          const totalIncome = transactions
+            .filter((transaction: any) => transaction.type === 'INCOME')
+            .reduce(
+              (sum: number, transaction: any) => sum + transaction.amount,
+              0,
+            );
+          const totalExpense = transactions
+            .filter((transaction: any) => transaction.type === 'EXPENSE')
+            .reduce(
+              (sum: number, transaction: any) => sum + transaction.amount,
+              0,
+            );
+
+          return {
+            _id: (report as any)._id,
+            title: report.title,
+            createdAt: (report as any).createdAt,
+            totalTransactions,
+            totalIncome,
+            totalExpense,
+            scheduleType: (report.schedule as any).type,
+          };
+        });
+        setReports(reportSummaries);
+        setTotalReports(reportSummaries.length);
+        setExceededReports(
+          reportSummaries.filter(
+            (report) => report.totalExpense > report.totalIncome,
+          ).length,
+        );
       } catch (err) {
         console.error('Failed to load reports');
       }
@@ -54,7 +90,7 @@ const Reports: React.FC = () => {
 
   const handleSaveSchedule = async (schedule: IReportSchedule) => {
     try {
-      if (schedule.id) {
+      if (schedule._id) {
         await updateSchedule(schedule);
       } else {
         await ScheduleReport(schedule);
@@ -72,7 +108,7 @@ const Reports: React.FC = () => {
   const handleDeleteSchedule = async () => {
     if (selectedSchedule) {
       try {
-        await deleteSchedule(selectedSchedule.id);
+        await deleteSchedule(selectedSchedule._id);
         const updatedSchedules = await fetchSchedules();
         const filteredSchedules = updatedSchedules.filter(
           (schedule) => schedule.type !== 'EXCEEDED',
@@ -96,7 +132,10 @@ const Reports: React.FC = () => {
           Schedule new Reporting time
         </button>
       </div>
-      <QuickStatistics reports={reports} />
+      <QuickStatistics
+        totalReports={totalReports}
+        exceededReports={exceededReports}
+      />
       <div className="flex justify-between items-center mt-7 mb-4">
         <h2 className="text-2xl font-bold">Auto-Generated Reports</h2>
       </div>

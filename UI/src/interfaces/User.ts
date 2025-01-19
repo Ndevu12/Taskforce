@@ -8,6 +8,4 @@ export interface User {
     email: string;
     name: string;
     role: UserRole;
-    password?: string;
-    profilePhoto?: string; 
 }

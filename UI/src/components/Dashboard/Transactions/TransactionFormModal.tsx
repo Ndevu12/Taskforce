@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { ITransaction } from '../../../interfaces/ITransaction';
+import {
+  ITransaction,
+  TransactionResponse,
+} from '../../../interfaces/ITransaction';
 import {
   createTransaction,
   updateTransaction,
@@ -11,7 +14,7 @@ interface TransactionFormModalProps {
   isOpen: boolean;
   onClose: () => void;
   onSave: (transaction: ITransaction) => void;
-  transactionToEdit?: ITransaction | null;
+  transactionToEdit?: TransactionResponse | null;
   categories: any[];
 }
 
@@ -23,7 +26,7 @@ const TransactionFormModal: React.FC<TransactionFormModalProps> = ({
   categories,
 }) => {
   const [transaction, setTransaction] = useState<ITransaction>({
-    id: '',
+    _id: '',
     account: '',
     category: '',
     type: 'EXPENSE',
@@ -40,9 +43,17 @@ const TransactionFormModal: React.FC<TransactionFormModalProps> = ({
 
   useEffect(() => {
     if (transactionToEdit) {
-      setTransaction(transactionToEdit);
-      setSelectedCategory(transactionToEdit.category);
-      fetchSubcategories(transactionToEdit.category);
+      setTransaction({
+        _id: transactionToEdit._id,
+        account: transactionToEdit._id,
+        category: transactionToEdit.category._id,
+        type: transactionToEdit.type,
+        amount: transactionToEdit.amount,
+        description: transactionToEdit.description,
+        date: transactionToEdit.date,
+      });
+      setSelectedCategory(transactionToEdit.category._id);
+      fetchSubcategories(transactionToEdit.category._id);
     }
   }, [transactionToEdit]);
 
@@ -74,10 +85,12 @@ const TransactionFormModal: React.FC<TransactionFormModalProps> = ({
   ) => {
     const categoryId = e.target.value;
     setSelectedCategory(categoryId);
+    console.log(categoryId);
+
     setTransaction((prev) => ({
       ...prev,
       category: categoryId,
-      type: categoryId,
+      type: categoryId === 'INCOME' ? 'INCOME' : 'EXPENSE',
     }));
     const subcategoriesData = await fetchSubcategories(categoryId);
     setSubcategories(subcategoriesData);
@@ -85,10 +98,14 @@ const TransactionFormModal: React.FC<TransactionFormModalProps> = ({
 
   const validateForm = () => {
     const newErrors: { [key: string]: string } = {};
-    if (!transaction.description) newErrors.description = 'Description is required';
-    if (!transaction.amount || transaction.amount <= 0) newErrors.amount = 'Amount must be greater than zero';
+    if (!transaction.description)
+      newErrors.description = 'Description is required';
+    if (!transaction.amount || transaction.amount <= 0)
+      newErrors.amount = 'Amount must be greater than zero';
     if (!transaction.date) newErrors.date = 'Date is required';
-    if (accounts.length < 2) newErrors.accounts = 'You must have at least two accounts to save a transaction';
+    if (accounts.length < 2)
+      newErrors.accounts =
+        'You must have at least two accounts to save a transaction';
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -98,7 +115,7 @@ const TransactionFormModal: React.FC<TransactionFormModalProps> = ({
     if (!validateForm()) return;
     const transactionData = { ...transaction, id: undefined };
     if (transactionToEdit) {
-      await updateTransaction(transaction._id, transactionData);
+      await updateTransaction(transaction?._id, transactionData);
     } else {
       await createTransaction(transactionData);
     }
@@ -202,7 +219,7 @@ const TransactionFormModal: React.FC<TransactionFormModalProps> = ({
               required
               title="Account"
             >
-              {accounts.map((account) => (
+              {accounts.map((account: { _id: string; name: string }) => (
                 <option key={account._id} value={account._id}>
                   {account.name}
                 </option>
