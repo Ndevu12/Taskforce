@@ -12,6 +12,7 @@ function LandingPage() {
     message: '',
   });
   const [formStatus, setFormStatus] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleRegisterClick = () => {
     navigate('/register');
@@ -26,6 +27,7 @@ function LandingPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await createMessage(formData);
       alert('Message sent successfully!');
@@ -34,6 +36,8 @@ function LandingPage() {
     } catch (error) {
       alert('Failed to send message. Please try again.');
       setFormStatus('Failed to send message. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -210,8 +214,9 @@ function LandingPage() {
             <button
               type="submit"
               className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 transition"
+              disabled={loading}
             >
-              Send Message
+              {loading ? 'Sending...' : 'Send Message'}
             </button>
           </form>
           {formStatus && <p className="mt-4">{formStatus}</p>}

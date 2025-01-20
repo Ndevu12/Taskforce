@@ -3444,3 +3444,9 @@
 {"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-20 02:12:03"}
 {"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-20 04:39:16"}
 {"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-20 04:42:54"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-20 11:37:01"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-20 11:37:01"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-20 11:37:04"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-20 11:37:06"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-20 11:37:08"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-20 11:37:10"}

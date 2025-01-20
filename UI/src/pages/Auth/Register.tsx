@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -9,6 +9,15 @@ const Register: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const { register } = useAuth();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      alert('You are already logged in.');
+      navigate('/dashboard');
+    }
+  }, [navigate]);
 
   const validateEmail = (email: string) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -33,10 +42,13 @@ const Register: React.FC = () => {
       alert('Passwords do not match');
       return;
     }
+    setLoading(true);
     try {
       await register({ name, email, password }, navigate);
     } catch (error: any) {
       alert(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -98,8 +110,9 @@ const Register: React.FC = () => {
           <button
             type="submit"
             className="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600"
+            disabled={loading}
           >
-            Register
+            {loading ? 'Registering...' : 'Register'}
           </button>
         </form>
         <p className="mt-4 text-gray-700 dark:text-gray-300">
