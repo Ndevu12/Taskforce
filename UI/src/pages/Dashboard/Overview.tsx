@@ -6,9 +6,6 @@ import Charts from '../../components/Dashboard/Overview/Charts';
 import { TransactionResponse } from '../../interfaces/ITransaction';
 import { fetchTransactionsByUser } from '../../actions/transactionActions';
 import formatMoney from '../../utils/formatMoney';
-import { User } from '../../interfaces/User';
-import { jwtDecode } from 'jwt-decode';
-import { DecodedUser } from '../../interfaces/DecodedUser';
 
 const Overview: React.FC = () => {
   const [transactions, setTransactions] = useState<TransactionResponse[]>([]);
@@ -18,20 +15,11 @@ const Overview: React.FC = () => {
   const [monthlyIncome, setMonthlyIncome] = useState(0);
   const [monthlyExpenses, setMonthlyExpenses] = useState(0);
   const [savingsProgress, setSavingsProgress] = useState(0);
-  const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(null);
 
   useEffect(() => {
     const loadTransactions = async () => {
       const fetchedTransactions = await fetchTransactionsByUser();
       setTransactions(fetchedTransactions);
-      const Token = localStorage.getItem('token');
-      setToken(Token);
-
-      if (token) {
-        const user: DecodedUser = jwtDecode(token);
-        setUser(user);
-      }
 
       const currentMonth = new Date().getMonth();
       const currentYear = new Date().getFullYear();
@@ -72,7 +60,7 @@ const Overview: React.FC = () => {
     <div className="space-y-8 p-6 bg-gray-100 dark:bg-gray-900 min-h-screen">
       {/* Welcome Banner */}
       <section className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-lg shadow-md dark:bg-gradient-to-r dark:from-blue-800 dark:to-indigo-900">
-        <h1 className="text-4xl font-bold">Welcome, {user?.name}!</h1>
+        <h1 className="text-4xl font-bold">Welcome, On your Dashboard!</h1>
         <p className="mt-2 text-lg">
           Here&apos;s a quick overview of your financial status.
         </p>
