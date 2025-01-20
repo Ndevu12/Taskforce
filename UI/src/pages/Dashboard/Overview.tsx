@@ -19,7 +19,7 @@ const Overview: React.FC = () => {
   useEffect(() => {
     const loadTransactions = async () => {
       const fetchedTransactions = await fetchTransactionsByUser();
-      setTransactions(fetchedTransactions);
+      setTransactions(fetchedTransactions.reverse());
 
       const currentMonth = new Date().getMonth();
       const currentYear = new Date().getFullYear();

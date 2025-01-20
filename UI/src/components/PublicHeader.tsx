@@ -42,29 +42,31 @@ const PublicHeader = () => {
             </svg>
           </button>
         </div>
-        <div className={`md:flex ${isOpen ? 'block' : 'hidden'} md:block`}>
+        <div
+          className={`md:flex ${isOpen ? 'block' : 'hidden'} gap-4 md:block`}
+        >
           <nav className="md:flex space-x-6 text-left">
             <a
               href="#features"
-              className="block text-gray-700 hover:text-blue-500 transition"
+              className="block text-gray-700 text-left hover:text-blue-500 transition w-full md:w-auto"
             >
               Features
             </a>
             <a
               href="#testimonials"
-              className="block text-gray-700 hover:text-blue-500 transition"
+              className="block text-gray-700 text-left hover:text-blue-500 transition w-full md:w-auto"
             >
               Testimonials
             </a>
             <a
               href="#contact"
-              className="block text-gray-700 hover:text-blue-500 transition"
+              className="block text-gray-700 text-left hover:text-blue-500 transition w-full md:w-auto"
             >
               Contact Us
             </a>
             <Link
               to="/about"
-              className="block text-gray-700 hover:text-blue-500 transition"
+              className="block text-gray-700 text-left hover:text-blue-500 transition w-full md:w-auto"
             >
               About Us
             </Link>

@@ -25,7 +25,7 @@ const Budgets: React.FC = () => {
   useEffect(() => {
     const loadBudgets = async () => {
       const fetchedBudgets = await fetchBudgets();
-      setBudgets(fetchedBudgets);
+      setBudgets(fetchedBudgets.reverse());
     };
     const loadCategories = async () => {
       const fetchedCategories = await fetchCategories();

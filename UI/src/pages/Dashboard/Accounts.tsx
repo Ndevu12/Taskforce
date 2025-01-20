@@ -25,7 +25,7 @@ const Accounts: React.FC = () => {
     const loadAccounts = async () => {
       try {
         const data = await fetchAccounts();
-        setAccounts(data);
+        setAccounts(data.reverse());
       } catch (error) {
         console.error(error);
       } finally {

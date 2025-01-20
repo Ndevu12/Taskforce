@@ -14,7 +14,10 @@ function Header() {
     const socket = io(BASE_URL);
 
     const incrementUnreadCount = () => {
-      setUnreadCount((prevCount) => prevCount + 1);
+      setUnreadCount((prevCount) => {
+        console.log('Previous unread count:', prevCount);
+        return prevCount + 1;
+      });
     };
 
     socket.on('notification', incrementUnreadCount);
@@ -22,6 +25,10 @@ function Header() {
     socket.on('budgetUpdated', incrementUnreadCount);
     socket.on('budgetDeleted', incrementUnreadCount);
     socket.on('accountBalanceUpdated', incrementUnreadCount);
+
+    socket.on('connect', () => {
+      console.log('Connected to socket server');
+    });
 
     return () => {
       socket.disconnect();
