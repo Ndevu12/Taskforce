@@ -73,7 +73,7 @@ const AccountTable: React.FC<AccountTableProps> = ({
           ) : currentAccounts.length > 0 ? (
             currentAccounts.map((account) => (
               <tr
-                key={account.id}
+                key={account._id}
                 className="hover:bg-gray-100 dark:hover:bg-gray-700"
                 onClick={() => onView(account)}
               >

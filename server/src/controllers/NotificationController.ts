@@ -5,7 +5,22 @@ import { validateNotificationInput, validateNotificationUpdateInput } from '../h
 
 export const getUnreadNotificationsByUser = async (req: Request, res: Response) => {
   try {
-    const notifications = await NotificationService.getUnreadNotificationsByUser(req.params.userId);
+    const userId = req.userId;
+    if (!userId) return res.status(401).json({ error: 'User not authorized' });
+
+    const notifications = await NotificationService.getUnreadNotificationsByUser(userId);
+    res.status(200).json(notifications);
+  } catch (error: any) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
+export const getNotificationsByUser = async (req: Request, res: Response) => {
+  try {
+    const userId = req.userId;
+    if (!userId) return res.status(401).json({ error: 'User not authorized' });
+
+    const notifications = await NotificationService.getNotificationsByUser(userId);
     res.status(200).json(notifications);
   } catch (error: any) {
     res.status(500).json({ error: error.message });

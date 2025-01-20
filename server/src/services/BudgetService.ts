@@ -10,7 +10,6 @@ import { ReportType } from '../types/enums/ReportType';
 import { NotificationType } from '../types/enums/NotificationType';
 import { autoGenerateReports } from './ReportService';
 import { createNotification } from './NotificationService';
-import logger from '../utils/logger';
 import mongoose from 'mongoose';
 import { findUserById } from './UserService';
 import { INotification } from '../types/interfaces/INotification';
@@ -21,6 +20,16 @@ export const createBudget = async (budgetData: IBudget) => {
   const budget = new Budget(budgetData);
   const savedBudget = await budget.save();
   io.emit('budgetCreated', savedBudget);
+
+  const notificationData: Partial<INotification> = {
+    user: budget.user,
+    type: NotificationType.BUDGET_THRESHOLD,
+    message: `A new budget has been created for ${budget.description}.`,
+    read: false,
+    link: '/dashboard/budgets',
+  };
+  await createNotification(notificationData as INotification);
+
   await checkBudgetExceed(savedBudget);
   return savedBudget;
 };
@@ -32,16 +41,31 @@ export const getBudgetsByUser = async (userId: string) => {
 export const updateBudgetById = async (budgetId: string, updateData: Partial<IBudget>) => {
   const updatedBudget = await Budget.findByIdAndUpdate(budgetId, updateData, { new: true });
   io.emit('budgetUpdated', updatedBudget);
+
+  if (updatedBudget) {
+    const notificationData: Partial<INotification> = {
+      user: updatedBudget.user,
+      type: NotificationType.BUDGET_THRESHOLD,
+      message: `The budget for ${updatedBudget.description} has been updated.`,
+      read: false,
+      link: '/dashboard/budgets',
+    };
+    await createNotification(notificationData as INotification);
+  }
+
   if (updatedBudget) {
     await checkBudgetExceed(updatedBudget);
   }
   return updatedBudget;
 };
 
+export const getBudgetById = async (budgetId: string) => {
+  return await Budget.findById(budgetId);
+}
+
 export const findExceededReportScheduleByUser = async (userId: string) => {
   const user = await findUserById(userId);
   if (!user) {
-    logger.error(`User not found with ID: ${userId}`);
     return null;
   }
 
@@ -51,21 +75,35 @@ export const findExceededReportScheduleByUser = async (userId: string) => {
   });
 };
 
-export const deleteBudgetById = async (budgetId: string) => {
+export const deleteBudgetById = async (budgetId: string): Promise<boolean> => {
+  const budget = await Budget.findById(budgetId);
+  if (!budget) {
+    return false;
+  }
+
   const deletedBudget = await Budget.findByIdAndDelete(budgetId);
   io.emit('budgetDeleted', budgetId);
-  return deletedBudget;
+
+  if (budget) {
+    const notificationData: Partial<INotification> = {
+      user: budget.user,
+      type: NotificationType.BUDGET_THRESHOLD,
+      message: `The budget for ${budget.description} has been deleted.`,
+      read: false,
+      link: '/dashboard/budgets',
+    };
+    await createNotification(notificationData as INotification);
+  }
+  return true;
 };
 
 const checkBudgetExceed = async (budget: IBudget) => {
   if (!budget) {
-    logger.error('Budget data has to be provided');
     return null;
   }
 
   const user = await findUserById(budget.user);
   if (!user) {
-    logger.error(`User not found with ID: ${budget.user}`);
     return null;
   }
 
@@ -89,7 +127,6 @@ const checkBudgetExceed = async (budget: IBudget) => {
       try {
         exceededSchedule = await createReportSchedule(reportScheduleData);
       } catch (error: any) {
-        logger.error(`Failed to create exceeded report schedule for user ${userId}: ${error.message}`);
         return null;
       }
     }
@@ -110,14 +147,14 @@ const checkBudgetExceed = async (budget: IBudget) => {
     const notificationData: Partial<INotification> = {
       user: budget.user,
       type: NotificationType.BUDGET_THRESHOLD,
-      message: `Your budget for ${categoryName} has exceeded the limit.\n\nReport:\n${JSON.stringify(reportData)}`,
-      read: false
+      message: `Your budget for ${categoryName} has exceeded the limit. \n\nBudget description: ${budget.description}`,
+      read: false,
+      link: '/dashboard/budgets',
     };
 
     try {
       await createNotification(notificationData as INotification);
     } catch (error: any) {
-      logger.error(`Failed to create notification for user ${userId}: ${error.message}`);
       return null;
     }
 
@@ -126,32 +163,18 @@ const checkBudgetExceed = async (budget: IBudget) => {
 };
 
 export const checkBudgetExceedForTransaction = async (transaction: ITransaction) => {
-  logger.info('Checking budget exceed for transaction...');
-
-  console.log('Transaction:', transaction);
   const budgets = await getBudgetsByUser(transaction.user);
   if (budgets.length === 0) {
-    logger.warn(`No budgets found for user ${transaction.user}`);
     return;
   }
 
-  logger.info(`Found ${budgets.length} budgets before filters for user ${transaction.user}`);
-
-  // Further filter the budgets based on date range
   const filteredBudgets = budgets.filter(budget => {
-    const isWithinDateRange = budget.startDate <= transaction.date && budget.endDate >= transaction.date;
-    logger.info(`Budget ID: ${budget._id}, isWithinDateRange: ${isWithinDateRange}`);
-    return isWithinDateRange;
+    return budget.startDate <= transaction.date && budget.endDate >= transaction.date;
   });
 
-  logger.info(`Budgets after date filter: ${filteredBudgets.length}`);
-
   if (filteredBudgets.length === 0) {
-    logger.warn(`No budget filtered with all criteria for the transaction for user ${transaction.user}.`);
     return;
   }
-
-  logger.info(`Found ${filteredBudgets.length} budgets after filters applied for user ${transaction.user}`);
 
   for (const budget of filteredBudgets) {
     const transactions = await Transaction.find({
@@ -175,7 +198,6 @@ export const checkBudgetExceedForTransaction = async (transaction: ITransaction)
         try {
           exceededSchedule = await createReportSchedule(reportScheduleData);
         } catch (error: any) {
-          logger.error(`Failed to create exceeded report schedule for user ${userId}: ${error.message}`);
           return null;
         }
       }
@@ -196,16 +218,16 @@ export const checkBudgetExceedForTransaction = async (transaction: ITransaction)
       const notificationData: Partial<INotification> = {
         user: budget.user,
         type: NotificationType.BUDGET_THRESHOLD,
-        message: `Your budget for ${categoryName} has exceeded the limit.\n\nReport:\n${JSON.stringify(reportData)}`,
-        read: false
+        message: `Your budget for ${categoryName} has exceeded the limit. \n\nBudget description: ${budget.description}`,
+        read: false,
+        link: '/dashboard/budgets',
       };
       
       try {
         await createNotification(notificationData as INotification);
-        } catch (error: any) {
-          logger.error(`Failed to create notification for user ${userId}: ${error.message}`);
-          return null
-        }
+      } catch (error: any) {
+        return null;
+      }
 
       io.emit('budgetExceeded', budget);
     }
@@ -213,30 +235,19 @@ export const checkBudgetExceedForTransaction = async (transaction: ITransaction)
 };
 
 export const updateBudgetOnTransactionCreate = async (transactionData: ITransaction) => {
-  logger.info('Updating budget on transaction create...');
-
   const budgets = await Budget.find({ user: transactionData.user });
 
   if (budgets.length === 0) {
-    logger.warn('No budgets found for the transaction.');
     return;
   }
 
-  logger.info(`Found ${budgets.length} budgets before filters`);
-
-  // Apply date range filter
   const dateFilteredBudgets = budgets.filter(budget =>
     budget.startDate <= transactionData.date && budget.endDate >= transactionData.date
   );
 
-  logger.info(`Budgets after date filter: ${dateFilteredBudgets.length}`);
-
   if (dateFilteredBudgets.length === 0) {
-    logger.warn('No budget found after date filter for the transaction.');
     return;
   }
-
-  logger.info(`Found ${dateFilteredBudgets.length} budgets after filters applied`);
 
   for (const budget of dateFilteredBudgets) {
     budget.currentSpent += transactionData.amount;
@@ -246,30 +257,19 @@ export const updateBudgetOnTransactionCreate = async (transactionData: ITransact
 };
 
 export const updateBudgetOnTransactionUpdate = async (existingTransaction: ITransaction, updatedTransaction: ITransaction) => {
-  logger.info('Updating budget on transaction update...');
-
   const budgets = await Budget.find({ user: updatedTransaction.user });
 
   if (budgets.length === 0) {
-    logger.warn('No budgets found for the transaction.');
     return;
   }
 
-  logger.info(`Found ${budgets.length} budgets before filters`);
-
-  // Apply date range filter
   const dateFilteredBudgets = budgets.filter(budget =>
     budget.startDate <= updatedTransaction.date && budget.endDate >= updatedTransaction.date
   );
 
-  logger.info(`Budgets after date filter: ${dateFilteredBudgets.length}`);
-
   if (dateFilteredBudgets.length === 0) {
-    logger.warn('No budget found after date filter for the transaction.');
     return;
   }
-
-  logger.info(`Found ${dateFilteredBudgets.length} budgets after filters applied`);
 
   for (const budget of dateFilteredBudgets) {
     budget.currentSpent -= existingTransaction.amount;

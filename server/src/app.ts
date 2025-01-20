@@ -47,9 +47,9 @@ app.use(router);
 
 // WebSocket connection
 io.on('connection', (socket) => {
-  logger.info('A user connected');
+  logger.info('Client connected');
   socket.on('disconnect', () => {
-    logger.info('User disconnected');
+    logger.info('Client disconnected');
   });
 });
 

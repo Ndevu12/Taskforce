@@ -9,6 +9,7 @@ import accountRoutes from './AccountRoutes';
 import authRoutes from './AuthRoutes';
 import reportScheduleRoutes from './ReportScheduleRoutes';
 import subCategoryRoutes from './SubCategoryRoutes';
+import messageRoutes from './MessageRoutes';
 
 const router = Router();
 
@@ -22,5 +23,6 @@ router.use('/budgets', budgetRoutes);
 router.use('/report/schedule', reportScheduleRoutes);
 router.use('/accounts', accountRoutes);
 router.use('/auth', authRoutes);
+router.use('/messages', messageRoutes);
 
 export default router;

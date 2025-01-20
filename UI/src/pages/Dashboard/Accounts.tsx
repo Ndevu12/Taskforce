@@ -123,6 +123,7 @@ const Accounts: React.FC = () => {
           <p className="text-2xl">{inactiveAccounts}</p>
         </div>
       </div>
+      <h2 className="text-lg font-bold mb-4">All Accounts</h2>
       <AccountTable
         accounts={accounts}
         onEdit={handleEditAccount}

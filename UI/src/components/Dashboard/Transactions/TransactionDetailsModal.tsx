@@ -1,8 +1,8 @@
 import React from 'react';
-import { ITransaction } from '../../../interfaces/ITransaction';
+import { TransactionResponse } from '../../../interfaces/ITransaction';
 
 interface TransactionDetailsModalProps {
-  transaction: ITransaction | null;
+  transaction: TransactionResponse | null;
   onClose: () => void;
 }
 

@@ -44,7 +44,7 @@ const ScheduleFormModal: React.FC<ScheduleFormModalProps> = ({
   const handleSave = () => {
     if (!validateForm()) return;
     onSave({
-      id: schedule?._id || '',
+      _id: schedule?._id || '',
       title,
       type,
       startDate: new Date(startDate),

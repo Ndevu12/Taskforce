@@ -95,7 +95,7 @@ const ScheduleTable: React.FC<ScheduleTableProps> = ({
             ) : (
               currentSchedules.map((schedule) => (
                 <tr
-                  key={schedule.id}
+                  key={schedule._id}
                   className="hover:bg-gray-100 dark:hover:bg-gray-700"
                 >
                   <td className="py-2 px-4 border-b dark:border-gray-700">

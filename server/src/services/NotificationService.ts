@@ -10,6 +10,10 @@ export const getUnreadNotificationsByUser = async (userId: string) => {
   return await Notification.find({ user: userId, read: false });
 };
 
+export const getNotificationsByUser = async (userId: string) => {
+  return await Notification.find({ user: userId });
+}
+
 export const markNotificationAsRead = async (notificationId: string) => {
   return await Notification.findByIdAndUpdate(notificationId, { read: true }, { new: true });
 };

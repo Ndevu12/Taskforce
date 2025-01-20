@@ -3415,3 +3415,30 @@
 {"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 15:39:03"}
 {"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 15:50:02"}
 {"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 17:00:39"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 21:50:58"}
+{"_original":{"endDate":"2025-01-31T00:00:00.000Z","startDate":"2025-01-20T00:00:00.000Z","title":"Akakanya wana","type":"DAILY"},"details":[{"context":{"key":"type","label":"type","valids":["SUMMARY","CATEGORY_ANALYSIS","BUDGET_STATUS"],"value":"DAILY"},"message":"\"type\" must be one of [SUMMARY, CATEGORY_ANALYSIS, BUDGET_STATUS]","path":["type"],"type":"any.only"}],"level":"error","message":"createReportSchedule error: \"type\" must be one of [SUMMARY, CATEGORY_ANALYSIS, BUDGET_STATUS]","service":"user-service","stack":"ValidationError: \"type\" must be one of [SUMMARY, CATEGORY_ANALYSIS, BUDGET_STATUS]","timestamp":"2025-01-19 21:51:24"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-19 21:57:36"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-19 21:57:37"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 21:57:44"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-19 21:57:50"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 21:57:57"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-19 21:58:25"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-19 21:58:25"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-19 21:58:27"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-19 21:58:29"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-19 21:58:31"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-19 21:58:33"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-19 21:58:35"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 22:49:34"}
+{"_original":{"endDate":"2025-01-23T00:00:00.000Z","startDate":"2025-01-20T00:00:00.000Z","title":"Another","type":"DAILY"},"details":[{"context":{"key":"type","label":"type","valids":["SUMMARY","CATEGORY_ANALYSIS","BUDGET_STATUS"],"value":"DAILY"},"message":"\"type\" must be one of [SUMMARY, CATEGORY_ANALYSIS, BUDGET_STATUS]","path":["type"],"type":"any.only"}],"level":"error","message":"createReportSchedule error: \"type\" must be one of [SUMMARY, CATEGORY_ANALYSIS, BUDGET_STATUS]","service":"user-service","stack":"ValidationError: \"type\" must be one of [SUMMARY, CATEGORY_ANALYSIS, BUDGET_STATUS]","timestamp":"2025-01-19 22:52:12"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-19 22:54:25"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-01-19 22:54:25"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-01-19 22:55:08"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 23:41:26"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 23:49:42"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-19 23:59:11"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-20 00:33:09"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-20 01:36:37"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-20 01:40:58"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-20 01:43:04"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-01-20 02:12:03"}
