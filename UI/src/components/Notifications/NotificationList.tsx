@@ -38,7 +38,7 @@ const NotificationList: React.FC<NotificationListProps> = ({
         title: 'New Budget Created',
         type: 'BUDGET_THRESHOLD',
         message: `A new budget has been created.`,
-        timestamp: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
         read: false,
         link: '/dashboard/budgets',
       };
@@ -54,7 +54,7 @@ const NotificationList: React.FC<NotificationListProps> = ({
         title: 'Budget Updated',
         type: 'BUDGET_THRESHOLD',
         message: `A budget has been updated.`,
-        timestamp: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
         read: false,
         link: '/dashboard/budgets',
       };
@@ -70,7 +70,7 @@ const NotificationList: React.FC<NotificationListProps> = ({
         type: 'BUDGET_THRESHOLD',
         title: 'Budget Deleted',
         message: `A budget has been deleted.`,
-        timestamp: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
         read: false,
         link: '/dashboard/budgets',
       };
@@ -86,7 +86,7 @@ const NotificationList: React.FC<NotificationListProps> = ({
         title: 'Account Balance Updated',
         type: 'TRANSACTION_ALERT',
         message: `The balance of account ${account.name} has been updated.`,
-        timestamp: new Date().toISOString(),
+        createdAt: new Date().toISOString(),
         read: false,
         link: '/dashboard/accounts',
       };

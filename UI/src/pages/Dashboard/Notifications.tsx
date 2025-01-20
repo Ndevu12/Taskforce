@@ -6,6 +6,7 @@ import { fetchNotifications } from '../../actions/notificationActions';
 
 const Notifications: React.FC = () => {
   const [notifications, setNotifications] = useState<Notification[]>([]);
+  const [loading, setLoading] = useState(true);
 
   const BASE_URL = import.meta.env.VITE_BASE_URL as string;
   if (!BASE_URL) {
@@ -14,8 +15,14 @@ const Notifications: React.FC = () => {
 
   useEffect(() => {
     const loadNotifications = async () => {
-      const initialNotifications = await fetchNotifications();
-      setNotifications(initialNotifications);
+      try {
+        const initialNotifications = await fetchNotifications();
+        setNotifications(initialNotifications.reverse());
+      } catch (error) {
+        console.error('Failed to fetch notifications:', error);
+      } finally {
+        setLoading(false);
+      }
     };
 
     loadNotifications();
@@ -24,8 +31,8 @@ const Notifications: React.FC = () => {
 
     socket.on('notification', (newNotification: Notification) => {
       setNotifications((prevNotifications) => [
-        newNotification,
         ...prevNotifications,
+        newNotification,
       ]);
     });
 
@@ -36,7 +43,11 @@ const Notifications: React.FC = () => {
 
   return (
     <div className="p-4 dark:bg-gray-900 dark:text-white">
-      {notifications.length === 0 ? (
+      {loading ? (
+        <p className="text-center text-gray-700 dark:text-gray-300">
+          Loading notifications...
+        </p>
+      ) : notifications.length === 0 ? (
         <p className="text-center text-gray-700 dark:text-gray-300">
           No notifications available.
         </p>
