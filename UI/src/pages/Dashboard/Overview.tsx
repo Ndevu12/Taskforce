@@ -60,7 +60,7 @@ const Overview: React.FC = () => {
     <div className="space-y-8 p-6 bg-gray-100 dark:bg-gray-900 min-h-screen">
       {/* Welcome Banner */}
       <section className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-lg shadow-md dark:bg-gradient-to-r dark:from-blue-800 dark:to-indigo-900">
-        <h1 className="text-4xl font-bold">Welcome, User!</h1>
+        <h1 className="text-4xl font-bold">Welcome, On your Dashboard!</h1>
         <p className="mt-2 text-lg">
           Here&apos;s a quick overview of your financial status.
         </p>
