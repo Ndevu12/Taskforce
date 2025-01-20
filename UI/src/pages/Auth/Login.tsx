@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 
@@ -7,14 +7,32 @@ const Login: React.FC = () => {
   const [password, setPassword] = useState('');
   const { login } = useAuth();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      alert('You are already logged in.');
+      navigate('/dashboard');
+    }
+  }, [navigate]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     try {
+      const token = localStorage.getItem('token');
+      if (token) {
+        alert('You are already logged in.');
+        setLoading(false);
+        return navigate('/dashboard');
+      }
       await login(email, password, navigate);
     } catch (error: any) {
       console.log({ error });
       alert(error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -52,8 +70,9 @@ const Login: React.FC = () => {
           <button
             type="submit"
             className="w-full bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600"
+            disabled={loading}
           >
-            Login
+            {loading ? 'Logging in...' : 'Login'}
           </button>
         </form>
         <p className="mt-4 text-gray-700 dark:text-gray-300">
