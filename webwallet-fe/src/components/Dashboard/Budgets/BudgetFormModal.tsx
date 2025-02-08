@@ -101,7 +101,7 @@ const BudgetFormModal: React.FC<BudgetFormModalProps> = ({
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             <div className="mb-4">
               <label className="block mb-1 text-gray-700 dark:text-gray-300">
-                Category
+                Category <span className="text-red-500">*</span>
               </label>
               <select
                 name="category"
@@ -136,7 +136,7 @@ const BudgetFormModal: React.FC<BudgetFormModalProps> = ({
             </div>
             <div className="mb-4">
               <label className="block mb-1 text-gray-700 dark:text-gray-300">
-                Period
+                Period <span className="text-red-500">*</span>
               </label>
               <select
                 name="period"
@@ -155,7 +155,7 @@ const BudgetFormModal: React.FC<BudgetFormModalProps> = ({
             </div>
             <div className="mb-4">
               <label className="block mb-1 text-gray-700 dark:text-gray-300">
-                Start Date
+                Start Date <span className="text-red-500">*</span>
               </label>
               <input
                 type="date"
@@ -178,7 +178,7 @@ const BudgetFormModal: React.FC<BudgetFormModalProps> = ({
             </div>
             <div className="mb-4">
               <label className="block mb-1 text-gray-700 dark:text-gray-300">
-                End Date
+                End Date <span className="text-red-500">*</span>
               </label>
               <input
                 type="date"
@@ -199,7 +199,7 @@ const BudgetFormModal: React.FC<BudgetFormModalProps> = ({
             </div>
             <div className="mb-4">
               <label className="block mb-1 text-gray-700 dark:text-gray-300">
-                Current Spent
+                Current Spent <span className="text-red-500">*</span>
               </label>
               <input
                 type="number"
@@ -215,15 +215,16 @@ const BudgetFormModal: React.FC<BudgetFormModalProps> = ({
             </div>
             <div className="mb-4 sm:col-span-3">
               <label className="block mb-1 text-gray-700 dark:text-gray-300">
-                Description
+                Description <span className="text-red-500">*</span>
               </label>
               <textarea
                 name="description"
                 value={budget.description}
                 onChange={handleChange}
                 className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
-                placeholder="Enter description (optional)"
+                placeholder="Enter description"
                 title="Description"
+                required
               />
             </div>
           </div>

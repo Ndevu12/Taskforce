@@ -27,12 +27,15 @@ const Overview: React.FC = () => {
       let income = 0;
       let expenses = 0;
       let balance = 0;
+      let saving = 0;
 
       fetchedTransactions.forEach((transaction: TransactionResponse) => {
         if (transaction.type === 'INCOME') {
           income += transaction.amount;
         } else if (transaction.type === 'EXPENSE') {
           expenses += transaction.amount;
+        } else if (transaction.type === 'SAVING') {
+          saving += transaction.amount;
         }
 
         if (
@@ -43,6 +46,8 @@ const Overview: React.FC = () => {
             balance += transaction.amount;
           } else if (transaction.type === 'EXPENSE') {
             balance -= transaction.amount;
+          } else if (transaction.type === 'SAVING') {
+            balance += transaction.amount;
           }
         }
       });
@@ -50,7 +55,7 @@ const Overview: React.FC = () => {
       setTotalBalance(balance);
       setMonthlyIncome(income);
       setMonthlyExpenses(expenses);
-      setSavingsProgress(income - expenses);
+      setSavingsProgress(saving);
     };
 
     loadTransactions();

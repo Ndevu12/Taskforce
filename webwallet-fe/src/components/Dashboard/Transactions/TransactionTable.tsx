@@ -163,7 +163,7 @@ const TransactionTable: React.FC<TransactionTableProps> = ({
                   </td>
                   <td className="border-b p-2 text-sm sm:text-base dark:border-gray-700">
                     <span
-                      className={`px-2 py-1 rounded ${transaction.type === 'INCOME' ? 'bg-green-200 dark:bg-green-700' : 'bg-red-200 dark:bg-red-700'}`}
+                      className={`px-2 py-1 rounded ${transaction.type === 'INCOME' ? 'bg-green-200 dark:bg-green-700' : transaction.type === 'SAVING' ? 'bg-green-400 dark:bg-green-800' : 'bg-red-200 dark:bg-red-700'}`}
                     >
                       {transaction.category.name}
                     </span>

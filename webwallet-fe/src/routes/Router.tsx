@@ -22,8 +22,8 @@ import { AuthProvider } from '../context/AuthContext';
 
 function Router() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
         {/* PRIVATE ROUTES */}
         <Routes>
           <Route path="/dashboard" element={<PrivateRoute />}>
@@ -57,8 +57,8 @@ function Router() {
         <Routes>
           <Route path="/not-allowed" element={<NotAllowed />} />
         </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 

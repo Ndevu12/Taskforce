@@ -89,7 +89,7 @@ const Transactions: React.FC = () => {
 
   const totalTransactions = transactions.length;
   const totalIncome = transactions
-    .filter((t) => t.type === 'INCOME')
+    .filter((t) => t.type === 'INCOME' || t.type === 'SAVING')
     .reduce((sum, t) => sum + t.amount, 0);
   const totalExpenses = transactions
     .filter((t) => t.type === 'EXPENSE')
@@ -116,7 +116,7 @@ const Transactions: React.FC = () => {
           )}
         </div>
         <div className="p-4 bg-green-100 dark:bg-green-800 text-green-800 dark:text-green-300 shadow rounded">
-          <h2 className="text-lg font-bold">Total Income</h2>
+          <h2 className="text-lg font-bold">Total Revenue</h2>
           {loading ? (
             <div className="animate-pulse h-8 bg-gray-200 dark:bg-gray-700 rounded"></div>
           ) : (
