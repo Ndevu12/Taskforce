@@ -21,7 +21,6 @@ const AccountFormModal: React.FC<AccountFormModalProps> = ({
     balance: 0,
     currency: 'RWF',
     isActive: true,
-    accountNumber: '',
   });
 
   useEffect(() => {
@@ -116,20 +115,6 @@ const AccountFormModal: React.FC<AccountFormModalProps> = ({
               readOnly
               className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
               title="Currency"
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block mb-1 text-gray-700 dark:text-gray-300">
-              Account Number
-            </label>
-            <input
-              type="text"
-              name="accountNumber"
-              value={account.accountNumber}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded dark:bg-gray-700 dark:text-gray-300"
-              placeholder="Enter account number"
-              title="Account Number"
             />
           </div>
           <div className="mb-4">

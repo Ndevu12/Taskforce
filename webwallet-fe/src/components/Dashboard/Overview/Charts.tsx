@@ -7,42 +7,74 @@ interface ChartsProps {
 }
 
 const Charts: React.FC<ChartsProps> = ({ transactions }) => {
-  const totalSpendByCategory = transactions
-    .filter((transaction) => transaction.type === 'EXPENSE')
-    .reduce(
-      (acc, curr) => {
-        acc[curr.category.name] = (acc[curr.category.name] || 0) + curr.amount;
-        return acc;
-      },
-      {} as Record<string, number>,
-    );
-
-  const budgetLimit = 10000;
-  const totalSpend = Object.values(totalSpendByCategory).reduce(
-    (acc, curr) => acc + curr,
-    0,
+  // Group transactions by type and category
+  const transactionsByTypeAndCategory = transactions.reduce(
+    (acc, curr) => {
+      if (!acc[curr.type]) {
+        acc[curr.type] = {};
+      }
+      acc[curr.type][curr.category.name] =
+        (acc[curr.type][curr.category.name] || 0) + curr.amount;
+      return acc;
+    },
+    {} as Record<string, Record<string, number>>,
   );
 
-  const spendingTrendsData = {
-    labels: Object.keys(totalSpendByCategory),
-    datasets: [
-      {
-        label: 'Spending by Category',
-        data: Object.values(totalSpendByCategory),
-        backgroundColor: 'rgba(75, 192, 192, 0.2)',
-        borderColor: 'rgba(75, 192, 192, 1)',
-        borderWidth: 1,
-      },
-    ],
+  const allCategories = [...new Set(transactions.map((t) => t.category.name))];
+
+  const chartColors = {
+    EXPENSE: {
+      backgroundColor: 'rgba(255, 99, 132, 0.2)',
+      borderColor: 'rgba(255, 99, 132, 1)',
+    },
+    INCOME: {
+      backgroundColor: 'rgba(75, 192, 192, 0.2)',
+      borderColor: 'rgba(75, 192, 192, 1)',
+    },
+    SAVING: {
+      backgroundColor: 'rgba(54, 162, 235, 0.2)',
+      borderColor: 'rgba(54, 162, 235, 1)',
+    },
   };
 
+  const spendingTrendsData = {
+    labels: allCategories,
+    datasets: Object.entries(transactionsByTypeAndCategory).map(
+      ([type, categories]) => ({
+        label: type,
+        data: allCategories.map((category) => categories[category] || 0),
+        backgroundColor:
+          chartColors[type as keyof typeof chartColors].backgroundColor,
+        borderColor: chartColors[type as keyof typeof chartColors].borderColor,
+        borderWidth: 1,
+      }),
+    ),
+  };
+
+  // Calculate totals for the budget progress chart
+  const totalsByType = Object.entries(transactionsByTypeAndCategory).reduce(
+    (acc, [type, categories]) => {
+      acc[type] = Object.values(categories).reduce(
+        (sum, amount) => sum + amount,
+        0,
+      );
+      return acc;
+    },
+    {} as Record<string, number>,
+  );
+
   const budgetProgressData = {
-    labels: ['Spent', 'Remaining'],
+    labels: Object.keys(totalsByType),
     datasets: [
       {
-        data: [totalSpend, budgetLimit - totalSpend],
-        backgroundColor: ['rgba(255, 99, 132, 0.2)', 'rgba(54, 162, 235, 0.2)'],
-        borderColor: ['rgba(255, 99, 132, 1)', 'rgba(54, 162, 235, 1)'],
+        data: Object.values(totalsByType),
+        backgroundColor: Object.keys(totalsByType).map(
+          (type) =>
+            chartColors[type as keyof typeof chartColors].backgroundColor,
+        ),
+        borderColor: Object.keys(totalsByType).map(
+          (type) => chartColors[type as keyof typeof chartColors].borderColor,
+        ),
         borderWidth: 1,
       },
     ],
@@ -50,9 +82,13 @@ const Charts: React.FC<ChartsProps> = ({ transactions }) => {
 
   return (
     <section className="flex flex-wrap gap-4">
-      <ChartCard title="Spending Trends" type="bar" data={spendingTrendsData} />
       <ChartCard
-        title="Budget Progress"
+        title="Transaction Analysis by Category"
+        type="bar"
+        data={spendingTrendsData}
+      />
+      <ChartCard
+        title="Transaction Distribution"
         type="doughnut"
         data={budgetProgressData}
       />

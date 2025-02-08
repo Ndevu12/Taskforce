@@ -1,53 +1,46 @@
-import axios from 'axios';
+import axios, { AxiosError } from 'axios';
+import { getErrorMessage, ApiError } from '../utils/errorHandler';
 
 const API_URL = import.meta.env.VITE_BASE_URL;
 
 export const register = async (name: string, email: string, password: string) => {
   try {
     const role = 'user';
-    const response = await axios.post(`${API_URL}/auth`, { name, email, password, role });
-    if (response.status === 409) {
-      return "Conflict";
-    }
-
-    if (response.status !== 201) {
-      throw new Error(response.data.message || 'Registration failed');
-    }
+    const response = await axios.post<{ message: string }>(`${API_URL}/auth`, { 
+      name, email, password, role 
+    });
     return response.data;
   } catch (error) {
-    const err = error as any;
-    throw new Error(err.response?.message || 'Registration failed');
+    const err = error as AxiosError<ApiError>;
+    throw new Error(getErrorMessage(err));
   }
 };
 
 export const login = async (email: string, password: string) => {
   try {
-    const response = await axios.post(`${API_URL}/auth/login`, { email, password });
-
-    if (response.status !== 200) {
-      throw new Error(response.data.message || 'Login failed');
-    }
+    const response = await axios.post<{ token: string; message: string }>(
+      `${API_URL}/auth/login`, 
+      { email, password }
+    );
     return response.data;
   } catch (error) {
-    const err = error as any;
-    throw new Error(err.response?.data?.message || 'Login failed');
+    const err = error as AxiosError<ApiError>;
+    throw new Error(getErrorMessage(err));
   }
 };
 
 export const logout = async (token: string) => {
   try {
-    const response = await axios.post(`${API_URL}/auth/logout`, {}, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (response.status !== 200) {
-      throw new Error(response.data.message || 'Logout failed');
-    }
+    const response = await axios.post<{ message: string }>(
+      `${API_URL}/auth/logout`, 
+      {}, 
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
     return response.data;
   } catch (error) {
-    const err = error as any;
-    throw new Error(err.response?.data?.message || 'Logout failed');
+    const err = error as AxiosError<ApiError>;
+    throw new Error(getErrorMessage(err));
   }
 };

@@ -10181,3 +10181,41 @@
 {"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-02-06 18:10:56"}
 {"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-02-06 18:10:56"}
 {"level":"info","message":"Client connected","service":"user-service","timestamp":"2025-02-06 18:10:57"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-02-08 20:17:15"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-02-08 20:17:17"}
+{"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-02-08 20:17:17"}
+{"level":"info","message":"Client connected","service":"user-service","timestamp":"2025-02-08 20:37:55"}
+{"level":"info","message":"Client disconnected","service":"user-service","timestamp":"2025-02-08 20:38:14"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-02-08 20:41:18"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-02-08 20:41:20"}
+{"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-02-08 20:41:20"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-02-08 20:52:19"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-02-08 20:52:21"}
+{"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-02-08 20:52:21"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-02-08 20:55:21"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-02-08 20:55:23"}
+{"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-02-08 20:55:23"}
+{"level":"info","message":"Client connected","service":"user-service","timestamp":"2025-02-08 21:26:29"}
+{"level":"info","message":"Client disconnected","service":"user-service","timestamp":"2025-02-08 21:27:53"}
+{"level":"info","message":"Client connected","service":"user-service","timestamp":"2025-02-08 21:27:55"}
+{"level":"info","message":"Client disconnected","service":"user-service","timestamp":"2025-02-08 21:30:45"}
+{"level":"info","message":"Client connected","service":"user-service","timestamp":"2025-02-08 21:30:47"}
+{"level":"info","message":"Client disconnected","service":"user-service","timestamp":"2025-02-08 21:48:48"}
+{"level":"info","message":"Client connected","service":"user-service","timestamp":"2025-02-08 21:49:43"}
+{"level":"info","message":"Client disconnected","service":"user-service","timestamp":"2025-02-08 21:56:55"}
+{"level":"info","message":"Client connected","service":"user-service","timestamp":"2025-02-08 21:57:01"}
+{"level":"info","message":"Client connected","service":"user-service","timestamp":"2025-02-08 22:15:07"}
+{"level":"info","message":"Client connected","service":"user-service","timestamp":"2025-02-08 22:15:08"}
+{"level":"info","message":"Client disconnected","service":"user-service","timestamp":"2025-02-08 22:15:25"}
+{"level":"info","message":"Client disconnected","service":"user-service","timestamp":"2025-02-08 22:15:25"}
+{"level":"info","message":"Client connected","service":"user-service","timestamp":"2025-02-08 22:15:31"}
+{"level":"info","message":"Client connected","service":"user-service","timestamp":"2025-02-08 22:15:31"}
+{"level":"info","message":"Client disconnected","service":"user-service","timestamp":"2025-02-08 22:16:36"}
+{"level":"info","message":"Client disconnected","service":"user-service","timestamp":"2025-02-08 22:16:37"}
+{"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-02-08 22:36:07"}
+{"level":"info","message":"Client connected","service":"user-service","timestamp":"2025-02-08 22:36:10"}
+{"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-02-08 22:37:30"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-02-08 22:37:51"}
+{"level":"info","message":"Client connected","service":"user-service","timestamp":"2025-02-08 22:37:52"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-02-08 22:37:53"}
+{"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-02-08 22:37:54"}

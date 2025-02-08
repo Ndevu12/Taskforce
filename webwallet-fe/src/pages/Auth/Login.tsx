@@ -8,15 +8,16 @@ const Login: React.FC = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string>('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
     setLoading(true);
     try {
-      login(email, password, navigate);
+      await login(email, password, navigate);
     } catch (error: any) {
-      console.log({ error });
-      alert(error.message);
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -28,6 +29,11 @@ const Login: React.FC = () => {
         <h2 className="text-2xl font-bold mb-6 text-gray-700 dark:text-gray-300">
           Login
         </h2>
+        {error && (
+          <div className="mb-4 p-2 bg-red-100 border border-red-400 text-red-700 rounded">
+            {error}
+          </div>
+        )}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-700 dark:text-gray-300 mb-2">

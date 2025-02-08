@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Account } from '../../../interfaces/Account';
 import Pagination from '../../common/Pagination';
+import formatMoney from '../../../utils/formatMoney';
 
 interface AccountTableProps {
   accounts: Account[];
@@ -84,7 +85,7 @@ const AccountTable: React.FC<AccountTableProps> = ({
                   {account.type}
                 </td>
                 <td className="py-2 px-4 border-b dark:border-gray-700 text-left">
-                  {account.balance}
+                  {formatMoney(account.balance)}
                 </td>
                 <td className="py-2 px-4 border-b dark:border-gray-700 text-left">
                   <span

@@ -10,6 +10,7 @@ const Register: React.FC = () => {
   const { register } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string>('');
 
   const validateEmail = (email: string) => {
     const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -18,27 +19,30 @@ const Register: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+
     if (name.length < 3 || name.length > 30) {
-      alert('Name must be between 3 and 30 characters');
+      setError('Name must be between 3 and 30 characters');
       return;
     }
     if (!validateEmail(email)) {
-      alert('Invalid email address');
+      setError('Invalid email address');
       return;
     }
     if (password.length < 6) {
-      alert('Password must be at least 6 characters');
+      setError('Password must be at least 6 characters');
       return;
     }
     if (password !== confirmPassword) {
-      alert('Passwords do not match');
+      setError('Passwords do not match');
       return;
     }
+
     setLoading(true);
     try {
       await register({ name, email, password }, navigate);
     } catch (error: any) {
-      alert(error.message);
+      setError(error.message);
     } finally {
       setLoading(false);
     }
@@ -50,6 +54,11 @@ const Register: React.FC = () => {
         <h2 className="text-2xl font-bold mb-6 text-gray-700 dark:text-gray-300">
           Register
         </h2>
+        {error && (
+          <div className="mb-4 p-2 bg-red-100 border border-red-400 text-red-700 rounded">
+            {error}
+          </div>
+        )}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-700 dark:text-gray-300 mb-2">
