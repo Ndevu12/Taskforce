@@ -1,35 +1,33 @@
 import Budget from '../models/Budget';
-import Notification from '../models/Notification';
 import Transaction from '../models/Transaction';
 import Category from '../models/Category';
 import { IBudget } from '../types/interfaces/IBudget';
 import { ITransaction } from '../types/interfaces/ITransaction';
-import { BudgetPeriod } from '../types/enums/BudgetPeriod';
-import { ReportType } from '../types/enums/ReportType';
 import { NotificationType } from '../types/enums/NotificationType';
-import { autoGenerateReports } from './ReportService';
 import { createNotification } from './NotificationService';
 import mongoose from 'mongoose';
 import { findUserById } from './UserService';
 import { INotification } from '../types/interfaces/INotification';
-import { io } from '../app';
+import { isExpenseCategory } from '../utils/categoryUtils';
+import logger from '../utils/logger';
+import NotificationGatewayService from './NotificationGatewayService';
 
 export const createBudget = async (budgetData: IBudget) => {
-  const budget = new Budget(budgetData);
-  const savedBudget = await budget.save();
-  io.emit('budgetCreated', savedBudget);
-
-  const notificationData: Partial<INotification> = {
-    user: budget.user,
-    type: NotificationType.BUDGET_THRESHOLD,
-    message: `A new budget has been created for ${budget.description}.`,
-    read: false,
-    link: '/dashboard/budgets',
-  };
-  await createNotification(notificationData as INotification);
-
-  await checkBudgetExceed(savedBudget);
-  return savedBudget;
+  try {
+    const budget = new Budget(budgetData);
+    const savedBudget = await budget.save();
+    
+    if (savedBudget) {
+    await NotificationGatewayService.createBudgetCreatedNotification(
+      savedBudget.user.toString(),
+      savedBudget?.description || 'New'
+    );
+  }
+    return savedBudget;
+  } catch (error) {
+    logger.error(`Error creating budget: ${error}`);
+    throw error;
+  }
 };
 
 export const getBudgetsByUser = async (userId: string) => {
@@ -38,15 +36,13 @@ export const getBudgetsByUser = async (userId: string) => {
 
 export const updateBudgetById = async (budgetId: string, updateData: Partial<IBudget>) => {
   const updatedBudget = await Budget.findByIdAndUpdate(budgetId, updateData, { new: true });
-  io.emit('budgetUpdated', updatedBudget);
 
   if (updatedBudget) {
     const notificationData: Partial<INotification> = {
       user: updatedBudget.user,
       type: NotificationType.BUDGET_THRESHOLD,
       message: `The budget for ${updatedBudget.description} has been updated.`,
-      read: false,
-      link: '/dashboard/budgets',
+      read: false
     };
     await createNotification(notificationData as INotification);
   }
@@ -75,15 +71,13 @@ export const deleteBudgetById = async (budgetId: string): Promise<boolean> => {
   }
 
   const deletedBudget = await Budget.findByIdAndDelete(budgetId);
-  io.emit('budgetDeleted', budgetId);
 
-  if (budget) {
+  if (deletedBudget) {
     const notificationData: Partial<INotification> = {
       user: budget.user,
       type: NotificationType.BUDGET_THRESHOLD,
       message: `The budget for ${budget.description} has been deleted.`,
-      read: false,
-      link: '/dashboard/budgets',
+      read: false
     };
     await createNotification(notificationData as INotification);
   }
@@ -108,145 +102,219 @@ const checkBudgetExceed = async (budget: IBudget) => {
   const totalSpent = transactions.reduce((sum, transaction) => sum + transaction.amount, 0);
 
   if (totalSpent > budget.amount) {
-    const userId = budget.user;
-    let exceededSchedule = await findExceededReportScheduleByUser(userId);
-    if (!exceededSchedule) {
-      const reportScheduleData = {
-        user: userId,
-        type: BudgetPeriod.EXCEEDED,
-        startDate: null,
-        endDate: null
-      };
-    }
-
-    let reportData;
-    if (exceededSchedule) {
-      reportData = await autoGenerateReports(
-        user._id as unknown as mongoose.Schema.Types.ObjectId,
-        undefined,
-        BudgetPeriod.EXCEEDED
-      );
-    }
-
     const category = await Category.findById(budget.category);
     const categoryName = category ? category.name : 'Expense';
 
-    const notificationData: Partial<INotification> = {
-      user: budget.user,
-      type: NotificationType.BUDGET_THRESHOLD,
-      message: `Your budget for ${categoryName} has exceeded the limit. \n\nBudget description: ${budget.description}`,
-      read: false,
-      link: '/dashboard/budgets',
-    };
-
-    try {
-      await createNotification(notificationData as INotification);
-    } catch (error: any) {
-      return null;
-    }
-
-    io.emit('budgetExceeded', budget);
+    // Create budget exceeded notification
+    await NotificationGatewayService.createBudgetExceededNotification(
+      budget.user.toString(),
+      budget.description || 'Unnamed Budget',
+      categoryName
+    );
   }
 };
 
 export const checkBudgetExceedForTransaction = async (transaction: ITransaction) => {
-  const budgets = await getBudgetsByUser(transaction.user);
-  if (budgets.length === 0) {
-    return;
-  }
-
-  const filteredBudgets = budgets.filter(budget => {
-    return budget.startDate <= transaction.date && budget.endDate >= transaction.date;
-  });
-
-  if (filteredBudgets.length === 0) {
-    return;
-  }
-
-  for (const budget of filteredBudgets) {
-    const transactions = await Transaction.find({
-      user: budget.user,
-      category: budget.category,
-      date: { $gte: budget.startDate, $lte: budget.endDate }
-    });
-
-    const totalSpent = transactions.reduce((sum, trans) => sum + trans.amount, 0);
-    if (totalSpent > budget.amount) {
-      const userId = budget.user;
-      let exceededSchedule = await findExceededReportScheduleByUser(userId);
-
-      let reportData;
-      if (exceededSchedule) {
-        reportData = await autoGenerateReports(
-          userId as unknown as mongoose.Schema.Types.ObjectId,
-          undefined,
-          BudgetPeriod.EXCEEDED
-        );
-      }
-
-      const category = await Category.findById(budget.category);
-      const categoryName = category ? category.name : 'EXPENSE';
-
-      const notificationData: Partial<INotification> = {
-        user: budget.user,
-        type: NotificationType.BUDGET_THRESHOLD,
-        message: `Your budget for ${categoryName} has exceeded the limit. \n\nBudget description: ${budget.description}`,
-        read: false,
-        link: '/dashboard/budgets',
-      };
-      
-      try {
-        await createNotification(notificationData as INotification);
-      } catch (error: any) {
-        return null;
-      }
-
-      io.emit('budgetExceeded', budget);
+  try {
+    // Check if this is an expense category transaction and has a budget
+    const isExpense = await isExpenseCategory(transaction.category.toString());
+    if (!isExpense || !transaction.budget) {
+      return null;
     }
+    
+    const budget = await Budget.findById(transaction.budget).populate('category');
+    if (!budget) {
+      return null;
+    }
+    
+    const spentPercentage = (budget.currentSpent / budget.amount) * 100;
+    const category = budget.category as any;
+    const categoryName = category?.name || 'this category';
+    
+    if (spentPercentage >= budget.notificationThreshold && spentPercentage < 100) {
+      return {
+        message: `Warning: You've spent ${spentPercentage.toFixed(0)}% of your budget for ${budget.description || categoryName}`,
+        threshold: budget.notificationThreshold,
+        percentage: spentPercentage,
+        budgetId: budget._id,
+        categoryName
+      };
+    } else if (spentPercentage >= 100) {
+      return {
+        message: `Alert: You've exceeded your budget for ${budget.description || categoryName}`,
+        threshold: 100,
+        percentage: spentPercentage,
+        budgetId: budget._id,
+        categoryName
+      };
+    }
+    
+    return null;
+  } catch (error) {
+    console.error('Error checking budget exceed:', error);
+    return null;
   }
 };
 
-export const updateBudgetOnTransactionCreate = async (transactionData: ITransaction) => {
-  const budgets = await Budget.find({ user: transactionData.user });
+export const updateBudgetOnTransactionCreate = async (
+  transaction: ITransaction,
+  session?: mongoose.ClientSession
+) => {
+  try {
+    // Check if the transaction has an expense category and a budget
+    const isExpense = await isExpenseCategory(transaction.category.toString());
+    if (!isExpense || !transaction.budget) {
+      return null;
+    }
 
-  if (budgets.length === 0) {
-    return;
-  }
+    const budget = session 
+      ? await Budget.findById(transaction.budget).session(session) 
+      : await Budget.findById(transaction.budget);
+      
+    if (!budget) {
+      return null;
+    }
 
-  const dateFilteredBudgets = budgets.filter(budget =>
-    budget.startDate <= transactionData.date && budget.endDate >= transactionData.date
-  );
+    // Ensure transaction is within budget date range
+    if (transaction.date < budget.startDate || transaction.date > budget.endDate) {
+      return null; // Transaction date outside budget period
+    }
 
-  if (dateFilteredBudgets.length === 0) {
-    return;
-  }
-
-  for (const budget of dateFilteredBudgets) {
-    budget.currentSpent += transactionData.amount;
-    await budget.save();
-    await checkBudgetExceed(budget);
+    budget.currentSpent += transaction.amount;
+    
+    const updatedBudget = session 
+      ? await budget.save({ session }) 
+      : await budget.save();
+      
+    await checkBudgetExceed(updatedBudget);
+    return updatedBudget;
+  } catch (error) {
+    console.error('Error updating budget on transaction create:', error);
+    return null;
   }
 };
 
-export const updateBudgetOnTransactionUpdate = async (existingTransaction: ITransaction, updatedTransaction: ITransaction) => {
-  const budgets = await Budget.find({ user: updatedTransaction.user });
+export const updateBudgetOnTransactionUpdate = async (
+  oldTransaction: ITransaction,
+  newTransaction: ITransaction,
+  session?: mongoose.ClientSession
+) => {
+  try {
+    // Check old and new transaction categories
+    const wasExpense = await isExpenseCategory(oldTransaction.category.toString());
+    const isExpense = await isExpenseCategory(newTransaction.category.toString());
+    
+    // Handle case where an expense transaction is being modified
+    if (wasExpense && isExpense) {
+      // If budget changed, update both old and new budgets
+      if (oldTransaction.budget?.toString() !== newTransaction.budget?.toString()) {
+        // Decrease amount in old budget if it exists
+        if (oldTransaction.budget) {
+          const oldBudget = session 
+            ? await Budget.findById(oldTransaction.budget).session(session) 
+            : await Budget.findById(oldTransaction.budget);
+            
+          if (oldBudget) {
+            oldBudget.currentSpent -= oldTransaction.amount;
+            session ? await oldBudget.save({ session }) : await oldBudget.save();
+          }
+        }
+        
+        // Increase amount in new budget if it exists
+        if (newTransaction.budget) {
+          const newBudget = session 
+            ? await Budget.findById(newTransaction.budget).session(session) 
+            : await Budget.findById(newTransaction.budget);
+            
+          if (newBudget) {
+            newBudget.currentSpent += newTransaction.amount;
+            session ? await newBudget.save({ session }) : await newBudget.save();
+          }
+        }
+      } 
+      // If same budget but amount changed
+      else if (oldTransaction.amount !== newTransaction.amount && newTransaction.budget) {
+        const budget = session 
+          ? await Budget.findById(newTransaction.budget).session(session) 
+          : await Budget.findById(newTransaction.budget);
+          
+        if (budget) {
+          // Adjust by the difference
+          const amountDifference = newTransaction.amount - oldTransaction.amount;
+          budget.currentSpent += amountDifference;
+          session ? await budget.save({ session }) : await budget.save();
+        }
+      }
+    } 
+    // Handle case where transaction category changed to or from expense
+    else if (wasExpense && !isExpense) {
+      // Remove amount from old budget
+      if (oldTransaction.budget) {
+        const oldBudget = session 
+          ? await Budget.findById(oldTransaction.budget).session(session) 
+          : await Budget.findById(oldTransaction.budget);
+          
+        if (oldBudget) {
+          oldBudget.currentSpent -= oldTransaction.amount;
+          session ? await oldBudget.save({ session }) : await oldBudget.save();
+        }
+      }
+    } 
+    else if (!wasExpense && isExpense) {
+      // Add amount to new budget
+      if (newTransaction.budget) {
+        const newBudget = session 
+          ? await Budget.findById(newTransaction.budget).session(session) 
+          : await Budget.findById(newTransaction.budget);
+          
+        if (newBudget) {
+          newBudget.currentSpent += newTransaction.amount;
+          session ? await newBudget.save({ session }) : await newBudget.save();
+        }
+      }
+    }
 
-  if (budgets.length === 0) {
-    return;
+    return null;
+  } catch (error) {
+    console.error('Error updating budget on transaction update:', error);
+    return null;
   }
+};
 
-  const dateFilteredBudgets = budgets.filter(budget =>
-    budget.startDate <= updatedTransaction.date && budget.endDate >= updatedTransaction.date
-  );
+export const updateBudgetOnTransactionDelete = async (
+  transaction: ITransaction,
+  session?: mongoose.ClientSession
+) => {
+  try {
+    // Check if the transaction is an expense and has a budget
+    const isExpense = await isExpenseCategory(transaction.category.toString());
+    if (!isExpense || !transaction.budget) {
+      return null;
+    }
 
-  if (dateFilteredBudgets.length === 0) {
-    return;
+    const budget = session 
+      ? await Budget.findById(transaction.budget).session(session) 
+      : await Budget.findById(transaction.budget);
+      
+    if (!budget) {
+      return null;
+    }
+
+    budget.currentSpent -= transaction.amount;
+    
+    return session 
+      ? await budget.save({ session }) 
+      : await budget.save();
+  } catch (error) {
+    console.error('Error updating budget on transaction delete:', error);
+    return null;
   }
+};
 
-  for (const budget of dateFilteredBudgets) {
-    budget.currentSpent -= existingTransaction.amount;
-    budget.currentSpent += updatedTransaction.amount;
-    await budget.save();
-    await checkBudgetExceed(budget);
-  }
+/**
+ * Check if budget has any associated transactions
+ */
+export const checkBudgetHasTransactions = async (budgetId: string): Promise<boolean> => {
+  const transactionCount = await Transaction.countDocuments({ budget: budgetId });
+  return transactionCount > 0;
 };

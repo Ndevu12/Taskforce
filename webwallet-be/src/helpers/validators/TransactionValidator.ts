@@ -1,29 +1,40 @@
 import Joi from 'joi';
 
-export const validateTransactionInput = (data: any) => {
+export const validateTransactionInput = (transactionData: any) => {
   const schema = Joi.object({
-    account: Joi.string().required(),
-    category: Joi.string().required(),
-    type: Joi.string().valid('INCOME', 'EXPENSE').required(),
-    amount: Joi.number().required(),
-    description: Joi.string().optional(),
-    date: Joi.date().optional(),
-    subCategory: Joi.array().items(Joi.string().regex(/^[0-9a-fA-F]{24}$/)).optional()
+    account: Joi.string().required().messages({
+      'string.empty': 'Account is required',
+    }),
+    category: Joi.string().required().messages({
+      'string.empty': 'Category is required',
+    }),
+    amount: Joi.number().required().positive().messages({
+      'number.base': 'Amount must be a number',
+      'number.positive': 'Amount must be positive',
+      'any.required': 'Amount is required',
+    }),
+    description: Joi.string().allow('').optional(),
+    date: Joi.date().required().messages({
+      'date.base': 'Date must be a valid date',
+      'any.required': 'Date is required',
+    }),
+    budget: Joi.string().allow(null, '').optional(),
+    subCategory: Joi.array().items(Joi.string()).optional(),
   });
 
-  return schema.validate(data);
+  return schema.validate(transactionData);
 };
 
-export const validateTransactionUpdateInput = (data: any) => {
+export const validateTransactionUpdateInput = (transactionData: any) => {
   const schema = Joi.object({
     account: Joi.string().optional(),
     category: Joi.string().optional(),
-    type: Joi.string().valid('INCOME', 'EXPENSE').optional(),
-    amount: Joi.number().optional(),
-    description: Joi.string().optional(),
+    amount: Joi.number().positive().optional(),
+    description: Joi.string().allow('').optional(),
     date: Joi.date().optional(),
-    subCategory: Joi.array().items(Joi.string().regex(/^[0-9a-fA-F]{24}$/)).optional()
+    budget: Joi.string().allow(null, '').optional(),
+    subCategory: Joi.array().items(Joi.string()).optional(),
   });
 
-  return schema.validate(data);
+  return schema.validate(transactionData);
 };
