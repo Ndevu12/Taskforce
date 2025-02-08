@@ -1,16 +1,35 @@
 import User from '../models/User';
-import { hashedPassword } from '../helpers/password';
+import { hashedPassword } from '../helpers/bycrptHashingManager';
 import { IUser } from '../types';
 import { BudgetPeriod } from '../types/enums/BudgetPeriod';
+import { sendVerificationEmail } from './AuthService';
+import { sendWelcomeEmail } from '../helpers/emailHandlers/emailHandlers';
+import logger from '../utils/logger';
 
 export const createUser = async (userData: IUser) => {
-    const hashed = await hashedPassword(userData.password);
-    if (hashed) {
-        userData.password = hashed;
+    try {
+        const hashed = await hashedPassword(userData.password);
+        if (hashed) {
+            userData.password = hashed;
+        }
+        const user = new User(userData);
+        const savedUser = await user.save();
+        
+        // Send verification email
+        await sendVerificationEmail(
+            (savedUser._id as string).toString(), 
+            savedUser.email, 
+            savedUser.name
+        );
+        
+        // Send welcome email
+        await sendWelcomeEmail(savedUser.name, savedUser.email);
+        
+        return savedUser;
+    } catch (error) {
+        logger.error('Error creating user:', error);
+        throw error;
     }
-    const user = new User(userData);
-    const savedUser = await user.save();
-    return savedUser;
 };
 
 export const findUserByEmail = async (email: string) => {
@@ -31,4 +50,17 @@ export const updateUserById = async (id: string, updateData: Partial<IUser>) => 
 
 export const deleteUserById = async (id: string) => {
   return await User.findByIdAndDelete(id);
+};
+
+/**
+ * Find all users with verified email accounts
+ * @returns Array of verified users
+ */
+export const findAllVerifiedUsers = async () => {
+  try {
+    return await User.find({ isVerified: true });
+  } catch (error) {
+    logger.error('Error finding verified users:', error);
+    throw error;
+  }
 };

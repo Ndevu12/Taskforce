@@ -12,14 +12,14 @@ export const createUser = async (req: Request, res: Response) => {
   }
 
   try {
-    const { email, name } = req.body;
+    const { email } = req.body;
     const existingUser = await UserService.findUserByEmail(email);
     if (existingUser) {
-      return res.status(409).json({ error: 'User with this email or name already exists' });
+      return res.status(409).json({ error: 'User with this email already exists' });
     }
 
-    const user = await UserService.createUser(req.body);
-    res.status(201).json(user);
+    await UserService.createUser(req.body);
+    res.status(201).json({ message: 'Registration successful! Please login to continue.' });
   } catch (error: any) {
     console.log(`Failed to create user: ${error.message}`);
     res.status(500).json({ error: error.message });

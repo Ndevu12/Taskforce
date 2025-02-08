@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ProfileDisplay from '../../components/Profile/ProfileDisplay';
 import { useAuth } from '../../context/AuthContext';
-import { User, UserRole } from '../../interfaces/User';
+import { User, UserRole } from '../../types/interfaces/User';
 
 const Profile: React.FC = () => {
   const { getCurrentUser } = useAuth();

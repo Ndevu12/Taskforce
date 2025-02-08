@@ -1,5 +1,5 @@
 import React from 'react';
-import { Account } from '../../../interfaces/Account';
+import { Account } from '../../../types/interfaces/Account';
 
 interface AccountDetailsModalProps {
   isOpen: boolean;

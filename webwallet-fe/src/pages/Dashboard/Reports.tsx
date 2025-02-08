@@ -1,230 +1,173 @@
 import React, { useState, useEffect } from 'react';
-import { IReportSchedule, IReportSummary } from '../../interfaces/Report';
+import { useNavigate } from 'react-router-dom';
+import { Alert } from '@mui/material';
 import ReportTable from '../../components/Dashboard/Reports/ReportTable';
-import ScheduleTable from '../../components/Dashboard/Reports/ScheduleTable';
 import ReportDetailsModal from '../../components/Dashboard/Reports/ReportDetailsModal';
-import ScheduleFormModal from '../../components/Dashboard/Reports/ScheduleFormModal';
-import ConfirmDeleteModal from '../../components/pop-ups/ConfirmDeleteModal';
 import QuickStatistics from '../../components/Dashboard/Reports/QuickStatistics';
+import ConfirmDeleteModal from '../../components/pop-ups/ConfirmDeleteModal';
 import {
   fetchReports,
-  fetchSchedules,
-  ScheduleReport,
-  updateSchedule,
-  deleteSchedule,
+  fetchReportAnalytics,
+  deleteReport,
+  getReportDetails,
 } from '../../actions/reportActions';
-import { useNavigate } from 'react-router-dom';
+import {
+  IReport,
+  IReportSummary,
+  IReportAnalytics,
+} from '../../types/interfaces/Report';
 
 const Reports: React.FC = () => {
   const [reports, setReports] = useState<IReportSummary[]>([]);
-  const [schedules, setSchedules] = useState<IReportSchedule[]>([]);
-  const [selectedReport, setSelectedReport] = useState<IReportSummary | null>(
-    null,
-  );
-  const [selectedSchedule, setSelectedSchedule] =
-    useState<IReportSchedule | null>(null);
-  const [isReportDetailsModalOpen, setIsReportDetailsModalOpen] =
-    useState(false);
-  const [isScheduleFormModalOpen, setIsScheduleFormModalOpen] = useState(false);
-  const [isConfirmDeleteModalOpen, setIsConfirmDeleteModalOpen] =
-    useState(false);
-  const [totalReports, setTotalReports] = useState(0);
-  const [exceededReports, setExceededReports] = useState(0);
+  const [analytics, setAnalytics] = useState<IReportAnalytics | null>(null);
+  const [selectedReport, setSelectedReport] = useState<IReport | null>(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [reportToDelete, setReportToDelete] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [analyticsLoading, setAnalyticsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const loadReports = async () => {
-      try {
-        const data = await fetchReports();
-        if (typeof data === 'string' && data === 'Unauthorized') {
-          alert('Access expired. Please, Login again!');
-          return navigate('/login');
-        }
-        if (typeof data === 'string') {
-          alert('Failed to load reports');
-          return;
-        }
-        const reportSummaries = data.map((report) => {
-          const transactions = (report.data as any)?.transactions || [];
-          const totalTransactions = transactions.length;
-          const totalIncome = transactions
-            .filter((transaction: any) => transaction.type === 'INCOME')
-            .reduce(
-              (sum: number, transaction: any) => sum + transaction.amount,
-              0,
-            );
-          const totalExpense = transactions
-            .filter((transaction: any) => transaction.type === 'EXPENSE')
-            .reduce(
-              (sum: number, transaction: any) => sum + transaction.amount,
-              0,
-            );
-
-          return {
-            _id: (report as any)._id,
-            title: report.title,
-            createdAt: (report as any).createdAt,
-            totalTransactions,
-            totalIncome,
-            totalExpense,
-            scheduleType: (report.schedule as any).type,
-          };
-        });
-        setReports(reportSummaries);
-        setTotalReports(reportSummaries.length);
-        setExceededReports(
-          reportSummaries.filter(
-            (report) => report.totalExpense > report.totalIncome,
-          ).length,
-        );
-      } catch (err) {
-        console.error('Failed to load reports', err);
-      }
-    };
-
-    const loadSchedules = async () => {
-      try {
-        const data = await fetchSchedules();
-        if (typeof data === 'string' && data === 'Unauthorized') {
-          alert('Access expired. Please, Login again!');
-          return navigate('/login');
-        }
-        if (typeof data === 'string') {
-          alert('Failed to load schedules');
-          return;
-        }
-        const filteredSchedules = data.filter(
-          (schedule) => schedule.type !== 'EXCEEDED',
-        );
-        setSchedules(filteredSchedules);
-      } catch (err) {
-        console.error('Failed to load schedules', err);
-      }
-    };
-
-    loadReports();
-    loadSchedules();
-  }, []);
-
-  const handleSaveSchedule = async (schedule: IReportSchedule) => {
+  const loadData = async () => {
     try {
-      if (schedule._id) {
-        await updateSchedule(schedule);
-      } else {
-        await ScheduleReport(schedule);
-      }
-      const updatedSchedules = await fetchSchedules();
-      if (
-        typeof updatedSchedules === 'string' &&
-        updatedSchedules === 'Unauthorized'
-      ) {
-        alert('Access expired. Please, Login again!');
-        return navigate('/login');
-      }
-      if (typeof updatedSchedules === 'string') {
-        alert('Failed to save schedule');
+      setLoading(true);
+      setError(null);
+
+      // Fetch reports
+      const reportsData = await fetchReports();
+      if (typeof reportsData === 'string' && reportsData === 'Unauthorized') {
+        navigate('/login');
         return;
       }
 
-      const filteredSchedules = updatedSchedules.filter(
-        (schedule) => schedule.type !== 'EXCEEDED',
+      setReports(
+        Array.isArray(reportsData)
+          ? reportsData.map((report) => ({
+              ...report,
+              summary: {
+                transactionCount: 0,
+                totalIncome: 0,
+                totalExpense: 0,
+                netAmount: 0,
+              },
+            }))
+          : [],
       );
-      setSchedules(filteredSchedules);
-    } catch (err) {
-      console.error('Failed to save schedule', err);
+
+      // Fetch analytics
+      setAnalyticsLoading(true);
+      const analyticsData = await fetchReportAnalytics();
+      if (
+        typeof analyticsData === 'string' &&
+        analyticsData === 'Unauthorized'
+      ) {
+        navigate('/login');
+        return;
+      }
+      setAnalytics(analyticsData);
+      setAnalyticsLoading(false);
+    } catch (err: any) {
+      setError(err.message || 'Error loading reports data');
+      console.error('Error loading reports:', err);
+    } finally {
+      setLoading(false);
     }
   };
 
-  const handleDeleteSchedule = async () => {
-    if (selectedSchedule) {
-      try {
-        await deleteSchedule(selectedSchedule._id);
-        const updatedSchedules = await fetchSchedules();
-        if (
-          typeof updatedSchedules === 'string' &&
-          updatedSchedules === 'Unauthorized'
-        ) {
-          alert('Access expired. Please, Login again!');
-          return navigate('/login');
-        }
+  useEffect(() => {
+    loadData();
+  }, [navigate]);
 
-        if (typeof updatedSchedules === 'string') {
-          alert('Failed to delete schedule');
-          return;
-        }
-
-        const filteredSchedules = updatedSchedules.filter(
-          (schedule) => schedule.type !== 'EXCEEDED',
-        );
-        setSchedules(filteredSchedules);
-        setIsConfirmDeleteModalOpen(false);
-      } catch (err) {
-        console.error('Failed to delete schedule', err);
+  const handleViewReport = async (report: IReportSummary) => {
+    try {
+      setLoading(true);
+      const reportDetails = await getReportDetails(report._id);
+      if (
+        typeof reportDetails === 'string' &&
+        reportDetails === 'Unauthorized'
+      ) {
+        navigate('/login');
+        return;
       }
+      setSelectedReport(reportDetails as IReport);
+    } catch (err: any) {
+      setError(err.message || 'Failed to load report details');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleDeleteReport = (reportId: string) => {
+    setReportToDelete(reportId);
+    setIsDeleteModalOpen(true);
+  };
+
+  const handleConfirmDelete = async () => {
+    if (!reportToDelete) return;
+
+    try {
+      setLoading(true);
+      const result = await deleteReport(reportToDelete);
+      if (result === 'Unauthorized') {
+        navigate('/login');
+        return;
+      }
+
+      // Refresh data after deletion
+      await loadData();
+    } catch (err: any) {
+      setError(err.message || 'Failed to delete report');
+    } finally {
+      setLoading(false);
+      setIsDeleteModalOpen(false);
+      setReportToDelete(null);
     }
   };
 
   return (
-    <div className="p-4 dark:bg-gray-900 dark:text-white">
+    <div className="p-4 bg-white dark:bg-gray-900 dark:text-white">
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-2xl font-bold">Reports</h2>
-        <button
-          className="bg-blue-500 text-white p-2 rounded-lg"
-          onClick={() => setIsScheduleFormModalOpen(true)}
-        >
-          Schedule new Reporting time
-        </button>
+        <h1 className="text-2xl font-bold">Reports</h1>
       </div>
-      <QuickStatistics
-        totalReports={totalReports}
-        exceededReports={exceededReports}
-      />
-      <div className="flex justify-between items-center mt-7 mb-4">
-        <h2 className="text-2xl font-bold">Auto-Generated Reports</h2>
+
+      {error && (
+        <Alert severity="error" className="mb-4" onClose={() => setError(null)}>
+          {error}
+        </Alert>
+      )}
+
+      <QuickStatistics analytics={analytics} isLoading={analyticsLoading} />
+
+      <div className="mt-6">
+        <h2 className="text-lg font-semibold mb-2">Your Reports</h2>
+        <ReportTable
+          reports={reports}
+          onView={handleViewReport}
+          onDelete={handleDeleteReport}
+          isLoading={loading}
+        />
       </div>
-      <ReportTable
-        reports={reports}
-        onView={(report) => {
-          setSelectedReport(report);
-          setIsReportDetailsModalOpen(true);
-        }}
-        onDelete={(report) => {
-          setSelectedReport(report);
-          setIsConfirmDeleteModalOpen(true);
-        }}
-      />
-      <h2 className="text-2xl font-bold mt-8">Scheduled Reports</h2>
-      <ScheduleTable
-        schedules={schedules}
-        onView={(schedule) => {
-          setSelectedSchedule(schedule);
-          setIsScheduleFormModalOpen(true);
-        }}
-        onDelete={(schedule) => {
-          setSelectedSchedule(schedule);
-          setIsConfirmDeleteModalOpen(true);
-        }}
-      />
-      {isReportDetailsModalOpen && selectedReport && (
+
+      {/* Report details modal */}
+      {selectedReport && (
         <ReportDetailsModal
           report={selectedReport}
-          onClose={() => setIsReportDetailsModalOpen(false)}
+          onClose={() => {
+            setSelectedReport(null);
+          }}
         />
       )}
-      {isScheduleFormModalOpen && (
-        <ScheduleFormModal
-          schedule={selectedSchedule}
-          onClose={() => setIsScheduleFormModalOpen(false)}
-          onSave={handleSaveSchedule}
-        />
-      )}
-      {isConfirmDeleteModalOpen && (
-        <ConfirmDeleteModal
-          isOpen={isConfirmDeleteModalOpen}
-          onConfirm={handleDeleteSchedule}
-          onCancel={() => setIsConfirmDeleteModalOpen(false)}
-        />
-      )}
+
+      {/* Confirm delete modal */}
+      <ConfirmDeleteModal
+        isOpen={isDeleteModalOpen}
+        onCancel={() => {
+          setIsDeleteModalOpen(false);
+          setReportToDelete(null);
+        }}
+        onConfirm={handleConfirmDelete}
+        message="Are you sure you want to delete this report? This action cannot be undone."
+      />
     </div>
   );
 };

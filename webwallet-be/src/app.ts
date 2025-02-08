@@ -2,13 +2,13 @@ import express, { Application } from "express";
 import cors from "cors";
 import dotenv from 'dotenv';
 import morgan from 'morgan';
-import path from 'path';
 import connectDB from "./mongooseConfig";
 import router from "./routes";
 import http from 'http';
-import { Server } from 'socket.io';
 import logger from './utils/logger';
 import { ServerHomeTemplate } from "./utils/serverHomeTemplate";
+import { initializeSocketServer } from './startUps/socketServer';
+import { initializeSchedulerServer } from './startUps/schedulerServer';
 
 dotenv.config();
 const client_url = process.env.CLIENT_URL;
@@ -17,13 +17,15 @@ if (!client_url) {
     process.exit(1);
 }
 
+// Create Express app and HTTP server
 const app: Application = express();
 const server = http.createServer(app);
-const io = new Server(server, {
-  cors: {
-    origin: client_url,
-  },
-});
+
+// Initialize socket.io server
+const io = initializeSocketServer(server);
+
+
+initializeSchedulerServer();
 
 const corsOptions = {
     origin: client_url,
@@ -46,18 +48,10 @@ app.get('/', (req, res) => {
 
 app.use(router);
 
-// WebSocket connection
-io.on('connection', (socket) => {
-  logger.info('Client connected');
-  socket.on('disconnect', () => {
-    logger.info('Client disconnected');
-  });
-});
-
 const PORT = process.env.PORT || 3000;
 
 server.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+    logger.info(`Server is running on http://localhost:${PORT}`);
 });
 
 export { server, io };

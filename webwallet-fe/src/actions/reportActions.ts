@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IReport, IReportSchedule } from '../interfaces/Report';
+import { IReport } from '../types/interfaces/Report';
 import { getAuthHeaders } from './APIHeader';
 
 const API_URL = import.meta.env.VITE_BASE_URL;
@@ -8,69 +8,80 @@ if (!API_URL) {
     throw new Error('VITE_BASE_URL is not defined');
 }
 
+/**
+ * Fetch all reports for logged in user
+ */
 export const fetchReports = async (): Promise<IReport[] | string> => {
-  const response = await axios.get(`${API_URL}/reports/user`, getAuthHeaders());
-  if (response.status === 401) {
-    return "Unauthorized";
+  try {
+    const response = await axios.get(`${API_URL}/reports/user`, getAuthHeaders());
+    return response.data;
+  } catch (error: any) {
+    console.error('Error fetching reports:', error.response?.data || error.message);
+    if (error.response?.status === 401) {
+      return 'Unauthorized';
+    }
+    throw new Error(error.response?.data?.error || 'Failed to fetch reports');
   }
-  return response.data;
 };
 
-export const getReportById = async (reportId: string): Promise<IReport | string> => {
-    const response = await axios.get(`${API_URL}/report/${reportId}`, getAuthHeaders());
-    if (response.status === 401) {
-        return "Unauthorized";
-      }
-    return response.data;
-}
+// Remove generateTransactionReport method
 
-// APIs FOR SCHEDULING REPORTS
-export const fetchSchedules = async (): Promise<IReportSchedule[] | string> => {
-    const response = await axios.get(`${API_URL}/report/schedule/user`, getAuthHeaders());
-    if (response.status === 401) {
-        return "Unauthorized";
-      }
+// Remove generateBudgetReport method
+
+/**
+ * Get report details
+ */
+export const getReportDetails = async (reportId: string): Promise<IReport | string> => {
+  try {
+    const response = await axios.get(
+      `${API_URL}/reports/${reportId}`,
+      getAuthHeaders()
+    );
     return response.data;
+  } catch (error: any) {
+    console.error('Error fetching report details:', error.response?.data || error.message);
+    if (error.response?.status === 401) {
+      return 'Unauthorized';
+    }
+    throw new Error(error.response?.data?.error || 'Failed to fetch report details');
+  }
 };
 
-export const ScheduleReport = async (scheduleData: IReportSchedule): Promise<IReportSchedule | string> => {
-    console.log('scheduleData', scheduleData);
-    const response = await axios.post(`${API_URL}/report/schedule`, {
-        type: scheduleData.type,
-        title: scheduleData.title,
-        startDate: scheduleData.startDate,
-        endDate: scheduleData.endDate,
-    }, getAuthHeaders());
+/**
+ * Delete a report
+ */
+export const deleteReport = async (reportId: string): Promise<boolean | string> => {
+  try {
+    await axios.delete(
+      `${API_URL}/reports/${reportId}`,
+      getAuthHeaders()
+    );
+    return true;
+  } catch (error: any) {
+    console.error('Error deleting report:', error.response?.data || error.message);
+    if (error.response?.status === 401) {
+      return 'Unauthorized';
+    }
+    throw new Error(error.response?.data?.error || 'Failed to delete report');
+  }
+};
 
-    if (response.status === 401) {
-        return "Unauthorized";
-      }
+/**
+ * Get reports analytics
+ */
+export const fetchReportAnalytics = async (): Promise<any | string> => {
+  try {
+    const response = await axios.get(
+      `${API_URL}/reports/analytics`,
+      getAuthHeaders()
+    );
     return response.data;
-}
+  } catch (error: any) {
+    console.error('Error fetching report analytics:', error.response?.data || error.message);
+    if (error.response?.status === 401) {
+      return 'Unauthorized';
+    }
+    throw new Error(error.response?.data?.error || 'Failed to fetch report analytics');
+  }
+};
 
-export const updateSchedule = async (scheduleData: IReportSchedule): Promise<IReportSchedule | string> => {
-    const response = await axios.put(`${API_URL}/report/schedule/${scheduleData._id}`, {
-        type: scheduleData.type,
-        title: scheduleData.title,
-        startDate: scheduleData.startDate,
-        endDate: scheduleData.endDate,
-    }, getAuthHeaders());
-
-    if (response.status === 401) {
-        return "Unauthorized";
-      }
-    return response.data;
-}
-
-export const deleteSchedule = async (scheduleId: string): Promise<void> => {
-    await axios.delete(`${API_URL}/report/schedule/${scheduleId}`, getAuthHeaders());
-}
-
-export const getScheduleById = async (scheduleId: string): Promise<IReportSchedule | string> => {
-    const response = await axios.get(`${API_URL}/report/schedule/${scheduleId}`, getAuthHeaders());
-
-    if (response.status === 401) {
-        return "Unauthorized";
-      }
-    return response.data;
-}
