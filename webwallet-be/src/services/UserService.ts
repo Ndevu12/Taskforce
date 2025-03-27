@@ -1,7 +1,6 @@
 import User from '../models/User';
 import { hashedPassword } from '../helpers/password';
 import { IUser } from '../types';
-import ReportSchedule from '../models/ReportSchedule';
 import { BudgetPeriod } from '../types/enums/BudgetPeriod';
 
 export const createUser = async (userData: IUser) => {
@@ -11,21 +10,6 @@ export const createUser = async (userData: IUser) => {
     }
     const user = new User(userData);
     const savedUser = await user.save();
-
-    try {
-      // Create a report schedule with type EXCEEDED and no start or end dates
-      const reportSchedule = new ReportSchedule({
-          user: savedUser._id,
-          title: 'Budget Exceeded Report',
-          type: BudgetPeriod.EXCEEDED,
-          startDate: null,
-          endDate: null
-      });
-      await reportSchedule.save();
-    } catch (error: any) {
-      console.log(`Failed to create report schedule for user: ${error.message}`);
-    }
-
     return savedUser;
 };
 

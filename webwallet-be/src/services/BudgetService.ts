@@ -2,7 +2,6 @@ import Budget from '../models/Budget';
 import Notification from '../models/Notification';
 import Transaction from '../models/Transaction';
 import Category from '../models/Category';
-import ReportSchedule from '../models/ReportSchedule';
 import { IBudget } from '../types/interfaces/IBudget';
 import { ITransaction } from '../types/interfaces/ITransaction';
 import { BudgetPeriod } from '../types/enums/BudgetPeriod';
@@ -13,7 +12,6 @@ import { createNotification } from './NotificationService';
 import mongoose from 'mongoose';
 import { findUserById } from './UserService';
 import { INotification } from '../types/interfaces/INotification';
-import { createReportSchedule } from './ReportScheduleService';
 import { io } from '../app';
 
 export const createBudget = async (budgetData: IBudget) => {
@@ -68,11 +66,6 @@ export const findExceededReportScheduleByUser = async (userId: string) => {
   if (!user) {
     return null;
   }
-
-  return await ReportSchedule.findOne({
-    user: user,
-    type: BudgetPeriod.EXCEEDED
-  });
 };
 
 export const deleteBudgetById = async (budgetId: string): Promise<boolean> => {
@@ -124,18 +117,12 @@ const checkBudgetExceed = async (budget: IBudget) => {
         startDate: null,
         endDate: null
       };
-      try {
-        exceededSchedule = await createReportSchedule(reportScheduleData);
-      } catch (error: any) {
-        return null;
-      }
     }
 
     let reportData;
     if (exceededSchedule) {
       reportData = await autoGenerateReports(
         user._id as unknown as mongoose.Schema.Types.ObjectId,
-        exceededSchedule._id as unknown as mongoose.Schema.Types.ObjectId,
         undefined,
         BudgetPeriod.EXCEEDED
       );
@@ -188,25 +175,10 @@ export const checkBudgetExceedForTransaction = async (transaction: ITransaction)
       const userId = budget.user;
       let exceededSchedule = await findExceededReportScheduleByUser(userId);
 
-      if (!exceededSchedule) {
-        const reportScheduleData = {
-          user: userId,
-          type: BudgetPeriod.EXCEEDED,
-          startDate: null,
-          endDate: null
-        };
-        try {
-          exceededSchedule = await createReportSchedule(reportScheduleData);
-        } catch (error: any) {
-          return null;
-        }
-      }
-
       let reportData;
       if (exceededSchedule) {
         reportData = await autoGenerateReports(
           userId as unknown as mongoose.Schema.Types.ObjectId,
-          exceededSchedule._id as unknown as mongoose.Schema.Types.ObjectId,
           undefined,
           BudgetPeriod.EXCEEDED
         );

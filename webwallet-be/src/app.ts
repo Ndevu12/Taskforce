@@ -8,6 +8,7 @@ import router from "./routes";
 import http from 'http';
 import { Server } from 'socket.io';
 import logger from './utils/logger';
+import { ServerHomeTemplate } from "./utils/serverHomeTemplate";
 
 dotenv.config();
 const client_url = process.env.CLIENT_URL;
@@ -40,7 +41,7 @@ const morganFormat = ':method :url :status :response-time ms - :res[content-leng
 app.use(morgan(morganFormat));
 
 app.get('/', (req, res) => {
-    res.json({ status: 'API is running' });
+    res.send(ServerHomeTemplate);
 });
 
 app.use(router);

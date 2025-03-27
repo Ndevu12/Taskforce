@@ -23,17 +23,12 @@ export const deleteReportById = async (reportId: string) => {
   return await Report.findByIdAndDelete(reportId);
 };
 
-export const autoGenerateReports = async (userId: mongoose.Schema.Types.ObjectId, scheduleId: mongoose.Schema.Types.ObjectId, period?: string, budgetExceed?: string) => {
+export const autoGenerateReports = async (userId: mongoose.Schema.Types.ObjectId, period?: string, budgetExceed?: string) => {
   if (!userId) {
     logger.error('User ID is required');
     return { error: 'User ID is required' };
   }
 
-  if (!scheduleId) {
-    logger.error('Schedule ID is required');
-    return { error: 'Schedule ID is required' };
-  }
-  
   const transactions = await Transaction.find({ user: userId });
   if (!transactions) {
     logger.error('No transactions found');
@@ -61,7 +56,6 @@ export const autoGenerateReports = async (userId: mongoose.Schema.Types.ObjectId
   const report = await createReport({
     user: userId,
     title: title,
-    schedule: scheduleId,
     data: {
       content: `Total Income: ${reportData.totalIncome}, Total Expense: ${reportData.totalExpense}`,
       transactions: reportData.transactions

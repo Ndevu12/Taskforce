@@ -7,7 +7,7 @@ const accountSchema = new mongoose.Schema({
   name: { type: String, required: true },
   type: { type: String, enum: Object.values(AccountType), required: true },
   balance: { type: Number, default: 0 },
-  currency: { type: String, default: 'USD' },
+  currency: { type: String, default: 'RWF' },
   isActive: { type: Boolean, default: true },
   accountNumber: { type: String, required: function(this: any) { return this.type === AccountType.BANK || this.type === AccountType.MOBILE_MONEY; } }
 }, { timestamps: true });
