@@ -5,7 +5,7 @@ import mongoose from 'mongoose';
 import User from "../models/User";
 import { IUser } from '../types/interfaces/IUser';
 import logger from "../utils/logger";
-import { verifyToken } from "../helpers/token";
+import { verifyToken } from "../helpers/jwtTokenManager";
 
 declare global {
     namespace Express {

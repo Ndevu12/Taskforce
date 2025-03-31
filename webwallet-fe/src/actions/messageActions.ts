@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { IMessage } from '../interfaces/Message';
+import { IMessage } from '../types/interfaces/Message';
 
 const API_URL = import.meta.env.VITE_BASE_URL;
 if (!API_URL) throw new Error('VITE_BASE_URL is not defined');
