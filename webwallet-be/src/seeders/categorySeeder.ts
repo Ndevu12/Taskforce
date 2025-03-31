@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 import Category from '../models/Category';
 
-const defaultCategories = ["EXPENSE", "INCOME", "SAVING"];
+const defaultCategories = ["EXPENSE", "INCOME", "SAVING", "DEBT", "CREDIT", "INVESTMENT"];
 
 export const seedCategories = async () => {
   await Category.deleteMany({});

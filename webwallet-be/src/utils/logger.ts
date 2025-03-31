@@ -1,7 +1,9 @@
 import { createLogger, format, transports } from 'winston';
 
+const logLevel = process.env.NODE_ENV === 'dev' ? 'debug' : 'info';
+
 const logger = createLogger({
-  level: 'info',
+  level: logLevel,
   format: format.combine(
     format.timestamp({ format: 'YYYY-MM-DD HH:mm:ss' }),
     format.errors({ stack: true }),

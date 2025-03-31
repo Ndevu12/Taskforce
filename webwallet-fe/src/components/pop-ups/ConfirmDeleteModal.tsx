@@ -1,41 +1,57 @@
 import React from 'react';
+import { CircularProgress } from '@mui/material';
 
 interface ConfirmDeleteModalProps {
   isOpen: boolean;
-  onConfirm: () => void;
   onCancel: () => void;
+  onConfirm: () => void;
+  title?: string;
+  message?: string;
+  isLoading?: boolean;
 }
 
 const ConfirmDeleteModal: React.FC<ConfirmDeleteModalProps> = ({
   isOpen,
-  onConfirm,
   onCancel,
+  onConfirm,
+  title = 'Confirm Deletion',
+  message = 'Are you sure you want to delete this item? This action cannot be undone.',
+  isLoading = false,
 }) => {
   if (!isOpen) return null;
 
   return (
-    <div
-      className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center"
-      onClick={onCancel}
-    >
-      <div
-        className="bg-white p-4 rounded-lg shadow-lg w-1/3"
-        onClick={(e) => e.stopPropagation()}
-      >
-        <h2 className="text-2xl font-bold mb-4">Confirm Deletion</h2>
-        <p>Are you sure you want to delete this item?</p>
-        <div className="flex justify-end mt-4">
+    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center z-50">
+      <div className="bg-white dark:bg-gray-800 p-6 rounded shadow-md w-96">
+        <h2 className="text-xl mb-4 text-gray-700 dark:text-gray-300">
+          {title}
+        </h2>
+        <p className="mb-6 text-gray-600 dark:text-gray-400">{message}</p>
+        <div className="flex justify-end">
           <button
-            className="bg-gray-500 text-white p-2 rounded-lg mr-2"
+            type="button"
+            className="mr-2 p-2 bg-gray-300 rounded dark:bg-gray-700 dark:text-white"
             onClick={onCancel}
+            disabled={isLoading}
           >
             Cancel
           </button>
           <button
-            className="bg-red-500 text-white p-2 rounded-lg"
+            type="button"
+            className={`p-2 bg-red-500 text-white rounded flex items-center justify-center min-w-[80px] ${
+              isLoading ? 'opacity-70 cursor-not-allowed' : ''
+            }`}
             onClick={onConfirm}
+            disabled={isLoading}
           >
-            Delete
+            {isLoading ? (
+              <>
+                <CircularProgress size={16} color="inherit" className="mr-2" />
+                <span>Deleting...</span>
+              </>
+            ) : (
+              'Delete'
+            )}
           </button>
         </div>
       </div>

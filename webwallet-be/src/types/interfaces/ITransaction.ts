@@ -5,8 +5,8 @@ export interface ITransaction extends Document {
   account: string;
   category: string;
   subCategory?: string[];
-  type: 'INCOME' | 'EXPENSE';
   amount: number;
   description?: string;
   date: Date;
+  budget: string;
 }
