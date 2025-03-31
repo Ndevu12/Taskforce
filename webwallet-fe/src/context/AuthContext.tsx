@@ -7,12 +7,14 @@ import React, {
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
-import { User, UserRole } from '../interfaces/User';
-import { DecodedUser } from '../interfaces/DecodedUser';
+import { User, UserRole } from '../types/interfaces/User';
+import { DecodedUser } from '../types/interfaces/DecodedUser';
 import {
   login as loginUser,
   register as registerUser,
   logout as logoutUser,
+  requestPasswordReset as requestReset,
+  resetPassword as resetUserPassword,
 } from '../actions/authActions';
 import {
   getToken,
@@ -24,6 +26,7 @@ import {
 interface AuthContextProps {
   user: User | null;
   isAuthenticated: boolean;
+  decodeToken: (token: string) => User;
   login: (
     email: string,
     password: string,
@@ -40,8 +43,13 @@ interface AuthContextProps {
   ) => void;
   getCurrentUser: () => User | null;
   isAuthorized: (role: UserRole) => boolean;
+  requestPasswordReset: (email: string) => Promise<{ message: string }>;
+  resetPassword: (
+    userId: string,
+    token: string,
+    newPassword: string,
+  ) => Promise<{ message: string }>;
 }
-
 const AuthContext = createContext<AuthContextProps | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: ReactNode }> = ({
@@ -81,19 +89,15 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     password: string,
     navigate: ReturnType<typeof useNavigate>,
   ) => {
-    try {
-      const data = await loginUser(email, password);
-      if (data && data.token) {
-        const user = decodeToken(data.token);
-        setUser(user);
-        setToken(data.token);
-        setIsAuthenticated(true);
-        navigate('/dashboard');
-      } else {
-        throw new Error('Invalid login response');
-      }
-    } catch (error: any) {
-      alert(error.message);
+    const data = await loginUser(email, password);
+    if (data && data.token) {
+      const user = decodeToken(data.token);
+      setUser(user);
+      setToken(data.token);
+      setIsAuthenticated(true);
+      navigate('/dashboard');
+    } else {
+      throw new Error('Authentication failed');
     }
   };
 
@@ -102,11 +106,11 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
       const token = getToken();
       if (token) {
         await logoutUser(token);
+        navigate('/');
       }
       setUser(null);
       clearToken();
       setIsAuthenticated(false);
-      navigate('/login');
     } catch (error: any) {
       alert(error.message);
     }
@@ -120,18 +124,16 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     },
     navigate: ReturnType<typeof useNavigate>,
   ) => {
-    try {
-      const data = await registerUser(
-        userData.name,
-        userData.email,
-        userData.password,
-      );
-      if (data) {
-        alert('Registrated successful');
-        navigate('/login');
-      }
-    } catch (error: any) {
-      alert(error.message);
+    const response = await registerUser(
+      userData.name,
+      userData.email,
+      userData.password,
+    );
+    if (response && response.message) {
+      alert(response.message);
+      navigate('/login');
+    } else {
+      throw new Error('Registration failed');
     }
   };
 
@@ -143,26 +145,39 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     return user?.role === role;
   };
 
+  const requestPasswordReset = async (email: string) => {
+    return await requestReset(email);
+  };
+
+  const resetPassword = async (
+    userId: string,
+    token: string,
+    newPassword: string,
+  ) => {
+    return await resetUserPassword(userId, token, newPassword);
+  };
+
+  const contextValue: AuthContextProps = {
+    user,
+    isAuthenticated,
+    login,
+    logout,
+    register,
+    getCurrentUser,
+    isAuthorized,
+    requestPasswordReset,
+    resetPassword,
+    decodeToken,
+  };
+
   return (
-    <AuthContext.Provider
-      value={{
-        user,
-        isAuthenticated,
-        login,
-        logout,
-        register,
-        getCurrentUser,
-        isAuthorized,
-      }}
-    >
-      {children}
-    </AuthContext.Provider>
+    <AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
   );
 };
 
 export const useAuth = () => {
   const context = useContext(AuthContext);
-  if (!context) {
+  if (context === undefined) {
     throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;

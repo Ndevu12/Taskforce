@@ -7,9 +7,9 @@ import categoryRoutes from './CategoryRoutes';
 import budgetRoutes from './BudgetRoutes';
 import accountRoutes from './AccountRoutes';
 import authRoutes from './AuthRoutes';
-import reportScheduleRoutes from './ReportScheduleRoutes';
 import subCategoryRoutes from './SubCategoryRoutes';
 import messageRoutes from './MessageRoutes';
+import analyticsRoutes from './analyticsRoutes';
 
 const router = Router();
 
@@ -20,9 +20,9 @@ router.use('/notifications', notificationRoutes);
 router.use('/categories', categoryRoutes);
 router.use('/subcategories', subCategoryRoutes);
 router.use('/budgets', budgetRoutes);
-router.use('/report/schedule', reportScheduleRoutes);
 router.use('/accounts', accountRoutes);
 router.use('/auth', authRoutes);
 router.use('/messages', messageRoutes);
+router.use('/analytics', analyticsRoutes);
 
 export default router;

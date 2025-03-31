@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import logo from '../assets/react.svg';
+import logo from '../assets/money taksy.png';
 
 const PublicHeader = () => {
   const [isOpen, setIsOpen] = useState(false);

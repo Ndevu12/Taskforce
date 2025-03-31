@@ -8,18 +8,33 @@ const Login: React.FC = () => {
   const { login } = useAuth();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string>('');
+  const [isEmailVerificationError, setIsEmailVerificationError] =
+    useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setError('');
+    setIsEmailVerificationError(false);
     setLoading(true);
     try {
-      login(email, password, navigate);
+      await login(email, password, navigate);
     } catch (error: any) {
-      console.log({ error });
-      alert(error.message);
+      if (error.message === 'Please verify your email before logging in.') {
+        setIsEmailVerificationError(true);
+      }
+      setError(error.message);
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleResendVerification = () => {
+    navigate('/resend-verification');
+  };
+
+  const handleForgotPassword = () => {
+    navigate('/request-password-reset');
   };
 
   return (
@@ -28,6 +43,19 @@ const Login: React.FC = () => {
         <h2 className="text-2xl font-bold mb-6 text-gray-700 dark:text-gray-300">
           Login
         </h2>
+        {error && (
+          <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
+            <p>{error}</p>
+            {isEmailVerificationError && (
+              <button
+                onClick={handleResendVerification}
+                className="mt-2 bg-blue-500 text-white py-1 px-3 rounded-lg hover:bg-blue-600"
+              >
+                Resend Verification Email
+              </button>
+            )}
+          </div>
+        )}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-700 dark:text-gray-300 mb-2">
@@ -52,6 +80,15 @@ const Login: React.FC = () => {
               className="w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-700 dark:text-gray-300"
               required
             />
+            <div className="flex justify-end mt-1">
+              <button
+                type="button"
+                onClick={handleForgotPassword}
+                className="text-sm text-blue-500 hover:underline"
+              >
+                Forgot password?
+              </button>
+            </div>
           </div>
           <button
             type="submit"

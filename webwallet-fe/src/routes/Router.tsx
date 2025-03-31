@@ -6,7 +6,7 @@ import NotAllowed from './NotAllowed';
 import PublicLayout from '../layouts/PublicLayout';
 import TermsOfService from '../pages/TermsOfService';
 import PrivacyPolicy from '../pages/PrivacyPolicy';
-import DashboardLayout from '../pages/Dashboard/DashboardLayout';
+import DashboardLayout from '../layouts/DashboardLayout';
 import Overview from '../pages/Dashboard/Overview';
 import Accounts from '../pages/Dashboard/Accounts';
 import Budgets from '../pages/Dashboard/Budgets';
@@ -19,11 +19,17 @@ import Login from '../pages/Auth/Login';
 import Register from '../pages/Auth/Register';
 import PrivateRoute from './PrivateRoute';
 import { AuthProvider } from '../context/AuthContext';
+import TransactionSummary from '../pages/Dashboard/TransactionSummary';
+import ResendVerification from '../pages/Auth/ResendVerification';
+import VerifyEmail from '../pages/Auth/VerifyEmail';
+import RequestPasswordReset from '../pages/Auth/RequestPasswordReset';
+import ResetPassword from '../pages/Auth/ResetPassword';
+import NotFound from '../pages/NotFound';
 
 function Router() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthProvider>
         {/* PRIVATE ROUTES */}
         <Routes>
           <Route path="/dashboard" element={<PrivateRoute />}>
@@ -32,6 +38,10 @@ function Router() {
               <Route path="accounts" element={<Accounts />} />
               <Route path="budgets" element={<Budgets />} />
               <Route path="transactions" element={<Transactions />} />
+              <Route
+                path="transaction-summary"
+                element={<TransactionSummary />}
+              />
               <Route path="reports" element={<Reports />} />
               <Route path="settings" element={<Settings />} />
               <Route path="profile" element={<Profile />} />
@@ -50,15 +60,28 @@ function Router() {
             <Route path="/privacy" element={<PrivacyPolicy />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/verify-email" element={<VerifyEmail />} />
+            <Route
+              path="/resend-verification"
+              element={<ResendVerification />}
+            />
+            <Route
+              path="/request-password-reset"
+              element={<RequestPasswordReset />}
+            />
+            <Route path="/reset-password" element={<ResetPassword />} />
           </Route>
         </Routes>
 
         {/* NOT ALLOWED AND NOT FOUND */}
         <Routes>
           <Route path="/not-allowed" element={<NotAllowed />} />
+          {/* 404 - Not Found Route */}
+          <Route path="/404" element={<NotFound />} />
+          {/* <Route path="*" element={<Navigate replace to="/404" />} /> */}
         </Routes>
-      </BrowserRouter>
-    </AuthProvider>
+      </AuthProvider>
+    </BrowserRouter>
   );
 }
 
