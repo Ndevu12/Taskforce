@@ -1907,3 +1907,26 @@
 {"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-03-31 12:53:08"}
 {"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-03-31 12:53:09"}
 {"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-03-31 12:53:09"}
+{"level":"info","message":"Initializing scheduler server...","service":"user-service","timestamp":"2025-04-07 23:19:26"}
+{"level":"info","message":"Scheduled weekly report job with cron: 0 8 * * 0","service":"user-service","timestamp":"2025-04-07 23:19:26"}
+{"level":"info","message":"Scheduled monthly report job with cron: 0 7 1 * *","service":"user-service","timestamp":"2025-04-07 23:19:26"}
+{"level":"info","message":"Scheduler server initialized successfully","service":"user-service","timestamp":"2025-04-07 23:19:26"}
+{"level":"info","message":"Server is running on http://localhost:3000","service":"user-service","timestamp":"2025-04-07 23:19:26"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-07 23:19:26"}
+{"level":"info","message":"Email server connection established successfully","service":"user-service","timestamp":"2025-04-07 23:19:28"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-04-07 23:19:28"}
+{"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-04-07 23:19:28"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 23:19:28"}
+{"level":"info","message":"Initializing scheduler server...","service":"user-service","timestamp":"2025-04-07 23:24:31"}
+{"level":"info","message":"Scheduled weekly report job with cron: 0 8 * * 0","service":"user-service","timestamp":"2025-04-07 23:24:31"}
+{"level":"info","message":"Scheduled monthly report job with cron: 0 7 1 * *","service":"user-service","timestamp":"2025-04-07 23:24:31"}
+{"level":"info","message":"Scheduler server initialized successfully","service":"user-service","timestamp":"2025-04-07 23:24:31"}
+{"level":"info","message":"Server is running on http://localhost:3000","service":"user-service","timestamp":"2025-04-07 23:24:31"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-07 23:24:31"}
+{"level":"info","message":"Email server connection established successfully","service":"user-service","timestamp":"2025-04-07 23:24:33"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-04-07 23:24:33"}
+{"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-04-07 23:24:34"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 23:24:37"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 23:25:37"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 23:25:43"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 23:28:36"}

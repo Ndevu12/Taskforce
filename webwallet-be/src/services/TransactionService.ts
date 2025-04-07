@@ -182,21 +182,18 @@ export const deleteTransactionById = async (transactionId: string) => {
       session
     );
 
-    // Update budget if necessary
     if (transactionType === TransactionType.EXPENSE && transaction.budget) {
       await updateBudgetOnTransactionDelete(transaction, session);
     }
 
-    // Delete the transaction
+
     await Transaction.findByIdAndDelete(transactionId).session(session);
 
     await session.commitTransaction();
 
-    // Get account name for notification
     const account = await Account.findById(transaction.account);
     const accountName = account ? account.name : 'Unknown Account';
 
-    // Create notification outside of transaction
     await NotificationGatewayService.createTransactionDeletedNotification(
       transaction.user.toString(),
       transaction.amount,
@@ -222,7 +219,6 @@ export const getTransactionsSummary = async (userId: string, startDate?: string,
     if (endDate) dateFilter.date.$lte = new Date(endDate);
   }
 
-  // Fetch transactions with category and subcategory info
   const transactions = await Transaction.find(dateFilter)
     .populate('category')
     .populate('subCategory')

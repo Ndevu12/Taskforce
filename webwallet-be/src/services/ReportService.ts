@@ -661,7 +661,6 @@ const findMostActiveDay = (transactions: any[]): string => {
     dateCount[date] = (dateCount[date] || 0) + 1;
   });
   
-  // Find date with most transactions
   let mostActiveDate = '';
   let highestCount = 0;
   

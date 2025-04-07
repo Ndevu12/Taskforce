@@ -291,3 +291,5 @@
 {"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-03-31 12:51:34"}
 {"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-03-31 12:52:19"}
 {"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-03-31 12:53:06"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-07 23:19:26"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-07 23:24:31"}
