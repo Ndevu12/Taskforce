@@ -77,7 +77,6 @@ const Accounts: React.FC = () => {
       setIsLoading(true);
       try {
         const data = await fetchAccounts();
-        console.log('Fetched accounts:', data);
         setAccounts(data.reverse());
       } catch (error: any) {
         addNotification(error.message || 'Failed to load accounts', 'error');
@@ -114,8 +113,6 @@ const Accounts: React.FC = () => {
       setFormError(null); // Reset error before attempting save
 
       if (accountToEdit) {
-        console.log('Submitting update for account:', account);
-
         // Check if balance has changed
         const balanceChanged =
           accountToEdit &&
@@ -132,27 +129,17 @@ const Accounts: React.FC = () => {
 
         // If balance changed, call the balance-specific endpoint
         if (balanceChanged) {
-          console.log(
-            'Balance changed from',
-            accountToEdit.balance,
-            'to',
-            account.balance,
-          );
           updatedAccount = await updateAccountBalance(
             account._id,
             account.balance,
           );
         }
 
-        console.log('Final updated account:', updatedAccount);
-
         // Update accounts with the new data
         setAccounts((prev) => {
-          console.log('Previous accounts state:', prev);
           const updated = prev.map((acc) =>
             acc._id === updatedAccount._id ? updatedAccount : acc,
           );
-          console.log('New accounts state:', updated);
           return updated;
         });
 
@@ -234,7 +221,7 @@ const Accounts: React.FC = () => {
         </div>
       )}
 
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-4 gap-3">
         <h1 className="text-2xl font-bold">Accounts</h1>
         <div className="flex space-x-2">
           <button

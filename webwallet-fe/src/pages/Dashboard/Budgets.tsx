@@ -199,7 +199,7 @@ const Budgets: React.FC = () => {
         </div>
       )}
 
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-4 gap-3">
         <h1 className="text-2xl font-bold">Budgets</h1>
         <div className="flex space-x-2">
           <button

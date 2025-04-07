@@ -80,7 +80,10 @@ export const joinUserRoom = (socket: Socket, userId: string): void => {
 export const SOCKET_EVENTS = {
   NOTIFICATION: 'notification',
   UNREAD_COUNT: 'unreadNotificationCount',
+  UNSEEN_COUNT: 'unseenNotificationCount',
   REQUEST_UNREAD_COUNT: 'getUnreadNotificationCount',
+  REQUEST_UNSEEN_COUNT: 'getUnseenNotificationCount',
+  MARK_AS_SEEN: 'markNotificationsAsSeen',
   READY: 'ready'
 };
 

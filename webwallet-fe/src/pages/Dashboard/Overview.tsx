@@ -17,6 +17,8 @@ import {
   Typography,
 } from '@mui/material';
 import BudgetProgressBar from '../../components/Dashboard/Budgets/BudgetProgressBar';
+import { getToken } from '../../utils/tokenUtils';
+import { useAuth } from '../../context/AuthContext';
 
 const Overview: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -27,6 +29,10 @@ const Overview: React.FC = () => {
   const [recentTransactions, setRecentTransactions] = useState<
     TransactionResponse[]
   >([]);
+  const { decodeToken } = useAuth();
+
+  const token = getToken();
+  const user = token ? decodeToken(token) : null;
 
   useEffect(() => {
     const loadDashboardData = async () => {
@@ -85,7 +91,10 @@ const Overview: React.FC = () => {
     <div className="space-y-8 px-2 sm:px-6 bg-gray-100 dark:bg-gray-900">
       {/* Welcome Banner */}
       <section className="bg-gradient-to-r from-blue-500 to-indigo-600 text-white p-6 rounded-lg shadow-md dark:bg-gradient-to-r dark:from-blue-800 dark:to-indigo-900">
-        <h1 className="text-4xl font-bold">
+        {user ? (
+          <h1 className="text-4xl font-bold mb-2">Hello {user.name},</h1>
+        ) : null}
+        <h1 className="text-2xl font-bold">
           Welcome to Your Financial Dashboard!
         </h1>
         <p className="mt-2 text-lg">
@@ -114,7 +123,7 @@ const Overview: React.FC = () => {
           title="Monthly Expenses"
           value={formatMoney(incomeExpense.currentMonth.expenses)}
           color="bg-red-200 dark:bg-red-700"
-          trend={incomeExpense.percentChange.expenses < 0 ? 'up' : 'down'} // Note: down is good for expenses
+          trend={incomeExpense.percentChange.expenses < 0 ? 'up' : 'down'}
           trendValue={`${Math.abs(incomeExpense.percentChange.expenses).toFixed(1)}%`}
         />
         <StatCard
@@ -244,7 +253,7 @@ const Overview: React.FC = () => {
         </div>
       </section>
 
-      {/* Charts Section - Using our reusable Charts component */}
+      {/* Charts Section */}
       <Charts analyticsData={overviewData} className="mb-8" />
 
       {/* Budget Status Section */}

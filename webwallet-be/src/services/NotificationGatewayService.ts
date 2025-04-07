@@ -177,7 +177,6 @@ class NotificationGatewayService {
         read: false
       } as unknown as INotification);
       
-      logger.info(`Created budget exceeded notification for user ${userId}`);
     } catch (error) {
       logger.error(`Failed to create budget exceeded notification: ${error}`);
     }
@@ -208,7 +207,6 @@ class NotificationGatewayService {
         read: false
       } as unknown as INotification);
       
-      logger.info(`Created transaction creation notification for user ${userId}`);
     } catch (error) {
       logger.error(`Failed to create transaction creation notification: ${error}`);
     }
@@ -239,7 +237,6 @@ class NotificationGatewayService {
         read: false
       } as unknown as INotification);
       
-      logger.info(`Created transaction update notification for user ${userId}`);
     } catch (error) {
       logger.error(`Failed to create transaction update notification: ${error}`);
     }
@@ -270,7 +267,6 @@ class NotificationGatewayService {
         read: false
       } as unknown as INotification);
       
-      logger.info(`Created transaction deletion notification for user ${userId}`);
     } catch (error) {
       logger.error(`Failed to create transaction deletion notification: ${error}`);
     }
@@ -301,7 +297,6 @@ class NotificationGatewayService {
         read: false
       } as unknown as INotification);
       
-      logger.info(`Created report generation notification for user ${userId}`);
     } catch (error) {
       logger.error(`Failed to create report generation notification: ${error}`);
     }
@@ -328,7 +323,6 @@ class NotificationGatewayService {
         read: false
       } as unknown as INotification);
       
-      logger.info(`Created report emailed notification for user ${userId}`);
     } catch (error) {
       logger.error(`Failed to create report emailed notification: ${error}`);
     }
@@ -359,7 +353,6 @@ class NotificationGatewayService {
         read: false
       } as unknown as INotification);
       
-      logger.info(`Created large expense warning notification for user ${userId}`);
     } catch (error) {
       logger.error(`Failed to create large expense warning notification: ${error}`);
     }
@@ -386,7 +379,6 @@ class NotificationGatewayService {
         read: false
       } as unknown as INotification);
       
-      logger.info(`Created success notification for user ${userId}`);
     } catch (error) {
       logger.error(`Failed to create success notification: ${error}`);
     }
@@ -413,7 +405,6 @@ class NotificationGatewayService {
         read: false
       } as unknown as INotification);
       
-      logger.info(`Created error notification for user ${userId}`);
     } catch (error) {
       logger.error(`Failed to create error notification: ${error}`);
     }

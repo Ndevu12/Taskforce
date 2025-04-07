@@ -4,10 +4,11 @@ import { FaBell } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import {
   initNotificationSocket,
-  subscribeToUnreadCount,
+  subscribeToUnseenCount,
   subscribeToReadyEvent,
-  requestUnreadCount,
-  unsubscribeFromUnreadCount,
+  requestUnseenCount,
+  markAllAsSeen,
+  unsubscribeFromUnseenCount,
   unsubscribeFromReadyEvent,
   disconnectNotificationSocket,
 } from '../../actions/realTimeActions/socketNotificationActions';
@@ -17,17 +18,22 @@ interface NotificationBadgeProps {
 }
 
 const NotificationBadge: React.FC<NotificationBadgeProps> = ({ className }) => {
-  const [unreadCount, setUnreadCount] = useState<number>(0);
+  const [unseenCount, setUnseenCount] = useState<number>(0);
 
-  // Handle unread count updates
-  const handleUnreadCountUpdate = (count: number) => {
-    setUnreadCount(count);
+  // Handle unseen count updates
+  const handleUnseenCountUpdate = (count: number) => {
+    setUnseenCount(count);
   };
 
   // Handle socket ready event
   const handleSocketReady = () => {
-    // Request initial unread count when socket is ready
-    requestUnreadCount();
+    // Request initial unseen count when socket is ready
+    requestUnseenCount();
+  };
+
+  // Handle bell icon click
+  const handleBellClick = () => {
+    markAllAsSeen();
   };
 
   useEffect(() => {
@@ -36,19 +42,23 @@ const NotificationBadge: React.FC<NotificationBadgeProps> = ({ className }) => {
 
     // Subscribe to socket events
     subscribeToReadyEvent(handleSocketReady);
-    subscribeToUnreadCount(handleUnreadCountUpdate);
+    subscribeToUnseenCount(handleUnseenCountUpdate);
 
     // Cleanup on unmount
     return () => {
       unsubscribeFromReadyEvent();
-      unsubscribeFromUnreadCount();
+      unsubscribeFromUnseenCount();
       disconnectNotificationSocket();
     };
   }, []);
 
   return (
-    <Link to="/dashboard/notifications" className={className}>
-      <Badge badgeContent={unreadCount} color="error" max={99}>
+    <Link
+      to="/dashboard/notifications"
+      className={className}
+      onClick={handleBellClick}
+    >
+      <Badge badgeContent={unseenCount} color="error" max={99}>
         <FaBell className="text-gray-600 hover:text-blue-500 transition-colors dark:text-gray-300" />
       </Badge>
     </Link>

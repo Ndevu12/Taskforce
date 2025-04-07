@@ -1907,3 +1907,238 @@
 {"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-03-31 12:53:08"}
 {"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-03-31 12:53:09"}
 {"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-03-31 12:53:09"}
+{"level":"info","message":"Initializing scheduler server...","service":"user-service","timestamp":"2025-04-07 13:38:37"}
+{"level":"info","message":"Scheduled weekly report job with cron: 0 8 * * 0","service":"user-service","timestamp":"2025-04-07 13:38:37"}
+{"level":"info","message":"Scheduled monthly report job with cron: 0 7 1 * *","service":"user-service","timestamp":"2025-04-07 13:38:37"}
+{"level":"info","message":"Scheduler server initialized successfully","service":"user-service","timestamp":"2025-04-07 13:38:37"}
+{"level":"info","message":"Server is running on http://localhost:3000","service":"user-service","timestamp":"2025-04-07 13:38:37"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-07 13:38:37"}
+{"level":"info","message":"Email server connection established successfully","service":"user-service","timestamp":"2025-04-07 13:38:39"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-04-07 13:38:39"}
+{"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-04-07 13:38:39"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-04-07 13:43:40"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-04-07 13:43:40"}
+{"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-04-07 13:43:40"}
+{"level":"info","message":"Initializing scheduler server...","service":"user-service","timestamp":"2025-04-07 13:58:16"}
+{"level":"info","message":"Scheduled weekly report job with cron: 0 8 * * 0","service":"user-service","timestamp":"2025-04-07 13:58:17"}
+{"level":"info","message":"Scheduled monthly report job with cron: 0 7 1 * *","service":"user-service","timestamp":"2025-04-07 13:58:17"}
+{"level":"info","message":"Scheduled daily report job with cron: 0 9 * * *","service":"user-service","timestamp":"2025-04-07 13:58:17"}
+{"level":"info","message":"Scheduled hourly job with cron: 0 * * * *","service":"user-service","timestamp":"2025-04-07 13:58:17"}
+{"level":"info","message":"Scheduler server initialized successfully","service":"user-service","timestamp":"2025-04-07 13:58:17"}
+{"level":"info","message":"Server is running on http://localhost:3000","service":"user-service","timestamp":"2025-04-07 13:58:17"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-07 13:58:17"}
+{"level":"info","message":"Email server connection established successfully","service":"user-service","timestamp":"2025-04-07 13:58:19"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-04-07 13:58:19"}
+{"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-04-07 13:58:19"}
+{"level":"info","message":"Running hourly financial update job","service":"user-service","timestamp":"2025-04-07 14:00:00"}
+{"level":"info","message":"Found 2 verified users for report distribution","service":"user-service","timestamp":"2025-04-07 14:00:00"}
+{"level":"info","message":"Preparing to send hourly reports to 2 verified users","service":"user-service","timestamp":"2025-04-07 14:00:00"}
+{"level":"info","message":"Email sent: <d089c15d-995a-1355-1bc5-ae8419946e7e@gmail.com>","service":"user-service","timestamp":"2025-04-07 14:00:05"}
+{"level":"info","message":"Email sent: <fc8f92c2-d143-bed0-8a6f-c88e37230672@gmail.com>","service":"user-service","timestamp":"2025-04-07 14:00:09"}
+{"level":"info","message":"hourly report distribution complete. Success: 2, Failures: 0","service":"user-service","timestamp":"2025-04-07 14:00:10"}
+{"level":"info","message":"Hourly financial job completed","service":"user-service","timestamp":"2025-04-07 14:00:10"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 14:02:30"}
+{"level":"error","message":"Failed to fetch transactions: read ECONNRESET","service":"user-service","timestamp":"2025-04-07 14:04:14"}
+{"level":"error","message":"Failed to fetch transactions: read ECONNRESET","service":"user-service","timestamp":"2025-04-07 14:04:23"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 14:04:46"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 14:04:49"}
+{"level":"error","message":"Failed to fetch transactions: read ECONNRESET","service":"user-service","timestamp":"2025-04-07 14:05:10"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 14:05:35"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 14:05:38"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 14:07:42"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 14:07:45"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 14:08:54"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 14:09:40"}
+{"level":"error","message":"Failed to fetch transactions: read ECONNRESET","service":"user-service","timestamp":"2025-04-07 14:10:36"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 14:12:30"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 14:12:32"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 14:44:04"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 14:44:06"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 14:46:17"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 14:46:27"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 14:46:28"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 14:46:29"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 14:46:29"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 14:46:33"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 14:46:34"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 14:46:34"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 14:54:16"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 14:54:16"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 14:54:16"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 14:54:17"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 14:54:17"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 14:54:17"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 14:54:27"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 14:54:27"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 14:54:28"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 14:54:28"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 14:54:28"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 14:54:28"}
+{"level":"info","message":"Running hourly financial update job","service":"user-service","timestamp":"2025-04-07 15:00:00"}
+{"level":"info","message":"Found 2 verified users for report distribution","service":"user-service","timestamp":"2025-04-07 15:00:00"}
+{"level":"info","message":"Preparing to send hourly reports to 2 verified users","service":"user-service","timestamp":"2025-04-07 15:00:00"}
+{"level":"info","message":"Email sent: <0ac964b8-8499-27bc-e62e-198f8d21addc@gmail.com>","service":"user-service","timestamp":"2025-04-07 15:00:05"}
+{"level":"info","message":"Email sent: <766382e9-89f6-96ae-2f82-a97f3dcc7849@gmail.com>","service":"user-service","timestamp":"2025-04-07 15:00:09"}
+{"level":"info","message":"hourly report distribution complete. Success: 2, Failures: 0","service":"user-service","timestamp":"2025-04-07 15:00:10"}
+{"level":"info","message":"Hourly financial job completed","service":"user-service","timestamp":"2025-04-07 15:00:10"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 15:05:32"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 15:05:32"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 15:05:32"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 15:05:32"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 15:05:32"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 15:05:32"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 15:05:32"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 15:05:34"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 15:05:47"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 15:06:49"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 15:07:59"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 15:08:05"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 15:08:05"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 15:08:05"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 15:08:06"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 15:08:06"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 15:08:06"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 15:08:06"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 15:24:34"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 15:24:34"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 15:24:34"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 15:24:34"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 15:24:34"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 15:24:34"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 15:24:34"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 15:24:35"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 15:24:39"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 15:24:56"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 15:24:56"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 15:24:56"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 15:24:56"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 15:24:56"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 15:24:56"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 15:24:56"}
+{"level":"error","message":"Redis client error: read ECONNRESET","service":"user-service","timestamp":"2025-04-07 15:45:41"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-04-07 15:45:41"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-07 15:45:46"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-04-07 15:45:48"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-04-07 15:45:48"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-04-07 15:45:50"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-04-07 15:45:50"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-04-07 15:45:52"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-04-07 15:45:52"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-04-07 15:45:54"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-04-07 15:45:54"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-04-07 15:45:56"}
+{"level":"info","message":"Redis client reconnect failed after 5 attempts","service":"user-service","timestamp":"2025-04-07 15:45:56"}
+{"level":"error","message":"Redis client error: getaddrinfo ENOTFOUND redis-15013.c341.af-south-1-1.ec2.redns.redis-cloud.com","service":"user-service","timestamp":"2025-04-07 15:45:56"}
+{"level":"info","message":"Running hourly financial update job","service":"user-service","timestamp":"2025-04-07 17:00:00"}
+{"cause":{"beforeHandshake":false,"errorLabelSet":{}},"errorLabelSet":{},"level":"error","message":"Error finding verified users: getaddrinfo ENOTFOUND taskforce-shard-00-01.boflo.mongodb.net","reason":{"commonWireVersion":0,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"logicalSessionTimeoutMinutes":null,"maxElectionId":{"$oid":"7fffffff0000000000000053"},"maxSetVersion":9,"servers":{"taskforce-shard-00-00.boflo.mongodb.net:27017":{"$clusterTime":null,"address":"taskforce-shard-00-00.boflo.mongodb.net:27017","arbiters":[],"electionId":null,"error":{"beforeHandshake":false,"errorLabelSet":{}},"hosts":[],"iscryptd":false,"lastUpdateTime":271375666,"lastWriteDate":0,"logicalSessionTimeoutMinutes":null,"maxBsonObjectSize":null,"maxMessageSizeBytes":null,"maxWireVersion":0,"maxWriteBatchSize":null,"me":null,"minRoundTripTime":0,"minWireVersion":0,"passives":[],"primary":null,"roundTripTime":-1,"setName":null,"setVersion":null,"tags":{},"topologyVersion":null,"type":"Unknown"},"taskforce-shard-00-01.boflo.mongodb.net:27017":{"$clusterTime":null,"address":"taskforce-shard-00-01.boflo.mongodb.net:27017","arbiters":[],"electionId":null,"error":{"beforeHandshake":false,"errorLabelSet":{}},"hosts":[],"iscryptd":false,"lastUpdateTime":271375665,"lastWriteDate":0,"logicalSessionTimeoutMinutes":null,"maxBsonObjectSize":null,"maxMessageSizeBytes":null,"maxWireVersion":0,"maxWriteBatchSize":null,"me":null,"minRoundTripTime":0,"minWireVersion":0,"passives":[],"primary":null,"roundTripTime":-1,"setName":null,"setVersion":null,"tags":{},"topologyVersion":null,"type":"Unknown"},"taskforce-shard-00-02.boflo.mongodb.net:27017":{"$clusterTime":null,"address":"taskforce-shard-00-02.boflo.mongodb.net:27017","arbiters":[],"electionId":null,"error":{"beforeHandshake":false,"errorLabelSet":{}},"hosts":[],"iscryptd":false,"lastUpdateTime":271375666,"lastWriteDate":0,"logicalSessionTimeoutMinutes":null,"maxBsonObjectSize":null,"maxMessageSizeBytes":null,"maxWireVersion":0,"maxWriteBatchSize":null,"me":null,"minRoundTripTime":0,"minWireVersion":0,"passives":[],"primary":null,"roundTripTime":-1,"setName":null,"setVersion":null,"tags":{},"topologyVersion":null,"type":"Unknown"}},"setName":"atlas-lu6m2i-shard-0","stale":false,"type":"ReplicaSetNoPrimary"},"service":"user-service","stack":"MongoServerSelectionError: getaddrinfo ENOTFOUND taskforce-shard-00-01.boflo.mongodb.net\n    at Topology.selectServer (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\mongodb\\src\\sdam\\topology.ts:628:30)\n    at async tryOperation (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:201:16)\n    at async executeOperation (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:115:12)\n    at async FindCursor._initialize (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\mongodb\\src\\cursor\\find_cursor.ts:92:22)\n    at async FindCursor.cursorInit (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\mongodb\\src\\cursor\\abstract_cursor.ts:944:21)\n    at async FindCursor.fetchBatch (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\mongodb\\src\\cursor\\abstract_cursor.ts:982:7)\n    at async FindCursor.next (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\mongodb\\src\\cursor\\abstract_cursor.ts:612:9)\n    at async FindCursor.[Symbol.asyncIterator] (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\mongodb\\src\\cursor\\abstract_cursor.ts:506:26)\n    at async FindCursor.toArray (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\mongodb\\src\\cursor\\abstract_cursor.ts:700:22)\n    at async model.Query._find (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\mongoose\\lib\\query.js:2381:14)","timestamp":"2025-04-07 17:00:30"}
+{"level":"error","message":"Error fetching verified users: MongoServerSelectionError: getaddrinfo ENOTFOUND taskforce-shard-00-01.boflo.mongodb.net","service":"user-service","timestamp":"2025-04-07 17:00:30"}
+{"level":"warn","message":"No verified users found to send reports to","service":"user-service","timestamp":"2025-04-07 17:00:30"}
+{"level":"info","message":"Hourly financial job completed","service":"user-service","timestamp":"2025-04-07 17:00:30"}
+{"level":"info","message":"Running hourly financial update job","service":"user-service","timestamp":"2025-04-07 18:00:00"}
+{"cause":{"beforeHandshake":false,"errorLabelSet":{}},"errorLabelSet":{},"level":"error","message":"Error finding verified users: getaddrinfo ENOTFOUND taskforce-shard-00-01.boflo.mongodb.net","reason":{"commonWireVersion":0,"compatible":true,"heartbeatFrequencyMS":10000,"localThresholdMS":15,"logicalSessionTimeoutMinutes":null,"maxElectionId":{"$oid":"7fffffff0000000000000053"},"maxSetVersion":9,"servers":{"taskforce-shard-00-00.boflo.mongodb.net:27017":{"$clusterTime":null,"address":"taskforce-shard-00-00.boflo.mongodb.net:27017","arbiters":[],"electionId":null,"error":{"beforeHandshake":false,"errorLabelSet":{}},"hosts":[],"iscryptd":false,"lastUpdateTime":274976534,"lastWriteDate":0,"logicalSessionTimeoutMinutes":null,"maxBsonObjectSize":null,"maxMessageSizeBytes":null,"maxWireVersion":0,"maxWriteBatchSize":null,"me":null,"minRoundTripTime":0,"minWireVersion":0,"passives":[],"primary":null,"roundTripTime":-1,"setName":null,"setVersion":null,"tags":{},"topologyVersion":null,"type":"Unknown"},"taskforce-shard-00-01.boflo.mongodb.net:27017":{"$clusterTime":null,"address":"taskforce-shard-00-01.boflo.mongodb.net:27017","arbiters":[],"electionId":null,"error":{"beforeHandshake":false,"errorLabelSet":{}},"hosts":[],"iscryptd":false,"lastUpdateTime":274976530,"lastWriteDate":0,"logicalSessionTimeoutMinutes":null,"maxBsonObjectSize":null,"maxMessageSizeBytes":null,"maxWireVersion":0,"maxWriteBatchSize":null,"me":null,"minRoundTripTime":0,"minWireVersion":0,"passives":[],"primary":null,"roundTripTime":-1,"setName":null,"setVersion":null,"tags":{},"topologyVersion":null,"type":"Unknown"},"taskforce-shard-00-02.boflo.mongodb.net:27017":{"$clusterTime":null,"address":"taskforce-shard-00-02.boflo.mongodb.net:27017","arbiters":[],"electionId":null,"error":{"beforeHandshake":false,"errorLabelSet":{}},"hosts":[],"iscryptd":false,"lastUpdateTime":274976533,"lastWriteDate":0,"logicalSessionTimeoutMinutes":null,"maxBsonObjectSize":null,"maxMessageSizeBytes":null,"maxWireVersion":0,"maxWriteBatchSize":null,"me":null,"minRoundTripTime":0,"minWireVersion":0,"passives":[],"primary":null,"roundTripTime":-1,"setName":null,"setVersion":null,"tags":{},"topologyVersion":null,"type":"Unknown"}},"setName":"atlas-lu6m2i-shard-0","stale":false,"type":"ReplicaSetNoPrimary"},"service":"user-service","stack":"MongoServerSelectionError: getaddrinfo ENOTFOUND taskforce-shard-00-01.boflo.mongodb.net\n    at Topology.selectServer (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\mongodb\\src\\sdam\\topology.ts:628:30)\n    at async tryOperation (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:201:16)\n    at async executeOperation (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\mongodb\\src\\operations\\execute_operation.ts:115:12)\n    at async FindCursor._initialize (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\mongodb\\src\\cursor\\find_cursor.ts:92:22)\n    at async FindCursor.cursorInit (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\mongodb\\src\\cursor\\abstract_cursor.ts:944:21)\n    at async FindCursor.fetchBatch (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\mongodb\\src\\cursor\\abstract_cursor.ts:982:7)\n    at async FindCursor.next (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\mongodb\\src\\cursor\\abstract_cursor.ts:612:9)\n    at async FindCursor.[Symbol.asyncIterator] (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\mongodb\\src\\cursor\\abstract_cursor.ts:506:26)\n    at async FindCursor.toArray (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\mongodb\\src\\cursor\\abstract_cursor.ts:700:22)\n    at async model.Query._find (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\mongoose\\lib\\query.js:2381:14)","timestamp":"2025-04-07 18:00:30"}
+{"level":"error","message":"Error fetching verified users: MongoServerSelectionError: getaddrinfo ENOTFOUND taskforce-shard-00-01.boflo.mongodb.net","service":"user-service","timestamp":"2025-04-07 18:00:30"}
+{"level":"warn","message":"No verified users found to send reports to","service":"user-service","timestamp":"2025-04-07 18:00:30"}
+{"level":"info","message":"Hourly financial job completed","service":"user-service","timestamp":"2025-04-07 18:00:30"}
+{"level":"info","message":"Running hourly financial update job","service":"user-service","timestamp":"2025-04-07 19:00:00"}
+{"level":"info","message":"Found 2 verified users for report distribution","service":"user-service","timestamp":"2025-04-07 19:00:30"}
+{"level":"info","message":"Preparing to send hourly reports to 2 verified users","service":"user-service","timestamp":"2025-04-07 19:00:30"}
+{"level":"info","message":"Email sent: <c4b33f12-2447-79b5-f51a-17aeb317b30b@gmail.com>","service":"user-service","timestamp":"2025-04-07 19:00:34"}
+{"level":"info","message":"Email sent: <337ef571-e993-a3ec-4617-3a040506e065@gmail.com>","service":"user-service","timestamp":"2025-04-07 19:00:40"}
+{"level":"info","message":"hourly report distribution complete. Success: 2, Failures: 0","service":"user-service","timestamp":"2025-04-07 19:00:40"}
+{"level":"info","message":"Hourly financial job completed","service":"user-service","timestamp":"2025-04-07 19:00:40"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 19:29:04"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 19:29:04"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 19:29:04"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 19:29:04"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 19:29:04"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 19:29:04"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 19:29:04"}
+{"level":"error","message":"Error, TOKEN NOT VERIFIED.\n The client is closed","service":"user-service","stack":"Error: The client is closed\n    at Commander._RedisClient_sendCommand (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\@redis\\client\\dist\\lib\\client\\index.js:520:31)\n    at Commander.commandsExecutor (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\@redis\\client\\dist\\lib\\client\\index.js:190:154)\n    at Commander.BaseClass.<computed> [as get] (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\@redis\\client\\dist\\lib\\commander.js:8:29)\n    at C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\src\\services\\external\\redis.ts:8:28\n    at Generator.next (<anonymous>)\n    at C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\src\\services\\external\\redis.ts:8:71\n    at new Promise (<anonymous>)\n    at __awaiter (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\src\\services\\external\\redis.ts:4:12)\n    at getToken (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\src\\services\\external\\redis.ts:7:47)\n    at C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\src\\helpers\\jwtTokenManager.ts:31:43","timestamp":"2025-04-07 19:29:05"}
+{"level":"info","message":"Invalid or expired Token.","service":"user-service","timestamp":"2025-04-07 19:29:05"}
+{"level":"error","message":"Error, TOKEN NOT VERIFIED.\n The client is closed","service":"user-service","stack":"Error: The client is closed\n    at Commander._RedisClient_sendCommand (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\@redis\\client\\dist\\lib\\client\\index.js:520:31)\n    at Commander.commandsExecutor (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\@redis\\client\\dist\\lib\\client\\index.js:190:154)\n    at Commander.BaseClass.<computed> [as get] (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\@redis\\client\\dist\\lib\\commander.js:8:29)\n    at C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\src\\services\\external\\redis.ts:8:28\n    at Generator.next (<anonymous>)\n    at C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\src\\services\\external\\redis.ts:8:71\n    at new Promise (<anonymous>)\n    at __awaiter (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\src\\services\\external\\redis.ts:4:12)\n    at getToken (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\src\\services\\external\\redis.ts:7:47)\n    at C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\src\\helpers\\jwtTokenManager.ts:31:43","timestamp":"2025-04-07 19:29:05"}
+{"level":"info","message":"Invalid or expired Token.","service":"user-service","timestamp":"2025-04-07 19:29:05"}
+{"level":"error","message":"Error, TOKEN NOT VERIFIED.\n The client is closed","service":"user-service","stack":"Error: The client is closed\n    at Commander._RedisClient_sendCommand (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\@redis\\client\\dist\\lib\\client\\index.js:520:31)\n    at Commander.commandsExecutor (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\@redis\\client\\dist\\lib\\client\\index.js:190:154)\n    at Commander.BaseClass.<computed> [as get] (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\node_modules\\@redis\\client\\dist\\lib\\commander.js:8:29)\n    at C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\src\\services\\external\\redis.ts:8:28\n    at Generator.next (<anonymous>)\n    at C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\src\\services\\external\\redis.ts:8:71\n    at new Promise (<anonymous>)\n    at __awaiter (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\src\\services\\external\\redis.ts:4:12)\n    at getToken (C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\src\\services\\external\\redis.ts:7:47)\n    at C:\\Users\\Ndevu\\Desktop\\Gigi\\Taskforce\\webwallet-be\\src\\helpers\\jwtTokenManager.ts:31:43","timestamp":"2025-04-07 19:29:05"}
+{"level":"warn","message":"Socket connection attempt with invalid token","service":"user-service","timestamp":"2025-04-07 19:29:05"}
+{"level":"info","message":"Initializing scheduler server...","service":"user-service","timestamp":"2025-04-07 19:29:53"}
+{"level":"info","message":"Scheduled weekly report job with cron: 0 8 * * 0","service":"user-service","timestamp":"2025-04-07 19:29:53"}
+{"level":"info","message":"Scheduled monthly report job with cron: 0 7 1 * *","service":"user-service","timestamp":"2025-04-07 19:29:53"}
+{"level":"info","message":"Scheduled daily report job with cron: 0 9 * * *","service":"user-service","timestamp":"2025-04-07 19:29:53"}
+{"level":"info","message":"Scheduled hourly job with cron: 0 * * * *","service":"user-service","timestamp":"2025-04-07 19:29:53"}
+{"level":"info","message":"Scheduler server initialized successfully","service":"user-service","timestamp":"2025-04-07 19:29:53"}
+{"level":"info","message":"Server is running on http://localhost:3000","service":"user-service","timestamp":"2025-04-07 19:29:53"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-07 19:29:53"}
+{"level":"info","message":"Email server connection established successfully","service":"user-service","timestamp":"2025-04-07 19:29:55"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-04-07 19:29:55"}
+{"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-04-07 19:29:55"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 19:30:05"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 19:30:36"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 19:32:13"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 19:32:25"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 19:32:32"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 19:32:33"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 19:32:34"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 19:32:37"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 19:32:39"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 19:32:40"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 19:33:07"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 19:33:07"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 19:33:07"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 19:33:07"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 19:33:09"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 19:33:09"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 19:33:10"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 19:33:10"}
+{"level":"info","message":"Running hourly financial update job","service":"user-service","timestamp":"2025-04-07 20:00:00"}
+{"level":"info","message":"Found 2 verified users for report distribution","service":"user-service","timestamp":"2025-04-07 20:00:00"}
+{"level":"info","message":"Preparing to send hourly reports to 2 verified users","service":"user-service","timestamp":"2025-04-07 20:00:00"}
+{"level":"info","message":"Email sent: <e27e9052-d7bc-49da-2a55-1456bb38d255@gmail.com>","service":"user-service","timestamp":"2025-04-07 20:00:05"}
+{"level":"info","message":"Email sent: <d1aa97f2-c8a5-b819-630a-d9122836673a@gmail.com>","service":"user-service","timestamp":"2025-04-07 20:00:11"}
+{"level":"info","message":"hourly report distribution complete. Success: 2, Failures: 0","service":"user-service","timestamp":"2025-04-07 20:00:11"}
+{"level":"info","message":"Hourly financial job completed","service":"user-service","timestamp":"2025-04-07 20:00:11"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 20:40:36"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 20:40:36"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 20:40:37"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 20:40:37"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 20:40:38"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 20:40:44"}
+{"level":"info","message":"Running hourly financial update job","service":"user-service","timestamp":"2025-04-07 21:00:00"}
+{"level":"info","message":"Found 2 verified users for report distribution","service":"user-service","timestamp":"2025-04-07 21:00:00"}
+{"level":"info","message":"Preparing to send hourly reports to 2 verified users","service":"user-service","timestamp":"2025-04-07 21:00:00"}
+{"level":"info","message":"Email sent: <3ba72dcf-8a02-8190-b415-12b64d469398@gmail.com>","service":"user-service","timestamp":"2025-04-07 21:00:04"}
+{"level":"info","message":"Email sent: <97110693-a25b-9094-7e5e-98f0f2700b4a@gmail.com>","service":"user-service","timestamp":"2025-04-07 21:00:08"}
+{"level":"info","message":"hourly report distribution complete. Success: 2, Failures: 0","service":"user-service","timestamp":"2025-04-07 21:00:08"}
+{"level":"info","message":"Hourly financial job completed","service":"user-service","timestamp":"2025-04-07 21:00:08"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 21:10:23"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 21:13:08"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 21:13:09"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 21:13:12"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 21:13:13"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 21:13:47"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 21:13:48"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 21:14:47"}
+{"level":"info","message":"Initializing scheduler server...","service":"user-service","timestamp":"2025-04-07 21:46:57"}
+{"level":"info","message":"Scheduled weekly report job with cron: 0 8 * * 0","service":"user-service","timestamp":"2025-04-07 21:46:57"}
+{"level":"info","message":"Scheduled monthly report job with cron: 0 7 1 * *","service":"user-service","timestamp":"2025-04-07 21:46:57"}
+{"level":"info","message":"Scheduled daily report job with cron: 0 9 * * *","service":"user-service","timestamp":"2025-04-07 21:46:57"}
+{"level":"info","message":"Scheduled hourly job with cron: 0 * * * *","service":"user-service","timestamp":"2025-04-07 21:46:57"}
+{"level":"info","message":"Scheduler server initialized successfully","service":"user-service","timestamp":"2025-04-07 21:46:57"}
+{"level":"info","message":"Server is running on http://localhost:3000","service":"user-service","timestamp":"2025-04-07 21:46:57"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-07 21:46:57"}
+{"level":"info","message":"Email server connection established successfully","service":"user-service","timestamp":"2025-04-07 21:46:59"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-04-07 21:46:59"}
+{"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-04-07 21:46:59"}
+{"level":"info","message":"Running hourly financial update job","service":"user-service","timestamp":"2025-04-07 22:00:00"}
+{"level":"info","message":"Found 2 verified users for report distribution","service":"user-service","timestamp":"2025-04-07 22:00:00"}
+{"level":"info","message":"Preparing to send hourly reports to 2 verified users","service":"user-service","timestamp":"2025-04-07 22:00:00"}
+{"level":"info","message":"Email sent: <43a4e358-28be-a194-5a99-af1baf3ca87a@gmail.com>","service":"user-service","timestamp":"2025-04-07 22:00:07"}
+{"level":"info","message":"Email sent: <70745e49-32e5-6000-965a-1c22c652381c@gmail.com>","service":"user-service","timestamp":"2025-04-07 22:00:14"}
+{"level":"info","message":"hourly report distribution complete. Success: 2, Failures: 0","service":"user-service","timestamp":"2025-04-07 22:00:14"}
+{"level":"info","message":"Hourly financial job completed","service":"user-service","timestamp":"2025-04-07 22:00:14"}
+{"level":"info","message":"Running hourly financial update job","service":"user-service","timestamp":"2025-04-07 23:00:00"}
+{"level":"info","message":"Found 2 verified users for report distribution","service":"user-service","timestamp":"2025-04-07 23:00:00"}
+{"level":"info","message":"Preparing to send hourly reports to 2 verified users","service":"user-service","timestamp":"2025-04-07 23:00:00"}
+{"level":"info","message":"Email sent: <91731557-7371-4db8-bd7c-1cf95ab8b17d@gmail.com>","service":"user-service","timestamp":"2025-04-07 23:00:04"}
+{"level":"info","message":"Email sent: <75d44f52-69be-6191-a1a8-0fde1a96e11e@gmail.com>","service":"user-service","timestamp":"2025-04-07 23:00:08"}
+{"level":"info","message":"hourly report distribution complete. Success: 2, Failures: 0","service":"user-service","timestamp":"2025-04-07 23:00:09"}
+{"level":"info","message":"Hourly financial job completed","service":"user-service","timestamp":"2025-04-07 23:00:09"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 23:01:01"}

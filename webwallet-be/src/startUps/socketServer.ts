@@ -1,7 +1,7 @@
 import { Server } from 'socket.io';
 import http from 'http';
 import { configureSocketServer, joinUserRoom, SOCKET_EVENTS } from '../config/realTimeConfig/socketConfig';
-import NotificationService from '../services/NotificationService';
+import * as NotificationService from '../services/NotificationService';
 import logger from '../utils/logger';
 
 // Initialize io as null and it will be assigned properly in initializeSocketServer
@@ -14,10 +14,8 @@ let io: Server | null = null;
  * @returns Configured Socket.IO server
  */
 export const initializeSocketServer = (server: http.Server): Server => {
-  // Configure socket server
   io = configureSocketServer(server);
 
-  // Set up connection handler
   io.on('connection', async (socket) => {
     const userId = socket.data.userId;
     
@@ -42,6 +40,27 @@ export const initializeSocketServer = (server: http.Server): Server => {
         socket.emit(SOCKET_EVENTS.UNREAD_COUNT, { count });
       } catch (error) {
         logger.error(`Error getting unread count for user:`, error);
+      }
+    });
+
+    // Handle request for unseen notification count
+    socket.on(SOCKET_EVENTS.REQUEST_UNSEEN_COUNT, async () => {
+      try {
+        const count = await NotificationService.getUnseenCount(userId);
+        socket.emit(SOCKET_EVENTS.UNSEEN_COUNT, { count });
+      } catch (error) {
+        logger.error(`Error getting unseen count for user:`, error);
+      }
+    });
+
+    // Handle mark notifications as seen
+    socket.on(SOCKET_EVENTS.MARK_AS_SEEN, async () => {
+      try {
+        await NotificationService.markAllAsSeen(userId);
+        const unseenCount = await NotificationService.getUnseenCount(userId);
+        socket.emit(SOCKET_EVENTS.UNSEEN_COUNT, { count: unseenCount });
+      } catch (error) {
+        logger.error(`Error marking notifications as seen for user:`, error);
       }
     });
 
@@ -94,5 +113,25 @@ export const emitUnreadCountToUser = async (userId: string): Promise<void> => {
   }
 };
 
+/**
+ * Emit an unseen notification count update to a user
+ * 
+ * @param userId User ID
+ */
+export const emitUnseenCountToUser = async (userId: string): Promise<void> => {
+  try {
+    const count = await NotificationService.getUnseenCount(userId);
+    emitToUser(userId, SOCKET_EVENTS.UNSEEN_COUNT, { count });
+  } catch (error) {
+    logger.error(`Error emitting unseen count for user:`, error);
+  }
+};
+
 export { io };
-export default { initializeSocketServer, getIO, emitToUser, emitUnreadCountToUser };
+export default { 
+  initializeSocketServer, 
+  getIO, 
+  emitToUser, 
+  emitUnreadCountToUser,
+  emitUnseenCountToUser 
+};

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '../../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import {
@@ -21,16 +21,6 @@ const RequestPasswordReset: React.FC = () => {
   const [message, setMessage] = useState('');
   const { requestPasswordReset } = useAuth();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    // Check if we have an email in session storage (from login page)
-    const savedEmail = sessionStorage.getItem('resetEmail');
-    if (savedEmail) {
-      setEmail(savedEmail);
-      // Clear it after use
-      sessionStorage.removeItem('resetEmail');
-    }
-  }, []);
 
   const validateEmail = (email: string): boolean => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
