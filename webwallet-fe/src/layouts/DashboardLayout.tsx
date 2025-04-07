@@ -27,16 +27,16 @@ function DashboardLayout() {
 
   return (
     <div className="h-screen overflow-hidden relative">
-      <div className="fixed top-0 left-0 h-full">
+      <div className="fixed top-0 left-0 h-full border border-green-800">
         <Sidebar isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
       </div>
       <div
         className={`transition-all duration-300 ${
           isCollapsed ? 'ml-16' : 'ml-64'
-        }`}
+        } 'border border-red-700 dark:border-gray-700'`}
       >
         <Header />
-        <main className="overflow-auto mt-20 h-[calc(100vh-5rem)] bg-gray-50 dark:bg-gray-900">
+        <main className="overflow-auto mt-20 h-[calc(100vh-5rem)] bg-gray-50 dark:bg-gray-900 border border-blue-800">
           <div className="container mx-auto sm:py-2 sm:px-1 py-6 px-4">
             <Outlet />
           </div>

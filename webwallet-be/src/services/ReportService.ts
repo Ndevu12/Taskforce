@@ -11,26 +11,7 @@ import { getTransactionTypeFromCategoryName } from '../utils/categoryUtils';
 import NotificationGatewayService from './NotificationGatewayService';
 import { sendReportEmail } from '../helpers/emailHandlers/emailHandlers';
 import { formatDateRange } from '../utils/formater/dateFormatter';
-
-interface FinancialSummary {
-  income: { total: number, categories: Record<string, number> };
-  expenses: { total: number, categories: Record<string, number> };
-  savings: { total: number, categories: Record<string, number> };
-  investments?: { total: number, categories: Record<string, number> };
-  debt?: { total: number, categories: Record<string, number> };
-  credit?: { total: number, categories: Record<string, number> };
-  netIncome: number;
-  statistics: {
-    totalTransactions: number;
-    mostActiveDay?: string;
-    mostUsedCategories?: Record<string, string>;
-    budgets?: {
-      total: number;
-      exceeded: number;
-      onTrack: number;
-    }
-  };
-}
+import { FinancialSummary } from '../types/interfaces/FinancialSummary';
 
 /**
  * Create a new report with validation

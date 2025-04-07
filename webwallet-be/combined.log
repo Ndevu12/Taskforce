@@ -2010,3 +2010,206 @@
 {"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:02:11"}
 {"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:02:11"}
 {"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:02:11"}
+{"level":"info","message":"Initializing scheduler server...","service":"user-service","timestamp":"2025-04-07 12:09:49"}
+{"level":"info","message":"Scheduled weekly report job with cron: 0 8 * * 0","service":"user-service","timestamp":"2025-04-07 12:09:49"}
+{"level":"info","message":"Scheduled monthly report job with cron: 0 7 1 * *","service":"user-service","timestamp":"2025-04-07 12:09:49"}
+{"level":"info","message":"Scheduler server initialized successfully","service":"user-service","timestamp":"2025-04-07 12:09:49"}
+{"level":"info","message":"Server is running on http://localhost:3000","service":"user-service","timestamp":"2025-04-07 12:09:49"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-07 12:09:49"}
+{"level":"info","message":"Email server connection established successfully","service":"user-service","timestamp":"2025-04-07 12:09:51"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-04-07 12:09:51"}
+{"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-04-07 12:09:51"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:09:51"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:09:51"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:09:51"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:09:51"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:09:51"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:09:55"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:09:55"}
+{"level":"info","message":"Initializing scheduler server...","service":"user-service","timestamp":"2025-04-07 12:12:24"}
+{"level":"info","message":"Scheduled weekly report job with cron: 0 8 * * 0","service":"user-service","timestamp":"2025-04-07 12:12:24"}
+{"level":"info","message":"Scheduled monthly report job with cron: 0 7 1 * *","service":"user-service","timestamp":"2025-04-07 12:12:24"}
+{"level":"info","message":"Scheduler server initialized successfully","service":"user-service","timestamp":"2025-04-07 12:12:24"}
+{"level":"info","message":"Server is running on http://localhost:3000","service":"user-service","timestamp":"2025-04-07 12:12:24"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-07 12:12:24"}
+{"level":"info","message":"Email server connection established successfully","service":"user-service","timestamp":"2025-04-07 12:12:26"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-04-07 12:12:26"}
+{"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-04-07 12:12:26"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:12:26"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:12:26"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:12:26"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:12:32"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:12:32"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:12:32"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:12:32"}
+{"level":"info","message":"Initializing scheduler server...","service":"user-service","timestamp":"2025-04-07 12:19:21"}
+{"level":"info","message":"Scheduled weekly report job with cron: 0 8 * * 0","service":"user-service","timestamp":"2025-04-07 12:19:21"}
+{"level":"info","message":"Scheduled monthly report job with cron: 0 7 1 * *","service":"user-service","timestamp":"2025-04-07 12:19:21"}
+{"level":"info","message":"Daily job not scheduled (SCHEDULE_DAILY environment variable not set to true)","service":"user-service","timestamp":"2025-04-07 12:19:21"}
+{"level":"info","message":"Hourly job not scheduled (SCHEDULE_HOURLY environment variable not set to true)","service":"user-service","timestamp":"2025-04-07 12:19:21"}
+{"level":"info","message":"Scheduler server initialized successfully","service":"user-service","timestamp":"2025-04-07 12:19:21"}
+{"level":"info","message":"Server is running on http://localhost:3000","service":"user-service","timestamp":"2025-04-07 12:19:21"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-07 12:19:21"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-04-07 12:19:24"}
+{"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-04-07 12:19:24"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:19:24"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:19:24"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:19:24"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:19:24"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:19:24"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:19:24"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:19:24"}
+{"level":"info","message":"Email server connection established successfully","service":"user-service","timestamp":"2025-04-07 12:19:25"}
+{"level":"info","message":"Initializing scheduler server...","service":"user-service","timestamp":"2025-04-07 12:20:23"}
+{"level":"info","message":"Scheduled weekly report job with cron: 0 8 * * 0","service":"user-service","timestamp":"2025-04-07 12:20:24"}
+{"level":"info","message":"Scheduled monthly report job with cron: 0 7 1 * *","service":"user-service","timestamp":"2025-04-07 12:20:24"}
+{"level":"info","message":"Daily job not scheduled (SCHEDULE_DAILY environment variable not set to true)","service":"user-service","timestamp":"2025-04-07 12:20:24"}
+{"level":"info","message":"Hourly job not scheduled (SCHEDULE_HOURLY environment variable not set to true)","service":"user-service","timestamp":"2025-04-07 12:20:24"}
+{"level":"info","message":"Scheduler server initialized successfully","service":"user-service","timestamp":"2025-04-07 12:20:24"}
+{"level":"info","message":"Server is running on http://localhost:3000","service":"user-service","timestamp":"2025-04-07 12:20:24"}
+{"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-04-07 12:20:24"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:20:24"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:20:24"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:20:25"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:20:25"}
+{"level":"info","message":"Email server connection established successfully","service":"user-service","timestamp":"2025-04-07 12:20:26"}
+{"level":"info","message":"Initializing scheduler server...","service":"user-service","timestamp":"2025-04-07 12:21:01"}
+{"level":"info","message":"Scheduled weekly report job with cron: 0 8 * * 0","service":"user-service","timestamp":"2025-04-07 12:21:01"}
+{"level":"info","message":"Scheduled monthly report job with cron: 0 7 1 * *","service":"user-service","timestamp":"2025-04-07 12:21:01"}
+{"level":"info","message":"Daily job not scheduled (SCHEDULE_DAILY environment variable not set to true)","service":"user-service","timestamp":"2025-04-07 12:21:01"}
+{"level":"info","message":"Hourly job not scheduled (SCHEDULE_HOURLY environment variable not set to true)","service":"user-service","timestamp":"2025-04-07 12:21:01"}
+{"level":"info","message":"Scheduler server initialized successfully","service":"user-service","timestamp":"2025-04-07 12:21:01"}
+{"level":"info","message":"Server is running on http://localhost:3000","service":"user-service","timestamp":"2025-04-07 12:21:02"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-07 12:21:02"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-04-07 12:21:04"}
+{"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-04-07 12:21:04"}
+{"level":"info","message":"Email server connection established successfully","service":"user-service","timestamp":"2025-04-07 12:21:05"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:21:08"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:21:08"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:21:08"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:21:08"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:21:08"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:21:08"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:21:08"}
+{"level":"info","message":"Initializing scheduler server...","service":"user-service","timestamp":"2025-04-07 12:23:12"}
+{"level":"info","message":"Scheduled weekly report job with cron: 0 8 * * 0","service":"user-service","timestamp":"2025-04-07 12:23:13"}
+{"level":"info","message":"Scheduled monthly report job with cron: 0 7 1 * *","service":"user-service","timestamp":"2025-04-07 12:23:13"}
+{"level":"info","message":"Daily job not scheduled (SCHEDULE_DAILY environment variable not set to true)","service":"user-service","timestamp":"2025-04-07 12:23:13"}
+{"level":"info","message":"Hourly job not scheduled (SCHEDULE_HOURLY environment variable not set to true)","service":"user-service","timestamp":"2025-04-07 12:23:13"}
+{"level":"info","message":"Scheduler server initialized successfully","service":"user-service","timestamp":"2025-04-07 12:23:13"}
+{"level":"info","message":"Server is running on http://localhost:3000","service":"user-service","timestamp":"2025-04-07 12:23:13"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-07 12:23:13"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-04-07 12:23:15"}
+{"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-04-07 12:23:15"}
+{"level":"info","message":"Email server connection established successfully","service":"user-service","timestamp":"2025-04-07 12:23:16"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:23:17"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:23:17"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:23:18"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:23:18"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:24:56"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:24:57"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:24:58"}
+{"level":"info","message":"Initializing scheduler server...","service":"user-service","timestamp":"2025-04-07 12:34:42"}
+{"level":"info","message":"Scheduled weekly report job with cron: 0 8 * * 0","service":"user-service","timestamp":"2025-04-07 12:34:42"}
+{"level":"info","message":"Scheduled monthly report job with cron: 0 7 1 * *","service":"user-service","timestamp":"2025-04-07 12:34:42"}
+{"level":"info","message":"Daily job not scheduled (SCHEDULE_DAILY environment variable not set to true)","service":"user-service","timestamp":"2025-04-07 12:34:42"}
+{"level":"info","message":"Hourly job not scheduled (SCHEDULE_HOURLY environment variable not set to true)","service":"user-service","timestamp":"2025-04-07 12:34:42"}
+{"level":"info","message":"Scheduler server initialized successfully","service":"user-service","timestamp":"2025-04-07 12:34:42"}
+{"level":"info","message":"Server is running on http://localhost:3000","service":"user-service","timestamp":"2025-04-07 12:34:42"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-07 12:34:42"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-04-07 12:34:44"}
+{"level":"info","message":"Email server connection established successfully","service":"user-service","timestamp":"2025-04-07 12:34:44"}
+{"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-04-07 12:34:45"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:34:45"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:34:45"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:34:45"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:34:45"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:34:46"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:34:46"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:34:46"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 12:36:19"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 12:36:20"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 12:36:20"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 12:36:20"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 12:36:20"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 12:36:21"}
+{"level":"info","message":"Socket disconnected for user","service":"user-service","timestamp":"2025-04-07 12:36:21"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:36:35"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:36:35"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:36:36"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:36:36"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:36:37"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:36:38"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:36:38"}
+{"level":"info","message":"Initializing scheduler server...","service":"user-service","timestamp":"2025-04-07 12:41:34"}
+{"level":"info","message":"Scheduled weekly report job with cron: 0 8 * * 0","service":"user-service","timestamp":"2025-04-07 12:41:34"}
+{"level":"info","message":"Scheduled monthly report job with cron: 0 7 1 * *","service":"user-service","timestamp":"2025-04-07 12:41:34"}
+{"level":"info","message":"Daily job not scheduled (SCHEDULE_DAILY environment variable not set to true)","service":"user-service","timestamp":"2025-04-07 12:41:34"}
+{"level":"info","message":"Hourly job not scheduled (SCHEDULE_HOURLY environment variable not set to true)","service":"user-service","timestamp":"2025-04-07 12:41:34"}
+{"level":"info","message":"Scheduler server initialized successfully","service":"user-service","timestamp":"2025-04-07 12:41:34"}
+{"level":"info","message":"Server is running on http://localhost:3000","service":"user-service","timestamp":"2025-04-07 12:41:34"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-07 12:41:34"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-04-07 12:41:36"}
+{"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-04-07 12:41:37"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:41:37"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:41:37"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:41:37"}
+{"level":"info","message":"Email server connection established successfully","service":"user-service","timestamp":"2025-04-07 12:41:37"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:41:39"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:41:40"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:41:40"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:41:40"}
+{"level":"info","message":"Initializing scheduler server...","service":"user-service","timestamp":"2025-04-07 12:44:40"}
+{"level":"info","message":"Scheduled weekly report job with cron: 0 8 * * 0","service":"user-service","timestamp":"2025-04-07 12:44:40"}
+{"level":"info","message":"Scheduled monthly report job with cron: 0 7 1 * *","service":"user-service","timestamp":"2025-04-07 12:44:40"}
+{"level":"info","message":"Daily job not scheduled (SCHEDULE_DAILY environment variable not set to true)","service":"user-service","timestamp":"2025-04-07 12:44:40"}
+{"level":"info","message":"Hourly job not scheduled (SCHEDULE_HOURLY environment variable not set to true)","service":"user-service","timestamp":"2025-04-07 12:44:40"}
+{"level":"info","message":"Scheduler server initialized successfully","service":"user-service","timestamp":"2025-04-07 12:44:40"}
+{"level":"info","message":"Server is running on http://localhost:3000","service":"user-service","timestamp":"2025-04-07 12:44:40"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-07 12:44:40"}
+{"level":"info","message":"Email server connection established successfully","service":"user-service","timestamp":"2025-04-07 12:44:42"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-04-07 12:44:42"}
+{"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-04-07 12:44:42"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:44:42"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:44:42"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:44:42"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:44:42"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:44:43"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:44:43"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:44:45"}
+{"level":"info","message":"Initializing scheduler server...","service":"user-service","timestamp":"2025-04-07 12:48:21"}
+{"level":"info","message":"Scheduled weekly report job with cron: 0 8 * * 0","service":"user-service","timestamp":"2025-04-07 12:48:21"}
+{"level":"info","message":"Scheduled monthly report job with cron: 0 7 1 * *","service":"user-service","timestamp":"2025-04-07 12:48:21"}
+{"level":"info","message":"Daily job not scheduled (SCHEDULE_DAILY environment variable not set to true)","service":"user-service","timestamp":"2025-04-07 12:48:21"}
+{"level":"info","message":"Hourly job not scheduled (SCHEDULE_HOURLY environment variable not set to true)","service":"user-service","timestamp":"2025-04-07 12:48:21"}
+{"level":"info","message":"Scheduler server initialized successfully","service":"user-service","timestamp":"2025-04-07 12:48:21"}
+{"level":"info","message":"Server is running on http://localhost:3000","service":"user-service","timestamp":"2025-04-07 12:48:21"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-07 12:48:21"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-04-07 12:48:23"}
+{"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-04-07 12:48:24"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:48:24"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:48:24"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:48:24"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:48:24"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:48:24"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:48:24"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:48:24"}
+{"level":"info","message":"Email server connection established successfully","service":"user-service","timestamp":"2025-04-07 12:48:24"}
+{"level":"info","message":"Initializing scheduler server...","service":"user-service","timestamp":"2025-04-07 12:49:34"}
+{"level":"info","message":"Scheduled weekly report job with cron: 0 8 * * 0","service":"user-service","timestamp":"2025-04-07 12:49:34"}
+{"level":"info","message":"Scheduled monthly report job with cron: 0 7 1 * *","service":"user-service","timestamp":"2025-04-07 12:49:34"}
+{"level":"info","message":"Daily job not scheduled (SCHEDULE_DAILY environment variable not set to true)","service":"user-service","timestamp":"2025-04-07 12:49:34"}
+{"level":"info","message":"Hourly job not scheduled (SCHEDULE_HOURLY environment variable not set to true)","service":"user-service","timestamp":"2025-04-07 12:49:34"}
+{"level":"info","message":"Scheduler server initialized successfully","service":"user-service","timestamp":"2025-04-07 12:49:34"}
+{"level":"info","message":"Server is running on http://localhost:3000","service":"user-service","timestamp":"2025-04-07 12:49:34"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-07 12:49:34"}
+{"level":"info","message":"Email server connection established successfully","service":"user-service","timestamp":"2025-04-07 12:49:36"}
+{"level":"info","message":"Redis client reconnecting","service":"user-service","timestamp":"2025-04-07 12:49:36"}
+{"level":"info","message":"Redis client ready","service":"user-service","timestamp":"2025-04-07 12:49:37"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:49:37"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:49:37"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:49:37"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:49:40"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:49:40"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:49:40"}
+{"level":"info","message":"Socket connected for user","service":"user-service","timestamp":"2025-04-07 12:49:40"}
