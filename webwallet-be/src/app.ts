@@ -2,6 +2,7 @@ import express, { Application } from "express";
 import cors from "cors";
 import dotenv from 'dotenv';
 import morgan from 'morgan';
+import path from 'path';
 import connectDB from "./mongooseConfig";
 import router from "./routes";
 import http from 'http';
@@ -37,6 +38,9 @@ connectDB();
 
 app.use(cors(corsOptions));
 app.use(express.json());
+
+// Serve static files from assets directory
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
 // Morgan format for logging
 const morganFormat = ':method :url :status :response-time ms - :res[content-length]';
