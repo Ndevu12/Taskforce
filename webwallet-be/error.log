@@ -295,3 +295,7 @@
 {"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-07 23:24:31"}
 {"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-09 14:12:13"}
 {"level":"error","message":"Failed to fetch transactions: read ECONNRESET","service":"user-service","timestamp":"2025-04-09 14:18:25"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-09 15:05:41"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-09 15:10:05"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-09 15:11:01"}
+{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-09 15:17:11"}
