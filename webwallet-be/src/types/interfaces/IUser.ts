@@ -1,6 +1,6 @@
-
 import { Document } from 'mongoose';
 import { UserRole } from '../enums/UserRole';
+import { AccountStatus } from '../enums/AccountStatus';
 
 export interface IUser extends Document {
   email: string;
@@ -22,4 +22,6 @@ export interface IUser extends Document {
     theme: string;
   };
   lastLogin: Date | null;
+  accountStatus: AccountStatus;
+  statusReason?: string;
 }

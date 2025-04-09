@@ -21,7 +21,7 @@ export const getPasswordResetEmailTemplate = (name: string, resetToken: string, 
       <p>If you didn't request a password reset, please ignore this email or contact support if you have concerns.</p>
       <p>This link will expire in 1 hour.</p>
       <p>Best regards,</p>
-      <p>The Web Wallet Team</p>
+      <p>The Money Tasky Team</p>
     </div>
   `;
 };

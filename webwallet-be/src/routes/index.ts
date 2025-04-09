@@ -10,6 +10,7 @@ import authRoutes from './AuthRoutes';
 import subCategoryRoutes from './SubCategoryRoutes';
 import messageRoutes from './MessageRoutes';
 import analyticsRoutes from './analyticsRoutes';
+import feedbackRoutes from './FeedbackRoutes';
 
 const router = Router();
 
@@ -24,5 +25,6 @@ router.use('/accounts', accountRoutes);
 router.use('/auth', authRoutes);
 router.use('/messages', messageRoutes);
 router.use('/analytics', analyticsRoutes);
+router.use('/feedback', feedbackRoutes);
 
 export default router;

@@ -187,7 +187,7 @@ const BudgetFormModal: React.FC<BudgetFormModalProps> = ({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
+    <div className="fixed mt-12 inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
       <div className="bg-white dark:bg-gray-800 p-6 rounded shadow-md w-full max-w-4xl overflow-y-auto max-h-[90vh]">
         <h2 className="text-xl mb-4 text-gray-700 dark:text-gray-300">
           {budgetToEdit ? 'Edit Budget' : 'Add Budget'}

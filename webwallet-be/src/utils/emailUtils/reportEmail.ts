@@ -281,7 +281,7 @@ export const getReportEmailTemplate = (
           </div>
 
           <p style="margin-top: 30px;">
-            To view more details about your financial activities, please log into your Web Wallet account.
+            To view more details about your financial activities, please log into your Money Tasky account.
           </p>
           
           <div style="text-align: center; margin: 30px 0;">
@@ -296,8 +296,8 @@ export const getReportEmailTemplate = (
         </div>
         
         <div style="text-align: center; margin-top: 20px; color: #666; font-size: 12px;">
-          <p>Web Wallet Financial Services</p>
-          <p>© ${new Date().getFullYear()} Web Wallet. All rights reserved.</p>
+          <p>Money Tasky Financial Services</p>
+          <p>© ${new Date().getFullYear()} Money Tasky. All rights reserved.</p>
         </div>
       </div>
     </body>

@@ -69,7 +69,8 @@ export const createNotification = async (notificationData: INotification) => {
 };
 
 export const getUnreadNotificationsByUser = async (userId: string) => {
-  return await Notification.find({ user: userId, read: false });
+  return await Notification.find({ user: userId, read: false })
+    .sort({ createdAt: -1 });
 };
 
 export const getNotificationsByUser = async (userId: string) => {
@@ -158,5 +159,10 @@ export default {
   markAllNotificationsAsRead,
   markAllNotificationsAsUnread,
   deleteAllNotifications,
-  getUnreadCount
+  getUnreadCount,
+  getUnseenCount,
+  markAllAsSeen,
+  markAsSeen,
+  emitUnreadCountToUser,
+  emitUnseenCountToUser
 };

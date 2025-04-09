@@ -8,6 +8,7 @@ import {
   FaCog,
   FaSignOutAlt,
   FaBars,
+  FaCommentDots,
 } from 'react-icons/fa';
 import { NavLink, useNavigate } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
@@ -64,7 +65,7 @@ function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
             onClick={() => setIsCollapsed(!isCollapsed)}
           />
         </div>
-        <nav className="mt-4">
+        <nav className="mt-4 flex flex-col h-[calc(100%-6rem)]">
           <NavLink
             to="/dashboard"
             className={({ isActive }) =>
@@ -120,7 +121,24 @@ function Sidebar({ isCollapsed, setIsCollapsed }: SidebarProps) {
             <FaCog className="mr-4" />
             {!isCollapsed && <span>Settings</span>}
           </NavLink>
-          <div className="mt-auto">
+
+          {/* Spacer to push feedback and logout to bottom */}
+          <div className="mt-3 bg-primary"></div>
+
+          {/* Feedback link - added at the bottom before logout */}
+          <NavLink
+            to="/dashboard/feedback"
+            className={({ isActive }) =>
+              `flex items-center p-4 hover:bg-gray-700 ${isActive ? 'bg-gray-700' : ''} ${
+                !isCollapsed && 'border-t border-gray-700'
+              }`
+            }
+          >
+            <FaCommentDots className="mr-4" />
+            {!isCollapsed && <span>Feedback</span>}
+          </NavLink>
+
+          <div>
             <button
               onClick={handleLogout}
               className="flex items-center p-4 w-full hover:bg-gray-700"

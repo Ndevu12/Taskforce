@@ -1,12 +1,13 @@
 import mongoose from 'mongoose';
 import { IUser } from '../types/interfaces/IUser';
 import { UserRole } from '../types/enums/UserRole';
+import { AccountStatus } from '../types/enums/AccountStatus';
 
 const userSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   name: { type: String, required: true },
-  role: { type: String, required: true, enum: UserRole },
+  role: { type: String, required: true, enum: Object.values(UserRole) },
   preferences: {
     defaultCurrency: { type: String, default: 'RWF' },
     notificationSettings: {
@@ -22,7 +23,12 @@ const userSchema = new mongoose.Schema({
   resetToken: { type: String, default: null },
   resetTokenExpires: { type: Date, default: null },
   lastLogin: { type: Date },
-  isActive: { type: Boolean, default: true },
+  accountStatus: { 
+    type: String, 
+    enum: Object.values(AccountStatus), 
+    default: AccountStatus.ACTIVE 
+  },
+  statusReason: { type: String }
 }, { timestamps: true });
 
 export default mongoose.model<IUser>('User', userSchema);

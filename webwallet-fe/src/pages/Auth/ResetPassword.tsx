@@ -124,7 +124,7 @@ const ResetPassword: React.FC = () => {
 
   if (status === 'error' && (!userId || !token)) {
     return (
-      <div className="min-h-screen bg-gray-100 flex flex-col items-center justify-center p-4">
+      <div className="min-h-screen mt-10 bg-gray-100 flex flex-col items-center justify-center p-4">
         <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md">
           <Alert severity="error" className="mb-4">
             {message ||

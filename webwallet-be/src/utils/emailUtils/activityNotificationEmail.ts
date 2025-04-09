@@ -15,7 +15,7 @@ export const getActivityNotificationEmailTemplate = (name: string, activity: str
       </p>
       <p>If this was you, you can ignore this email. If you didn't perform this action, please contact our support team immediately.</p>
       <p>Best regards,</p>
-      <p>The Web Wallet Team</p>
+      <p>The Money Tasky Team</p>
     </div>
   `;
 };

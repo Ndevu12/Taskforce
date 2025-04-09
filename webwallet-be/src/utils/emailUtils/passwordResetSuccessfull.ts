@@ -11,7 +11,7 @@ export const getSuccessfulPasswordResetEmailTemplate = (name: string) => {
         <p>Your password has been successfully reset.</p>
         <p>If you did not request this change, please contact support immediately.</p>
         <p>Best regards,</p>
-        <p>The Web Wallet Team</p>
+        <p>The Money Tasky Team</p>
         </div>
     `;
 }

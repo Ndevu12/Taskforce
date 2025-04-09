@@ -66,7 +66,7 @@ const ResendVerification: React.FC = () => {
   };
 
   return (
-    <div className="bg-white p-8 rounded-lg shadow-md w-full max-w-md mx-auto">
+    <div className="bg-white mt-14 p-8 rounded-lg shadow-md w-full max-w-md mx-auto">
       <h2 className="text-2xl font-bold text-center mb-6">
         Resend Verification Email
       </h2>

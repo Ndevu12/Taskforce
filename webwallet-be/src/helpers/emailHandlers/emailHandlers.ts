@@ -38,7 +38,7 @@ export const sendEmail = async (options: EmailOptions): Promise<boolean> => {
     }
 
     const mailOptions = {
-      from: `Web Wallet <${SENDER_EMAIL}>`,
+      from: `Money Tasky <${SENDER_EMAIL}>`,
       to: options.to,
       subject: options.subject,
       text: options.text,
@@ -63,7 +63,7 @@ export const sendEmail = async (options: EmailOptions): Promise<boolean> => {
  * @returns Promise resolving to the send result
  */
 export const sendWelcomeEmail = async (name: string, email: string): Promise<boolean> => {
-  const subject = 'Welcome to Web Wallet!';
+  const subject = 'Welcome to Money Tasky!';
   const html = getWelcomeEmailTemplate(name);
 
   return await sendEmail({ to: email, subject, html });
@@ -82,7 +82,7 @@ export const sendActivityNotificationEmail = async (
   email: string,
   activity: string
 ): Promise<boolean> => {
-  const subject = 'Web Wallet: Account Activity Notification';
+  const subject = 'Money Tasky: Account Activity Notification';
   const html = getActivityNotificationEmailTemplate(name, activity);
 
   return await sendEmail({ to: email, subject, html });
@@ -103,7 +103,7 @@ export const sendPasswordResetEmail = async (
   resetToken: string,
   resetUrl: string
 ): Promise<boolean> => {
-  const subject = 'Web Wallet: Password Reset Request';
+  const subject = 'Money Tasky: Password Reset Request';
   const html = getPasswordResetEmailTemplate(name, resetToken, resetUrl);
 
   return await sendEmail({ to: email, subject, html });
@@ -124,7 +124,7 @@ export const sendAccountVerificationEmail = async (
   verificationToken: string,
   verificationUrl: string
 ): Promise<boolean> => {
-  const subject = 'Web Wallet: Verify Your Email Address';
+  const subject = 'Money Tasky: Verify Your Email Address';
   const html = getAccountVerificationEmailTemplate(name, verificationToken, verificationUrl);
 
   return await sendEmail({ to: email, subject, html });
@@ -141,7 +141,7 @@ export const sendPasswordResetSuccessEmail = async (
   name: string,
   email: string
 ): Promise<boolean> => {
-  const subject = 'Web Wallet: Password Reset Successful';
+  const subject = 'Money Tasky: Password Reset Successful';
   const html = getSuccessfulPasswordResetEmailTemplate(name);
 
   return await sendEmail({ to: email, subject, html });
@@ -179,7 +179,7 @@ export const sendReportEmail = async (
   },
   attachmentPath?: string
 ): Promise<boolean> => {
-  const subject = `Web Wallet: ${reportTitle} - ${reportPeriod}`;
+  const subject = `Money Tasky: ${reportTitle} - ${reportPeriod}`;
   const html = getReportEmailTemplate(name, reportTitle, reportPeriod, financialSummary);
 
   const emailOptions: EmailOptions = { to: email, subject, html };

@@ -5,7 +5,7 @@ const API_URL = import.meta.env.VITE_BASE_URL;
 
 export const register = async (name: string, email: string, password: string) => {
   try {
-    const role = 'user';
+    const role = 'USER';
     const response = await axios.post<{ message: string }>(`${API_URL}/auth`, { 
       name, email, password, role 
     });

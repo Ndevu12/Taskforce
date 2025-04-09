@@ -19,6 +19,11 @@ const Login: React.FC = () => {
     setLoading(true);
     try {
       await login(email, password, navigate);
+      // After successful login logic
+      const redirectPath =
+        sessionStorage.getItem('redirectAfterAuth') || '/dashboard';
+      sessionStorage.removeItem('redirectAfterAuth'); // Clear it after use
+      navigate(redirectPath);
     } catch (error: any) {
       if (error.message === 'Please verify your email before logging in.') {
         setIsEmailVerificationError(true);
@@ -47,12 +52,17 @@ const Login: React.FC = () => {
           <div className="mb-4 p-4 bg-red-100 border border-red-400 text-red-700 rounded">
             <p>{error}</p>
             {isEmailVerificationError && (
-              <button
-                onClick={handleResendVerification}
-                className="mt-2 bg-blue-500 text-white py-1 px-3 rounded-lg hover:bg-blue-600"
-              >
-                Resend Verification Email
-              </button>
+              <>
+                <p className="bg-blue-100 text-blue-700 p-2 rounded mt-2">
+                  Please, consider checking sparm folder for verification email.
+                </p>
+                <button
+                  onClick={handleResendVerification}
+                  className="mt-2 bg-blue-500 text-white py-1 px-3 rounded-lg hover:bg-blue-600"
+                >
+                  Resend Verification Email
+                </button>
+              </>
             )}
           </div>
         )}

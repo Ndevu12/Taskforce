@@ -7,9 +7,9 @@
 export const getWelcomeEmailTemplate = (name: string): string => {
   return `
     <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-      <h2>Welcome to Web Wallet, ${name}!</h2>
+      <h2>Welcome to Money Tasky, ${name}!</h2>
       <p>Thank you for creating an account. We're excited to have you on board!</p>
-      <p>With Web Wallet, you can:</p>
+      <p>With Money Tasky, you can:</p>
       <ul>
         <li>Track your expenses and income</li>
         <li>Create and manage budgets</li>
@@ -18,7 +18,7 @@ export const getWelcomeEmailTemplate = (name: string): string => {
       </ul>
       <p>If you have any questions, feel free to contact our support team.</p>
       <p>Happy budgeting!</p>
-      <p>The Web Wallet Team</p>
+      <p>The Money Tasky Team</p>
     </div>
   `;
 };

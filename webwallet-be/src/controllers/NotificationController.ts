@@ -1,7 +1,5 @@
 import { Request, Response } from 'express';
-import Notification from '../models/Notification';
 import * as NotificationService from '../services/NotificationService';
-import { emitUnreadCountToUser, emitUnseenCountToUser } from '../startUps/socketServer';
 import logger from '../utils/logger';
 import { isValidObjectId } from '../utils/validationUtils';
 
@@ -11,12 +9,15 @@ import { isValidObjectId } from '../utils/validationUtils';
 export const getNotificationsByUser = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = req.user?._id;
+    if (!userId) {
+      res.status(401).json({ message: 'User not authenticated' });
+      return;
+    }
     
-    const notifications = await Notification.find({ user: userId })
-      .sort({ createdAt: -1 });
-    
+    const notifications = await NotificationService.getNotificationsByUser(userId.toString());
     res.status(200).json(notifications);
   } catch (error) {
+    logger.error('Error fetching notifications:', error);
     res.status(500).json({ message: 'Error fetching notifications', error });
   }
 };
@@ -27,12 +28,15 @@ export const getNotificationsByUser = async (req: Request, res: Response): Promi
 export const getUnreadNotificationsByUser = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = req.user?._id;
+    if (!userId) {
+      res.status(401).json({ message: 'User not authenticated' });
+      return;
+    }
     
-    const notifications = await Notification.find({ user: userId, read: false })
-      .sort({ createdAt: -1 });
-    
+    const notifications = await NotificationService.getUnreadNotificationsByUser(userId.toString());
     res.status(200).json(notifications);
   } catch (error) {
+    logger.error('Error fetching unread notifications:', error);
     res.status(500).json({ message: 'Error fetching unread notifications', error });
   }
 };
@@ -43,13 +47,16 @@ export const getUnreadNotificationsByUser = async (req: Request, res: Response):
 export const getUnseenNotificationsByUser = async (req: Request, res: Response): Promise<void> => {
   try {
     const userId = req.user?._id;
+    if (!userId) {
+      res.status(401).json({ message: 'User not authenticated' });
+      return;
+    }
     
-    const notifications = await Notification.find({ user: userId, seen: false })
-      .sort({ createdAt: -1 });
-    
-    res.status(200).json(notifications);
+    const count = await NotificationService.getUnseenCount(userId.toString());
+    res.status(200).json({ count });
   } catch (error) {
-    res.status(500).json({ message: 'Error fetching unseen notifications', error });
+    logger.error('Error fetching unseen notifications count:', error);
+    res.status(500).json({ message: 'Error fetching unseen notifications count', error });
   }
 };
 
@@ -61,26 +68,26 @@ export const markNotificationAsRead = async (req: Request, res: Response): Promi
     const { notificationId } = req.params;
     const userId = req.user?._id;
     
-    const notification = await Notification.findOneAndUpdate(
-      { _id: notificationId, user: userId },
-      { read: true },
-      { new: true }
-    );
+    if (!userId || !isValidObjectId(userId.toString())) {
+      res.status(401).json({ message: 'User not authenticated' });
+      return;
+    }
+    
+    if (!isValidObjectId(notificationId)) {
+      res.status(400).json({ message: 'Invalid notification ID' });
+      return;
+    }
+    
+    const notification = await NotificationService.markNotificationAsRead(userId.toString(), notificationId);
     
     if (!notification) {
       res.status(404).json({ message: 'Notification not found' });
       return;
     }
     
-    // Update unread count for the user
-    if (userId) {
-          if (userId) {
-              await emitUnreadCountToUser(userId.toString());
-          }
-    }
-    
     res.status(200).json(notification);
   } catch (error) {
+    logger.error('Error marking notification as read:', error);
     res.status(500).json({ message: 'Error marking notification as read', error });
   }
 };
@@ -91,17 +98,19 @@ export const markNotificationAsRead = async (req: Request, res: Response): Promi
 export const markNotificationAsUnread = async (req: Request, res: Response): Promise<void> => {
   try {
     const { notificationId } = req.params;
+    const userId = req.user?._id;
+    
+    if (!userId || !isValidObjectId(userId.toString())) {
+      res.status(401).json({ message: 'User not authenticated' });
+      return;
+    }
+    
     if (!isValidObjectId(notificationId)) {
       res.status(400).json({ message: 'Invalid notification ID' });
       return;
     }
-    const userId = req.user?._id;
     
-    const notification = await Notification.findOneAndUpdate(
-      { _id: notificationId, user: userId },
-      { read: false },
-      { new: true }
-    );
+    const notification = await NotificationService.markNotificationAsUnread(userId.toString(), notificationId);
     
     if (!notification) {
       res.status(404).json({ message: 'Notification not found' });
@@ -110,6 +119,7 @@ export const markNotificationAsUnread = async (req: Request, res: Response): Pro
     
     res.status(200).json(notification);
   } catch (error) {
+    logger.error('Error marking notification as unread:', error);
     res.status(500).json({ message: 'Error marking notification as unread', error });
   }
 };
@@ -121,12 +131,14 @@ export const markNotificationAsSeen = async (req: Request, res: Response): Promi
   try {
     const { notificationId } = req.params;
     const userId = req.user?._id;
-    if (!isValidObjectId(notificationId)) {
-      res.status(400).json({ message: 'Invalid notification ID' });
+    
+    if (!userId || !isValidObjectId(userId.toString())) {
+      res.status(401).json({ message: 'User not authenticated' });
       return;
     }
-    if (!userId || !isValidObjectId(userId.toString())) {
-      res.status(400).json({ message: 'Invalid user ID' });
+    
+    if (!isValidObjectId(notificationId)) {
+      res.status(400).json({ message: 'Invalid notification ID' });
       return;
     }
     
@@ -139,6 +151,7 @@ export const markNotificationAsSeen = async (req: Request, res: Response): Promi
     
     res.status(200).json(notification);
   } catch (error) {
+    logger.error('Error marking notification as seen:', error);
     res.status(500).json({ message: 'Error marking notification as seen', error });
   }
 };
@@ -150,13 +163,15 @@ export const markAllNotificationsAsRead = async (req: Request, res: Response): P
   try {
     const userId = req.user?._id;
     
-    await Notification.updateMany(
-      { user: userId, read: false },
-      { read: true }
-    );
+    if (!userId) {
+      res.status(401).json({ message: 'User not authenticated' });
+      return;
+    }
     
-    res.status(200).json({ message: 'All notifications marked as read' });
+    const result = await NotificationService.markAllNotificationsAsRead(userId.toString());
+    res.status(200).json({ message: 'All notifications marked as read', count: result.modifiedCount });
   } catch (error) {
+    logger.error('Error marking all notifications as read:', error);
     res.status(500).json({ message: 'Error marking all notifications as read', error });
   }
 };
@@ -168,13 +183,15 @@ export const markAllNotificationsAsUnread = async (req: Request, res: Response):
   try {
     const userId = req.user?._id;
     
-    await Notification.updateMany(
-      { user: userId },
-      { read: false }
-    );
+    if (!userId) {
+      res.status(401).json({ message: 'User not authenticated' });
+      return;
+    }
     
-    res.status(200).json({ message: 'All notifications marked as unread' });
+    const result = await NotificationService.markAllNotificationsAsUnread(userId.toString());
+    res.status(200).json({ message: 'All notifications marked as unread', count: result.modifiedCount });
   } catch (error) {
+    logger.error('Error marking all notifications as unread:', error);
     res.status(500).json({ message: 'Error marking all notifications as unread', error });
   }
 };
@@ -186,15 +203,15 @@ export const markAllNotificationsAsSeen = async (req: Request, res: Response): P
   try {
     const userId = req.user?._id;
     
-    if (userId) {
-      await NotificationService.markAllAsSeen(userId.toString());
-    } else {
-      res.status(400).json({ message: 'Invalid user ID' });
+    if (!userId) {
+      res.status(401).json({ message: 'User not authenticated' });
       return;
     }
     
+    await NotificationService.markAllAsSeen(userId.toString());
     res.status(200).json({ message: 'All notifications marked as seen' });
   } catch (error) {
+    logger.error('Error marking all notifications as seen:', error);
     res.status(500).json({ message: 'Error marking all notifications as seen', error });
   }
 };
@@ -207,15 +224,25 @@ export const deleteNotificationById = async (req: Request, res: Response): Promi
     const { notificationId } = req.params;
     const userId = req.user?._id;
     
-    const notification = await Notification.findOneAndDelete({ _id: notificationId, user: userId });
-    
-    if (!notification) {
-      res.status(404).json({ message: 'Notification not found' });
+    if (!userId) {
+      res.status(401).json({ message: 'User not authenticated' });
       return;
     }
     
+    if (!isValidObjectId(notificationId)) {
+      res.status(400).json({ message: 'Invalid notification ID' });
+      return;
+    }
+    
+    const result = await NotificationService.deleteNotificationById(userId.toString(), notificationId);
+    
+    if (!result) {
+      res.status(404).json({ message: 'Notification not found' });
+      return;
+    }
     res.status(200).json({ message: 'Notification deleted successfully' });
   } catch (error) {
+    logger.error('Error deleting notification:', error);
     res.status(500).json({ message: 'Error deleting notification', error });
   }
 };
@@ -227,14 +254,19 @@ export const deleteAllNotifications = async (req: Request, res: Response): Promi
   try {
     const userId = req.user?._id;
     
-    await Notification.deleteMany({ user: userId });
-    
-    if (userId) {
-      await emitUnseenCountToUser(userId.toString());
+    if (!userId) {
+      res.status(401).json({ message: 'User not authenticated' });
+      return;
     }
     
-    res.status(200).json({ message: 'All notifications deleted successfully' });
+    const result = await NotificationService.deleteAllNotifications(userId.toString());
+    
+    res.status(200).json({ 
+      message: 'All notifications deleted successfully', 
+      count: result.deletedCount 
+    });
   } catch (error) {
+    logger.error('Error deleting all notifications:', error);
     res.status(500).json({ message: 'Error deleting all notifications', error });
   }
 };
