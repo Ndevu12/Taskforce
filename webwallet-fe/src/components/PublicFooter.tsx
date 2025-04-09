@@ -1,30 +1,36 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 const PublicFooter = () => {
   return (
     <footer className="footer-section py-8 bg-gray-800 text-white text-center">
       <div className="container mx-auto">
-        <div className="flex justify-center space-x-4 mb-4">
-          <a href="/about" className="hover:underline">
+        <div className="flex flex-wrap justify-center gap-4 mb-4">
+          <Link to="/about" className="hover:underline">
             About Us
-          </a>
-          <a href="/terms" className="hover:underline">
+          </Link>
+          <Link to="/terms" className="hover:underline">
             Terms of Service
-          </a>
-          <a href="/privacy" className="hover:underline">
+          </Link>
+          <Link to="/privacy" className="hover:underline">
             Privacy Policy
-          </a>
-          <a href="/learn-more" className="hover:underline">
-            Learn more
-          </a>
+          </Link>
+          <Link to="/learn-more" className="hover:underline">
+            Learn More
+          </Link>
+          <Link to="/feedback" className="hover:underline text-accent">
+            Provide Feedback
+          </Link>
           <a href="#contact" className="hover:underline">
             Contact Us
           </a>
-          <a href="/learn-more#faq" className="hover:underline">
+          <Link to="/learn-more#faq" className="hover:underline">
             FAQ
-          </a>
+          </Link>
         </div>
-        <p>&copy; 2025 Money Tasky. All rights reserved.</p>
+        <p>
+          &copy; {new Date().getFullYear()} Money Tasky. All rights reserved.
+        </p>
       </div>
     </footer>
   );

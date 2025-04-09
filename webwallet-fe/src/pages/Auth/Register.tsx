@@ -41,6 +41,11 @@ const Register: React.FC = () => {
     setLoading(true);
     try {
       await register({ name, email, password }, navigate);
+
+      // After successful registration logic
+      const redirectPath =
+        sessionStorage.getItem('redirectAfterAuth') || '/dashboard';
+      navigate(redirectPath);
     } catch (error: any) {
       setError(error.message);
     } finally {
@@ -49,7 +54,7 @@ const Register: React.FC = () => {
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
+    <div className="flex mt-14 items-center justify-center min-h-screen bg-gray-100 dark:bg-gray-900">
       <div className="bg-white dark:bg-gray-800 p-8 rounded-lg shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-gray-700 dark:text-gray-300">
           Register

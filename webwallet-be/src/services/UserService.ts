@@ -1,7 +1,6 @@
 import User from '../models/User';
 import { hashedPassword } from '../helpers/bycrptHashingManager';
 import { IUser } from '../types';
-import { BudgetPeriod } from '../types/enums/BudgetPeriod';
 import { sendVerificationEmail } from './AuthService';
 import { sendWelcomeEmail } from '../helpers/emailHandlers/emailHandlers';
 import logger from '../utils/logger';

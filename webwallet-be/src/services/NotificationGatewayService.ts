@@ -128,7 +128,6 @@ class NotificationGatewayService {
         read: false
       } as unknown as INotification);
       
-      logger.info(`Created budget threshold notification for user ${userId}`);
     } catch (error) {
       logger.error(`Failed to create budget threshold notification: ${error}`);
     }
@@ -149,8 +148,6 @@ class NotificationGatewayService {
         message: `Your new budget "${budgetName}" has been created.`,
         read: false
       } as unknown as INotification);
-      
-      logger.info(`Created budget creation notification for user ${userId}`);
     } catch (error) {
       logger.error(`Failed to create budget creation notification: ${error}`);
     }
@@ -407,6 +404,57 @@ class NotificationGatewayService {
       
     } catch (error) {
       logger.error(`Failed to create error notification: ${error}`);
+    }
+  }
+
+  /**
+   * Create a notification for feedback received
+   * 
+   * @param userId User ID
+   * @param feedbackId Feedback ID
+   */
+  async createFeedbackReceivedNotification(
+    userId: string,
+    feedbackId: string
+  ): Promise<void> {
+    try {
+      await NotificationService.createNotification({
+        user: userId,
+        type: NotificationType.INFO,
+        title: 'Feedback Received',
+        message: 'Thank you for your feedback! We appreciate your input and will review it shortly.',
+        read: false,
+        seen: false // Important for unseen count
+      } as unknown as INotification);
+      
+    } catch (error) {
+      logger.error(`Failed to create feedback received notification: ${error}`);
+    }
+  }
+
+  /**
+   * Create a notification for feedback response
+   * 
+   * @param userId User ID
+   * @param responseText Response text
+   */
+  async createFeedbackResponseNotification(
+    userId: string,
+    responseText: string
+  ): Promise<void> {
+    try {
+      await NotificationService.createNotification({
+        user: userId,
+        type: NotificationType.INFO,
+        title: 'Feedback Response',
+        message: `Your feedback has been addressed: "${responseText}"`,
+        read: false,
+        seen: false // Important for unseen count
+      } as unknown as INotification);
+      
+      logger.info(`Created feedback response notification for user ${userId}`);
+    } catch (error) {
+      logger.error(`Failed to create feedback response notification: ${error}`);
     }
   }
 }

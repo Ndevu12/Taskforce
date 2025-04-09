@@ -25,6 +25,8 @@ import VerifyEmail from '../pages/Auth/VerifyEmail';
 import RequestPasswordReset from '../pages/Auth/RequestPasswordReset';
 import ResetPassword from '../pages/Auth/ResetPassword';
 import NotFound from '../pages/NotFound';
+import Feedback from '../pages/Dashboard/Feedback';
+import PublicFeedback from '../components/PublicFeedback';
 
 function Router() {
   return (
@@ -46,6 +48,8 @@ function Router() {
               <Route path="settings" element={<Settings />} />
               <Route path="profile" element={<Profile />} />
               <Route path="notifications" element={<Notifications />} />
+              {/* The feedback route */}
+              <Route path="feedback" element={<Feedback />} />
             </Route>
           </Route>
         </Routes>
@@ -70,15 +74,16 @@ function Router() {
               element={<RequestPasswordReset />}
             />
             <Route path="/reset-password" element={<ResetPassword />} />
+            {/* The public feedback entry point */}
+            <Route path="/feedback" element={<PublicFeedback />} />
           </Route>
         </Routes>
 
         {/* NOT ALLOWED AND NOT FOUND */}
         <Routes>
           <Route path="/not-allowed" element={<NotAllowed />} />
-          {/* 404 - Not Found Route */}
           <Route path="/404" element={<NotFound />} />
-          {/* <Route path="*" element={<Navigate replace to="/404" />} /> */}
+          {/* <Route path="*" element={<NotFound />} /> */}
         </Routes>
       </AuthProvider>
     </BrowserRouter>
