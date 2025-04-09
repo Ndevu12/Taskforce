@@ -29,6 +29,9 @@ export const initializeSchedulerServer = (sendDelayed = false, delayMinutes = 3)
     // Schedule monthly report
     scheduleMonthlyReport();
     
+    // Schedule daily and hourly jobs based on environment variables
+    scheduleConditionalJobs();
+    
     // Send first report after delay if requested
     if (sendDelayed) {
       const delayMs = delayMinutes * 60 * 1000; // Convert minutes to milliseconds
@@ -91,6 +94,61 @@ const scheduleMonthlyReport = (): void => {
 };
 
 /**
+ * Schedule daily financial report job
+ */
+const scheduleDailyReport = (): void => {
+  cron.schedule(SCHEDULES.DAILY_JOB, async () => {
+    try {
+      logger.info('Running daily financial report job for all verified users');
+      await sendFinancialReportToAllVerifiedUsers('daily');
+      logger.info('Daily financial report job completed');
+    } catch (error) {
+      logger.error(`Error in daily report job: ${error}`);
+    }
+  }, scheduleOptions);
+  
+  logger.info(`Scheduled daily report job with cron: ${SCHEDULES.DAILY_JOB}`);
+};
+
+/**
+ * Schedule hourly financial summary job
+ */
+const scheduleHourlyJob = (): void => {
+  cron.schedule(SCHEDULES.HOURLY_JOB, async () => {
+    try {
+      logger.info('Running hourly financial update job');
+      
+      await sendFinancialReportToAllVerifiedUsers('hourly');
+      
+      logger.info('Hourly financial job completed');
+    } catch (error) {
+      logger.error(`Error in hourly job: ${error}`);
+    }
+  }, scheduleOptions);
+  
+  logger.info(`Scheduled hourly job with cron: ${SCHEDULES.HOURLY_JOB}`);
+};
+
+/**
+ * Schedule jobs based on environment variables
+ */
+const scheduleConditionalJobs = (): void => {
+  // Check if daily job should be scheduled
+  if (process.env.SCHEDULE_DAILY === 'true') {
+    scheduleDailyReport();
+  } else {
+    logger.info('Daily job not scheduled (SCHEDULE_DAILY environment variable not set to true)');
+  }
+  
+  // Check if hourly job should be scheduled
+  if (process.env.SCHEDULE_HOURLY === 'true') {
+    scheduleHourlyJob();
+  } else {
+    logger.info('Hourly job not scheduled (SCHEDULE_HOURLY environment variable not set to true)');
+  }
+};
+
+/**
  * Get all verified users from the database
  * @returns Array of verified user objects
  */
@@ -107,9 +165,11 @@ async function getVerifiedUsers(): Promise<any[]> {
 
 /**
  * Send financial reports to all verified users
- * @param reportFrequency 'weekly' or 'monthly'
+ * @param reportFrequency 'daily', 'weekly' or 'monthly'
  */
-async function sendFinancialReportToAllVerifiedUsers(reportFrequency: 'weekly' | 'monthly'): Promise<void> {
+async function sendFinancialReportToAllVerifiedUsers(
+  reportFrequency: 'hourly' | 'daily' | 'weekly' | 'monthly'
+): Promise<void> {
   try {
     // Get all verified users
     const verifiedUsers = await getVerifiedUsers();
@@ -150,10 +210,13 @@ async function sendFinancialReportToAllVerifiedUsers(reportFrequency: 'weekly' |
 /**
  * Send a financial report to a specific user
  * 
- * @param reportFrequency 'weekly' or 'monthly'
+ * @param reportFrequency 'daily', 'weekly' or 'monthly'
  * @param user The user object to send the report to
  */
-async function sendFinancialReport(reportFrequency: 'weekly' | 'monthly', user: any): Promise<void> {
+async function sendFinancialReport(
+  reportFrequency: 'hourly' | 'daily' | 'weekly' | 'monthly', 
+  user: any
+): Promise<void> {
   try {
     if (!user || !user._id) {
       throw new Error('Invalid user object provided');
@@ -165,10 +228,18 @@ async function sendFinancialReport(reportFrequency: 'weekly' | 'monthly', user: 
     const today = new Date();
     let startDate: Date, endDate: Date;
     
-    if (reportFrequency === 'weekly') {
+    if (reportFrequency === 'daily') {
+      endDate = new Date(today);
+      startDate = new Date(today);
+      startDate.setDate(today.getDate() - 1); // 24 hours ago
+    } else if (reportFrequency === 'weekly') {
       endDate = new Date(today);
       startDate = new Date(today);
       startDate.setDate(today.getDate() - 7); // 7 days ago
+    } else if (reportFrequency === 'hourly') {
+      endDate = new Date(today);
+      startDate = new Date(today);
+      startDate.setHours(today.getHours() - 1); // 1 hour ago
     } else { // monthly
       endDate = new Date(today.getFullYear(), today.getMonth(), 0); // Last day of previous month
       startDate = new Date(today.getFullYear(), today.getMonth() - 1, 1); // First day of previous month
@@ -178,7 +249,7 @@ async function sendFinancialReport(reportFrequency: 'weekly' | 'monthly', user: 
     const reportPeriod = formatDateRange(startDate, endDate);
     
     // Send transaction summary report
-    const transactionTitle = `${reportFrequency === 'weekly' ? 'Weekly' : 'Monthly'} Financial Report`;
+    const transactionTitle = `${reportFrequency.charAt(0).toUpperCase() + reportFrequency.slice(1)} Financial Report`;
     await generateAndSendReport(
       userId,
       startDate,
@@ -187,9 +258,9 @@ async function sendFinancialReport(reportFrequency: 'weekly' | 'monthly', user: 
       ReportType.TRANSACTION_SUMMARY
     );
     
-    // Send budget performance report for monthly reports
-    if (reportFrequency === 'monthly') {
-      const budgetTitle = 'Monthly Budget Performance';
+    // Send budget performance report for monthly and weekly reports
+    if (reportFrequency === 'monthly' || reportFrequency === 'weekly') {
+      const budgetTitle = `${reportFrequency.charAt(0).toUpperCase() + reportFrequency.slice(1)} Budget Performance`;
       await generateAndSendReport(
         userId,
         startDate,
@@ -262,9 +333,11 @@ async function generateAndSendReport(
 
 /**
  * Send a report immediately to all verified users
- * @param reportType Type of report to send ('weekly' or 'monthly')
+ * @param reportType Type of report to send ('daily', 'weekly' or 'monthly')
  */
-export const sendReportImmediatelyToAllUsers = async (reportType: 'weekly' | 'monthly' = 'weekly'): Promise<boolean> => {
+export const sendReportImmediatelyToAllUsers = async (
+  reportType: 'daily' | 'weekly' | 'monthly' = 'weekly'
+): Promise<boolean> => {
   try {
     await sendFinancialReportToAllVerifiedUsers(reportType);
     logger.info(`On-demand ${reportType} reports sent successfully to all verified users`);

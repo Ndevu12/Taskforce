@@ -1,14 +1,69 @@
 import Notification from '../models/Notification';
 import { INotification } from '../types/interfaces/INotification';
-import { emitUnreadCountToUser } from '../startUps/socketServer';
+import { emitUnreadCountToUser, emitUnseenCountToUser } from '../startUps/socketServer';
 import logger from '../utils/logger';
+
+  /**
+   * Get unread notification count for a user
+   * @param userId The user ID
+   * @returns The count of unread notifications
+   */
+  export const getUnreadCount =async(userId: string): Promise<number> =>{
+    return await Notification.countDocuments({ user: userId, read: false });
+  }
+
+  /**
+   * Get unseen notification count for a user
+   * @param userId The user ID
+   * @returns The count of unseen notifications
+   */
+  export const getUnseenCount = async(userId: string): Promise<number> => {
+    return await Notification.countDocuments({ user: userId, seen: false });
+  }
+
+  /**
+   * Mark all notifications as seen for a user
+   * @param userId The user ID
+   */
+  export const markAllAsSeen = async(userId: string): Promise<void> => {
+    await Notification.updateMany(
+      { user: userId, seen: false },
+      { $set: { seen: true } }
+    );
+    
+    // Update the unseen count
+    await emitUnseenCountToUser(userId);
+  }
+
+  /**
+   * Mark a notification as seen
+   * @param notificationId The notification ID
+   * @param userId The user ID (for validation)
+   */
+  export const markAsSeen = async(notificationId: string, userId: string): Promise<INotification | null> => {
+    const notification = await Notification.findOneAndUpdate(
+      { _id: notificationId, user: userId },
+      { $set: { seen: true } },
+      { new: true }
+    );
+
+    if (notification) {
+      // Update the unseen count
+      await emitUnseenCountToUser(userId);
+    }
+    
+    return notification;
+  }
+
+
 
 export const createNotification = async (notificationData: INotification) => {
   const notification = new Notification(notificationData);
   const savedNotification = await notification.save();
   
-  // Update unread count for the user
+  // Update unread and unseen count for the user
   await emitUnreadCountToUser(notificationData.user.toString());
+  await emitUnseenCountToUser(notificationData.user.toString());
   
   return savedNotification;
 };
@@ -22,7 +77,6 @@ export const getNotificationsByUser = async (userId: string) => {
 }
 
 export const markNotificationAsRead = async (userId: string, notificationId: string) => {
-  // Find notification that belongs to the user and update it
   const notification = await Notification.findOneAndUpdate(
     { _id: notificationId, user: userId },
     { read: true },
@@ -38,14 +92,12 @@ export const markNotificationAsRead = async (userId: string, notificationId: str
 };
 
 export const markNotificationAsUnread = async (userId: string, notificationId: string) => {
-  // Find notification that belongs to the user and update it
   const notification = await Notification.findOneAndUpdate(
     { _id: notificationId, user: userId },
     { read: false },
     { new: true }
   );
   
-  // Update unread count for the user
   if (notification) {
     await emitUnreadCountToUser(userId);
   }
@@ -54,7 +106,6 @@ export const markNotificationAsUnread = async (userId: string, notificationId: s
 };
 
 export const updateNotificationById = async (userId: string, notificationId: string, updateData: Partial<INotification>) => {
-  // Ensure we don't allow changing the user field
   if (updateData.user) {
     delete updateData.user;
   }
@@ -67,14 +118,12 @@ export const updateNotificationById = async (userId: string, notificationId: str
 };
 
 export const deleteNotificationById = async (userId: string, notificationId: string) => {
-  // Only delete notification if it belongs to the user
   return await Notification.findOneAndDelete({ _id: notificationId, user: userId });
 };
 
 export const markAllNotificationsAsRead = async (userId: string) => {
   const result = await Notification.updateMany({ user: userId, read: false }, { read: true });
   
-  // Update unread count for the user
   await emitUnreadCountToUser(userId);
   
   return result;
@@ -96,22 +145,6 @@ export const deleteAllNotifications = async (userId: string) => {
   await emitUnreadCountToUser(userId);
   
   return result;
-};
-
-/**
- * Calculate the count of unread notifications for a user
- * 
- * @param userId User ID
- * @returns Count of unread notifications
- */
-export const getUnreadCount = async (userId: string): Promise<number> => {
-  try {
-    const count = await Notification.countDocuments({ user: userId, read: false });
-    return count;
-  } catch (error) {
-    logger.error(`Error counting unread notifications for user ${userId}:`, error);
-    return 0;
-  }
 };
 
 export default {

@@ -26,6 +26,7 @@ import {
 interface AuthContextProps {
   user: User | null;
   isAuthenticated: boolean;
+  decodeToken: (token: string) => User;
   login: (
     email: string,
     password: string,
@@ -166,6 +167,7 @@ export const AuthProvider: React.FC<{ children: ReactNode }> = ({
     isAuthorized,
     requestPasswordReset,
     resetPassword,
+    decodeToken,
   };
 
   return (

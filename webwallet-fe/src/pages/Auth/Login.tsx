@@ -30,16 +30,10 @@ const Login: React.FC = () => {
   };
 
   const handleResendVerification = () => {
-    // Store the email in session storage so it can be pre-filled in the resend form
-    sessionStorage.setItem('verificationEmail', email);
     navigate('/resend-verification');
   };
 
   const handleForgotPassword = () => {
-    // Store the email in session storage so it can be pre-filled in the reset form
-    if (email) {
-      sessionStorage.setItem('resetEmail', email);
-    }
     navigate('/request-password-reset');
   };
 

@@ -24,6 +24,7 @@ import ResendVerification from '../pages/Auth/ResendVerification';
 import VerifyEmail from '../pages/Auth/VerifyEmail';
 import RequestPasswordReset from '../pages/Auth/RequestPasswordReset';
 import ResetPassword from '../pages/Auth/ResetPassword';
+import NotFound from '../pages/NotFound';
 
 function Router() {
   return (
@@ -75,6 +76,9 @@ function Router() {
         {/* NOT ALLOWED AND NOT FOUND */}
         <Routes>
           <Route path="/not-allowed" element={<NotAllowed />} />
+          {/* 404 - Not Found Route */}
+          <Route path="/404" element={<NotFound />} />
+          {/* <Route path="*" element={<Navigate replace to="/404" />} /> */}
         </Routes>
       </AuthProvider>
     </BrowserRouter>

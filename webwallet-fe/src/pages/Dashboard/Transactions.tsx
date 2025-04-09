@@ -113,7 +113,7 @@ const Transactions: React.FC = () => {
 
   return (
     <div className="p-4 dark:bg-gray-900 dark:text-white">
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex flex-col sm:flex-row justify-between items-center mb-4 gap-3">
         <h1 className="text-2xl font-bold">Transactions</h1>
         <button
           className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600"

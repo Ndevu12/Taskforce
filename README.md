@@ -1,236 +1,184 @@
-# Project Name: Taskforce Wallet App
+# Money Tasky
 
 ## Description
 
-Taskforce Wallet is a web-based financial management platform designed to empower users to manage transactions, accounts, and budgets effectively. The application offers intuitive dashboards, advanced budget tracking, transaction management, and real-time updates via WebSocket. Users can generate reports, schedule periodic tasks, and maintain financial control seamlessly. The platform employs a modern tech stack for a robust, secure, and scalable system.
+Money Tasky is a comprehensive financial management platform designed to empower users with intuitive control over their finances. The application provides a robust solution for tracking accounts, managing transactions, planning budgets, and generating insightful financial reports. With a modern user interface and secure architecture, this platform helps users achieve clarity and control in their financial journey.
 
 ## Table of Contents
 
+- [Features](#features)
 - [Project Structure](#project-structure)
 - [Technology Stack](#technology-stack)
 - [Installation](#installation)
 - [Usage](#usage)
-- [Features](#features)
-- [API Endpoints](#api-endpoints)
-- [Configuration](#configuration)
-- [WebSocket Integration](#websocket-integration)
+- [Advanced Technical Features](#advanced-technical-features)
 - [Contributing](#contributing)
 - [License](#license)
 
+## Features
+
+### User Experience
+- **Intuitive Dashboard**: Quick overview of financial status with data visualizations
+- **Responsive Design**: Optimized for all devices from mobile to desktop
+- **Dark & Light Modes**: Choose the viewing experience that suits your preference
+
+### Core Functionality
+- **Account Management**: Add, edit, and track multiple account types (bank, cash, savings, etc.)
+- **Transaction Tracking**: Record and categorize income, expenses, and transfers
+- **Budget Planning**: Set and monitor budget limits with visual progress indicators
+- **Financial Reports**: Generate and view reports for better financial insights
+
+### Security
+- **Secure Authentication**: Protected user accounts with JWT-based authentication
+- **Data Privacy**: End-to-end encryption ensures your financial data remains private
+- **Role-Based Access**: Different permission levels based on user roles
+
+### User Tools
+- **Profile Management**: Update profile information and preferences
+- **Notifications**: Receive alerts for important financial events
+- **Financial Calendar**: View scheduled transactions and bill reminders
+
 ## Project Structure
 
-This repository is a monorepo where both the client and server are defined together in different folders.
+The project is organized as a monorepo with frontend and backend in separate directories:
 
-- **Client**: Located in the `UI/` folder.
-- **Server**: Located in the `server/` folder.
+- **Frontend**: Located in the `webwallet-fe/` directory
+- **Backend**: Located in the `webwallet-be/` directory
 
 ## Technology Stack
 
+### Frontend Technologies
+- **React.js** with **TypeScript** for a robust UI
+- **Tailwind CSS** for responsive and customizable styling
+- **Framer Motion** for smooth animations and transitions
+- **Material UI** components for consistent UI elements
+- **Chart.js** for data visualization
+- **Axios** for API communication
+- **Socket.IO Client** for real-time data updates
+
 ### Backend Technologies
-
-- **Node.js** with **Express.js**
-- **MongoDB** with **Mongoose**
-- **Joi** for input validation
-- **TypeScript** for maintainable and scalable code
-
-### Frontend Stack
-
-- **ReactJS** with **Vite**
-- **TypeScript** for strongly typed code
-- **TailwindCSS** for styling
-- **Axios** for API calls
-
-### Advanced Features
-
-- **Socket.IO** for real-time WebSocket communication
-- **Redis** for caching
+- **Node.js** with **Express.js** framework
+- **TypeScript** for type-safe development
+- **MongoDB** for database management
+- **Mongoose** ODM for data modeling
+- **JWT** for authentication
+- **Redis** for caching and session management
+- **Socket.IO** for real-time bidirectional communication
+- **Node-cron** for scheduling automated tasks
 
 ## Installation
 
-To install the project, follow these steps:
+Follow these steps to set up the project locally:
 
-1. Clone the repository:
+### Prerequisites
+- Node.js (v16 or higher)
+- npm or yarn
+- MongoDB instance (local or cloud)
+- Redis server (v6.0 or higher)
 
-    ```bash
-    git clone https://github.com/Ndevu12/Taskforce.git
-    ```
+### Frontend Setup
+```bash
+# Navigate to frontend directory
+cd webwallet-fe
 
-2. Navigate to the project directory:
+# Install dependencies
+npm install
 
-    ```bash
-    cd Taskforce
-    ```
+# Start development server
+npm run dev
+```
 
-3. Install dependencies for both client and server:
+### Backend Setup
+```bash
+# Navigate to backend directory
+cd webwallet-be
 
-    - **Client**:
-      ```bash
-      cd UI
-      yarn install
-      ```
+# Install dependencies
+npm install
 
-    - **Server**:
-      ```bash
-      cd server
-      yarn install
-      ```
+# Configure environment variables
+# Create a .env file with the following keys:
+# MONGO_URI=your_mongodb_connection_string
+# REDIS_URL=your_redis_connection_string
+# JWT_SECRET=your_jwt_secret_key
+# CLIENT_URL=http://localhost:5173
 
-4. Run the development servers:
-
-    - **Client**:
-      ```bash
-      yarn dev
-      ```
-
-    - **Server**:
-      ```bash
-      yarn dev
-      ```
+# Start development server
+npm run dev
+```
 
 ## Usage
 
-Run the application in development mode to explore its features. Access the client at the specified port (default: `3000`) and interact with the backend APIs.
+After installation, access the application through:
+- Frontend: http://localhost:7000 (default Vite port)
+- Backend API: http://localhost:3000 (default Express port)
 
-## Features
+### Getting Started
+1. Register an account or login to your existing account
+2. Set up your financial accounts (bank, cash, credit cards, etc.)
+3. Start tracking your transactions and expenses
+4. Create budgets to help manage your spending
+5. Generate reports to gain insights into your finances
 
-- **Comprehensive Dashboard**:
-  - Single-page layout with a sidebar and header for seamless navigation.
-  - Real-time account, budget, and transaction summaries.
-  - Integrated graphs for visualizing spending trends and budget progress.
+## Advanced Technical Features
 
-- **User Authentication and Authorization**:
-  - Login and registration with secure token-based authentication.
-  - Role-based access control (e.g., Admin, User).
+### Redis Implementation
+Money Tasky utilizes Redis for:
+- **Authentication Caching**: Speeds up authorization checks and reduces database load
+- **Session Management**: Maintains user sessions efficiently with fast read/write operations
+- **Rate Limiting**: Protects API endpoints from abuse by implementing request rate limiting
+- **Temporary Data Storage**: Stores short-lived data like verification codes and password reset tokens
 
-- **Account Management**:
-  - Create, update, delete, and view accounts.
-  - Support for multiple account types (e.g., Bank, Mobile Money, Cash).
-  - Real-time account balance updates.
+### Real-time Updates with Socket.IO
+The application leverages Socket.IO to provide real-time experiences:
+- **Account Balance Updates**: See balance changes instantly without refreshing
+- **Budget Alerts**: Receive immediate notifications when approaching budget limits
+- **Transaction Confirmations**: Get instant confirmation when transactions are processed
+- **Collaborative Features**: Supports multiple users viewing the same financial data simultaneously
 
-- **Transaction Management**:
-  - Create, update, delete, and view transactions.
-  - Search, filter, and paginate transaction history.
-  - Clickable transactions for detailed modal view.
+### Automated Tasks with Cron Jobs
+Node-cron powers scheduled tasks including:
+- **Financial Report Generation**: Weekly and monthly reports automatically created and delivered via email
+- **Budget Status Notifications**: Regular updates on budget statuses and financial goals
+- **Account Syncing**: Scheduled synchronization of connected financial accounts
+- **Data Maintenance**: Periodic cleanup and optimization of database records
 
-- **Budget Management**:
-  - Create, update, delete, and view budgets.
-  - Progress tracking with visual indicators for budget usage.
-  - Alerts for exceeded budgets.
+### Setup Instructions for Advanced Features
 
-- **Reports**:
-  - Generate auto-generated reports (e.g., transaction summaries, budget analysis).
-  - Schedule periodic reports (Daily, Weekly, Monthly, etc.).
-  - View scheduled reports and manage them directly in the dashboard.
+#### Redis Configuration
+```bash
+# Install Redis
+# For Ubuntu:
+sudo apt-get install redis-server
 
-- **Real-Time Notifications**:
-  - Receive alerts for key events (e.g., budget exceeded, account updates).
-  - View and manage notifications directly in the dashboard.
-  - Mark notifications as read/unread and delete them.
+# For macOS:
+brew install redis
 
-- **Settings**:
-  - Toggle between light and dark modes.
-  - View and manage notification preferences.
-
-- **Profile Management**:
-  - Update user profile information, including name and password.
-  - Upload and preview profile photos.
-
-## API Endpoints
-
-### Authentication
-- `POST /auth` - Register a new user.
-- `POST /auth/login` - Authenticate and login a user.
-- `POST /auth/logout` - Logout the user.
-
-### Accounts
-- `GET /accounts` - Retrieve all accounts.
-- `POST /accounts` - Create a new account.
-- `GET /accounts/:accountId` - Retrieve an account by ID.
-- `PUT /accounts/:accountId` - Update an account by ID.
-- `DELETE /accounts/:accountId` - Delete an account by ID.
-
-### Transactions
-- `GET /transactions` - Retrieve all transactions.
-- `POST /transactions` - Create a new transaction.
-- `GET /transactions/:transactionId` - Retrieve a transaction by ID.
-- `PUT /transactions/:transactionId` - Update a transaction by ID.
-- `DELETE /transactions/:transactionId` - Delete a transaction by ID.
-
-### Budgets
-- `GET /budgets` - Retrieve all budgets.
-- `POST /budgets` - Create a new budget.
-- `GET /budgets/:id` - Retrieve a budget by ID.
-- `PUT /budgets/:id` - Update a budget by ID.
-- `DELETE /budgets/:id` - Delete a budget by ID.
-
-## Configuration
-
-Set up the server configuration using environment variables. Create a `.env` file in the `server/` folder with the following keys:
-
-```properties
-MONGO_URI=""
-REDIS_URL=""
-JWT_SECRET=""
-JWT_REFRESH_SECRET=""
-CLIENT_URL=""
+# Verify Redis is running
+redis-cli ping
+# Should return "PONG"
 ```
 
-## WebSocket Integration
+#### Socket.IO Integration
+The Socket.IO server is automatically initialized when the backend starts. The frontend connects to it seamlessly for real-time updates. No additional configuration is typically required for development.
 
-The server includes WebSocket integration for real-time notifications and updates.
-
-### WebSocket Events
-- `accountBalanceUpdated`: Emitted when an account balance is updated.
-- `budgetCreated`: Emitted when a new budget is created.
-- `budgetUpdated`: Emitted when a budget is updated.
-- `budgetDeleted`: Emitted when a budget is deleted.
-- `budgetExceeded`: Emitted when a budget is exceeded.
-
-### Example WebSocket Client
-
-```javascript
-const socket = io(API_URL);
-
-socket.on('accountBalanceUpdated', (data) => {
-  console.log('Account balance updated:', data);
-});
-
-socket.on('budgetCreated', (data) => {
-  console.log('New budget created:', data);
-});
-
-socket.on('budgetUpdated', (data) => {
-  console.log('Budget updated:', data);
-});
-
-socket.on('budgetDeleted', (data) => {
-  console.log('Budget deleted:', data);
-});
-
-socket.on('budgetExceeded', (data) => {
-  console.log('Budget exceeded:', data);
-});
-```
+#### Cron Job Configuration
+The application automatically initializes scheduled tasks when the server starts. You can modify the scheduling in the backend configuration files if needed.
 
 ## Contributing
 
-Contributions are welcome! Please follow these steps to contribute:
+Contributions are welcome! Please follow these steps:
 
-1. Fork the repository.
-2. Create a new branch:
-    ```sh
-    git checkout -b feature-branch
-    ```
-3. Make your changes and commit them:
-    ```sh
-    git commit -m "Description of changes"
-    ```
-4. Push to the branch:
-    ```sh
-    git push origin feature-branch
-    ```
-5. Open a pull request.
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+---
+
+© 2024 Money Tasky. All Rights Reserved.

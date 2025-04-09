@@ -14,11 +14,17 @@ const PublicFooter = () => {
           <a href="/privacy" className="hover:underline">
             Privacy Policy
           </a>
+          <a href="/learn-more" className="hover:underline">
+            Learn more
+          </a>
+          <a href="#contact" className="hover:underline">
+            Contact Us
+          </a>
           <a href="/learn-more#faq" className="hover:underline">
             FAQ
           </a>
         </div>
-        <p>&copy; 2025 Wallet App. All rights reserved.</p>
+        <p>&copy; 2025 Money Tasky. All rights reserved.</p>
       </div>
     </footer>
   );

@@ -98,6 +98,46 @@ export const markAllNotificationsAsUnread = async (): Promise<boolean> => {
 };
 
 /**
+ * Mark a single notification as seen
+ */
+export const markNotificationAsSeen = async (notificationId: string): Promise<Notification | null> => {
+  try {
+    // Validate notification ID
+    if (!notificationId || notificationId === 'undefined') {
+      console.error('Invalid notification ID provided for marking as seen');
+      return null;
+    }
+
+    const response = await axios.put(
+      `${BASE_URL}/notifications/${notificationId}/seen`, 
+      {},
+      getAuthHeaders()
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error marking notification as seen:', error);
+    return null;
+  }
+};
+
+/**
+ * Mark all notifications as seen
+ */
+export const markAllNotificationsAsSeen = async (): Promise<boolean> => {
+  try {
+    await axios.put(
+      `${BASE_URL}/notifications/seen-all`,
+      {},
+      getAuthHeaders()
+    );
+    return true;
+  } catch (error) {
+    console.error('Error marking all notifications as seen:', error);
+    return false;
+  }
+};
+
+/**
  * Delete a single notification
  */
 export const deleteNotification = async (notificationId: string): Promise<boolean> => {

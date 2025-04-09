@@ -6,9 +6,7 @@ const API_URL = import.meta.env.VITE_BASE_URL;
 
 export const fetchBudgets = async (): Promise<BudgetResponse[]> => {
   try {
-    console.log('Fetching budgets from API');
     const response = await axios.get(`${API_URL}/budgets/user`, getAuthHeaders());
-    console.log('Budgets fetched successfully:', response.data);
     return response.data;
   } catch (error: any) {
     console.error('Error fetching budgets:', error.response?.data?.error || error.message);
@@ -40,7 +38,6 @@ export const fetchBudgetById = async (budgetId: string): Promise<BudgetResponse>
 
 export const createBudget = async (budget: BudgetResponse): Promise<BudgetResponse> => {
   try {
-    console.log('Creating budget with data:', budget);
     
     const payload = {
       category: budget.category._id,
@@ -59,7 +56,6 @@ export const createBudget = async (budget: BudgetResponse): Promise<BudgetRespon
       getAuthHeaders()
     );
 
-    console.log('Budget created successfully:', response.data);
     return response.data;
   } catch (error: any) {
     console.error('Error creating budget:', error);
@@ -84,9 +80,7 @@ export const createBudget = async (budget: BudgetResponse): Promise<BudgetRespon
 
 export const updateBudget = async (budget: BudgetResponse): Promise<BudgetResponse> => {
   try {
-    console.log('Updating budget with data:', budget);
     
-    // Ensure proper data formatting before sending to API
     const payload = {
       category: budget.category._id,
       amount: Number(budget.amount),
@@ -104,7 +98,6 @@ export const updateBudget = async (budget: BudgetResponse): Promise<BudgetRespon
       getAuthHeaders()
     );
 
-    console.log('Budget updated successfully:', response.data);
     return response.data;
   } catch (error: any) {
     console.error('Error updating budget:', error);
@@ -133,9 +126,7 @@ export const updateBudget = async (budget: BudgetResponse): Promise<BudgetRespon
 
 export const deleteBudget = async (budgetId: string): Promise<void> => {
   try {
-    console.log('Deleting budget:', budgetId);
     await axios.delete(`${API_URL}/budgets/${budgetId}`, getAuthHeaders());
-    console.log('Budget deleted successfully');
   } catch (error: any) {
     console.error('Error deleting budget:', error);
     

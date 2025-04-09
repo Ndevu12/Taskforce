@@ -1,12 +1,15 @@
 import socketManager from '../../utils/realTimeInfo/socketConfig';
 
-// Type definition for unread count callback
-type UnreadCountCallback = (count: number) => void;
+// Type definition for notification count callback
+type NotificationCountCallback = (count: number) => void;
 
-// Event names constants - keeping only what's needed for unread counts
+// Event names constants
 const EVENTS = {
   UNREAD_COUNT: 'unreadNotificationCount',
+  UNSEEN_COUNT: 'unseenNotificationCount',
   REQUEST_UNREAD_COUNT: 'getUnreadNotificationCount',
+  REQUEST_UNSEEN_COUNT: 'getUnseenNotificationCount',
+  MARK_AS_SEEN: 'markNotificationsAsSeen',
   READY: 'ready',
 };
 
@@ -36,8 +39,18 @@ export const subscribeToReadyEvent = (callback: () => void): void => {
  * Subscribe to unread notification count updates
  * @param callback Function to call when unread count changes
  */
-export const subscribeToUnreadCount = (callback: UnreadCountCallback): void => {
+export const subscribeToUnreadCount = (callback: NotificationCountCallback): void => {
   socketManager.subscribe(EVENTS.UNREAD_COUNT, (data: { count: number }) => {
+    callback(data.count);
+  });
+};
+
+/**
+ * Subscribe to unseen notification count updates
+ * @param callback Function to call when unseen count changes
+ */
+export const subscribeToUnseenCount = (callback: NotificationCountCallback): void => {
+  socketManager.subscribe(EVENTS.UNSEEN_COUNT, (data: { count: number }) => {
     callback(data.count);
   });
 };
@@ -47,6 +60,20 @@ export const subscribeToUnreadCount = (callback: UnreadCountCallback): void => {
  */
 export const requestUnreadCount = (): void => {
   socketManager.emit(EVENTS.REQUEST_UNREAD_COUNT);
+};
+
+/**
+ * Request the current unseen notification count
+ */
+export const requestUnseenCount = (): void => {
+  socketManager.emit(EVENTS.REQUEST_UNSEEN_COUNT);
+};
+
+/**
+ * Mark all notifications as seen
+ */
+export const markAllAsSeen = (): void => {
+  socketManager.emit(EVENTS.MARK_AS_SEEN);
 };
 
 /**
@@ -64,9 +91,17 @@ export const unsubscribeFromUnreadCount = (): void => {
 };
 
 /**
+ * Unsubscribe from unseen count updates
+ */
+export const unsubscribeFromUnseenCount = (): void => {
+  socketManager.unsubscribe(EVENTS.UNSEEN_COUNT);
+};
+
+/**
  * Unsubscribe from all notification events
  */
 export const unsubscribeFromAllNotifications = (): void => {
   unsubscribeFromReadyEvent();
   unsubscribeFromUnreadCount();
+  unsubscribeFromUnseenCount();
 };
