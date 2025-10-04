@@ -1,8 +1,8 @@
-# Money Tasky
+# Bendif
 
 ## Description
 
-Money Tasky is a comprehensive financial management platform designed to empower users with intuitive control over their finances. The application provides a robust solution for tracking accounts, managing transactions, planning budgets, and generating insightful financial reports. With a modern user interface and secure architecture, this platform helps users achieve clarity and control in their financial journey.
+Bendif is a comprehensive financial management platform designed to empower users with intuitive control over their finances. The application provides a robust solution for tracking accounts, managing transactions, planning budgets, and generating insightful financial reports. With a modern user interface and secure architecture, this platform helps users achieve clarity and control in their financial journey.
 
 ## Table of Contents
 
@@ -123,7 +123,7 @@ After installation, access the application through:
 ## Advanced Technical Features
 
 ### Redis Implementation
-Money Tasky utilizes Redis for:
+Bendif utilizes Redis for:
 - **Authentication Caching**: Speeds up authorization checks and reduces database load
 - **Session Management**: Maintains user sessions efficiently with fast read/write operations
 - **Rate Limiting**: Protects API endpoints from abuse by implementing request rate limiting
@@ -181,4 +181,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 
-© 2024 Money Tasky. All Rights Reserved.
+© 2024 Bendif. All Rights Reserved.
