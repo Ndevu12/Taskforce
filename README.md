@@ -1,8 +1,8 @@
-# Bendif
+# Money Tasky
 
 ## Description
 
-Bendif is a comprehensive financial management platform designed to empower users with intuitive control over their finances. The application provides a robust solution for tracking accounts, managing transactions, planning budgets, and generating insightful financial reports. With a modern user interface and secure architecture, this platform helps users achieve clarity and control in their financial journey.
+Money Tasky is a comprehensive financial management platform designed to empower users with intuitive control over their finances. The application provides a robust solution for tracking accounts, managing transactions, planning budgets, and generating insightful financial reports. With a modern user interface and secure architecture, this platform helps users achieve clarity and control in their financial journey.
 
 ## Table of Contents
 
@@ -42,8 +42,8 @@ Bendif is a comprehensive financial management platform designed to empower user
 
 The project is organized as a monorepo with frontend and backend in separate directories:
 
-- **Frontend**: Located in the `webwallet-fe/` directory
-- **Backend**: Located in the `webwallet-be/` directory
+- **Frontend**: Located in the `moneyTasky-fe/` directory
+- **Backend**: Located in the `moneyTasky-be/` directory
 
 ## Technology Stack
 
@@ -79,7 +79,7 @@ Follow these steps to set up the project locally:
 ### Frontend Setup
 ```bash
 # Navigate to frontend directory
-cd webwallet-fe
+cd moneyTasky-fe
 
 # Install dependencies
 npm install
@@ -91,7 +91,7 @@ npm run dev
 ### Backend Setup
 ```bash
 # Navigate to backend directory
-cd webwallet-be
+cd moneyTasky-be
 
 # Install dependencies
 npm install
@@ -123,7 +123,7 @@ After installation, access the application through:
 ## Advanced Technical Features
 
 ### Redis Implementation
-Bendif utilizes Redis for:
+Money Tasky utilizes Redis for:
 - **Authentication Caching**: Speeds up authorization checks and reduces database load
 - **Session Management**: Maintains user sessions efficiently with fast read/write operations
 - **Rate Limiting**: Protects API endpoints from abuse by implementing request rate limiting
@@ -181,4 +181,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 
 ---
 
-© 2024 Bendif. All Rights Reserved.
+© 2024 Money Tasky. All Rights Reserved.

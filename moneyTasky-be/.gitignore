@@ -1,0 +1,11 @@
+node_modules/
+dist/
+
+# LOCK FILES    
+yarn.lock
+.yarn/
+.yarnrc.yml
+.npmrc
+
+# ENV VARIABLES
+.env
