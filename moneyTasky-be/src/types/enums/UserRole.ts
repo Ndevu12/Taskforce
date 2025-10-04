@@ -1,0 +1,7 @@
+/**
+ * Enum for user roles
+ */
+export enum UserRole {
+  USER = 'USER',
+  ADMIN = 'ADMIN'
+}

@@ -42,8 +42,8 @@ Money Tasky is a comprehensive financial management platform designed to empower
 
 The project is organized as a monorepo with frontend and backend in separate directories:
 
-- **Frontend**: Located in the `webwallet-fe/` directory
-- **Backend**: Located in the `webwallet-be/` directory
+- **Frontend**: Located in the `moneyTasky-fe/` directory
+- **Backend**: Located in the `moneyTasky-be/` directory
 
 ## Technology Stack
 
@@ -79,7 +79,7 @@ Follow these steps to set up the project locally:
 ### Frontend Setup
 ```bash
 # Navigate to frontend directory
-cd webwallet-fe
+cd moneyTasky-fe
 
 # Install dependencies
 npm install
@@ -91,7 +91,7 @@ npm run dev
 ### Backend Setup
 ```bash
 # Navigate to backend directory
-cd webwallet-be
+cd moneyTasky-be
 
 # Install dependencies
 npm install
