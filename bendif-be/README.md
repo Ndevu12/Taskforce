@@ -33,9 +33,23 @@ The backend leverages the following technologies:
 
 ## Folder Structure
 
-The backend application is located in the `server/` folder. Below is the folder structure:
+The backend application is located in the `bendif-be/` folder. Below is the folder structure:
 
-server/ ├── src/ │ ├── config/ # Configuration files │ ├── controllers/ # API controllers │ ├── middlewares/ # Express middlewares │ ├── models/ # Mongoose models │ ├── routes/ # API routes │ ├── services/ # Business logic services │ ├── utils/ # Utility functions │ ├── app.ts # Express app initialization │ ├── server.ts # Entry point of the server └── package.json # Dependencies and scripts
+bendif-be/
+├── src/
+│   ├── config/           # Configuration files
+│   ├── controllers/      # API controllers
+│   ├── middleware/       # Express middlewares
+│   ├── models/          # Mongoose models
+│   ├── routes/          # API routes
+│   ├── services/        # Business logic services
+│   ├── utils/           # Utility functions
+│   ├── types/           # TypeScript type definitions
+│   ├── startUps/        # Socket and scheduler initialization
+│   ├── app.ts           # Express app initialization
+│   └── mongooseConfig.ts # Database configuration
+├── package.json         # Dependencies and scripts
+└── tsconfig.json       # TypeScript configuration
 
 
 ## Installation
@@ -44,7 +58,7 @@ To set up the backend locally, follow these steps:
 
 1. Navigate to the backend directory:
     ```bash
-    cd server
+    cd bendif-be
     ```
 
 2. Install dependencies:
@@ -53,13 +67,14 @@ To set up the backend locally, follow these steps:
     ```
 
 3. Set up environment variables:
-    - Create a `.env` file in the `server/` directory and add the following:
+    - Create a `.env` file in the `bendif-be/` directory and add the following:
       ```properties
       MONGO_URI=""
       REDIS_URL=""
       JWT_SECRET=""
       JWT_REFRESH_SECRET=""
-      CLIENT_URL=""
+      CLIENT_URL="http://localhost:7000"
+      PORT=3000
       ```
 
 4. Start the development server:
@@ -67,7 +82,7 @@ To set up the backend locally, follow these steps:
     yarn dev
     ```
 
-The backend will run at `http://localhost:5000` (default port).
+The backend will run at `http://localhost:3000` (default port).
 
 ## Usage
 
@@ -129,13 +144,14 @@ The backend will run at `http://localhost:5000` (default port).
 
 ## Configuration
 
-Set up the backend configuration using environment variables. Create a `.env` file in the `server/` folder with the following keys:
+Set up the backend configuration using environment variables. Create a `.env` file in the `bendif-be/` folder with the following keys:
 
 ```properties
 MONGO_URI=""
 REDIS_URL=""
 JWT_SECRET=""
 JWT_REFRESH_SECRET=""
-CLIENT_URL=""
+CLIENT_URL="http://localhost:7000"
+PORT=3000
 ```
 

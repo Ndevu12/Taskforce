@@ -19,7 +19,7 @@ import {
 import LoadingSpinner from '../../components/UI/LoadingSpinner';
 import { FeedbackCategory } from '../../types/enums/FeedbackCategory';
 import { FeedbackSentiment } from '../../types/enums/FeedbackSentiment';
-import { ErrorDisplay } from '../../components/UI/ErrorDisplay';
+import ErrorDisplay from '../../components/UI/ErrorDisplay';
 import { formatDate } from '../../utils/formatDate';
 
 const Feedback: React.FC = () => {
@@ -227,7 +227,11 @@ const Feedback: React.FC = () => {
                   encountered.
                 </p>
 
-                {submitError && <ErrorDisplay message={submitError} />}
+                {submitError && (
+                  <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <p className="text-red-800">{submitError}</p>
+                  </div>
+                )}
 
                 <form onSubmit={handleSubmit} className="space-y-6">
                   <div>
@@ -344,16 +348,18 @@ const Feedback: React.FC = () => {
                 )}
 
                 {historyError && (
-                  <ErrorDisplay
-                    message={historyError}
-                    action={{
-                      label: 'Try Again',
-                      onClick: () => {
+                  <div className="p-4 bg-red-50 border border-red-200 rounded-lg">
+                    <p className="text-red-800 mb-3">{historyError}</p>
+                    <button
+                      onClick={() => {
                         setHistoryError(null);
                         loadPreviousFeedback();
-                      },
-                    }}
-                  />
+                      }}
+                      className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition-colors"
+                    >
+                      Try Again
+                    </button>
+                  </div>
                 )}
 
                 {!isLoadingHistory &&

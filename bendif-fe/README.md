@@ -21,8 +21,8 @@ Bendif Wallet is a web-based financial management platform designed to empower u
 
 This repository is a monorepo where both the client and server are defined together in different folders.
 
-- **Client**: Located in the `UI/` folder.
-- **Server**: Located in the `server/` folder.
+- **Frontend**: Located in the `bendif-fe/` folder.
+- **Backend**: Located in the `bendif-be/` folder.
 
 ## Technology Stack
 
@@ -61,35 +61,35 @@ To install the project, follow these steps:
     cd Bendif
     ```
 
-3. Install dependencies for both client and server:
+3. Install dependencies for both frontend and backend:
 
-    - **Client**:
+    - **Frontend**:
       ```bash
-      cd UI
+      cd bendif-fe
       yarn install
       ```
 
-    - **Server**:
+    - **Backend**:
       ```bash
-      cd server
+      cd bendif-be
       yarn install
       ```
 
 4. Run the development servers:
 
-    - **Client**:
+    - **Frontend**:
       ```bash
       yarn dev
       ```
 
-    - **Server**:
+    - **Backend**:
       ```bash
       yarn dev
       ```
 
 ## Usage
 
-Run the application in development mode to explore its features. Access the client at the specified port (default: `3000`) and interact with the backend APIs.
+Run the application in development mode to explore its features. Access the frontend at http://localhost:7000 and interact with the backend APIs at http://localhost:3000.
 
 ## Features
 
@@ -165,17 +165,14 @@ Run the application in development mode to explore its features. Access the clie
 
 ## Configuration
 
-Set up the server configuration using environment variables. Create a `.env` file in the `server/` folder with the following keys:
+Set up the frontend configuration using environment variables. Create a `.env` file in the `bendif-fe/` folder with the following keys:
 
 ```properties
-MONGO_URI=""
-REDIS_URL=""
-JWT_SECRET=""
-JWT_REFRESH_SECRET=""
-CLIENT_URL=""
+VITE_BASE_URL=http://localhost:3000
+VITE_APP_NAME=Bendif
 ```
 
-UI/
+bendif-fe/
 ├── public/                # Public assets
 ├── src/
 │   ├── assets/            # Images and other static assets
@@ -200,7 +197,7 @@ To set up the frontend locally, follow these steps:
 
 1. Navigate to the frontend directory:
     ```bash
-    cd UI
+    cd bendif-fe
     ```
 
 2. Install the dependencies:
@@ -213,7 +210,7 @@ To set up the frontend locally, follow these steps:
     yarn dev
     ```
 
-The application will run at `http://localhost:5173` (default port for Vite).
+The application will run at `http://localhost:7000` (configured port for Vite).
 
 ## Usage
 

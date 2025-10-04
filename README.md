@@ -42,8 +42,8 @@ Bendif is a comprehensive financial management platform designed to empower user
 
 The project is organized as a monorepo with frontend and backend in separate directories:
 
-- **Frontend**: Located in the `webwallet-fe/` directory
-- **Backend**: Located in the `webwallet-be/` directory
+- **Frontend**: Located in the `bendif-fe/` directory
+- **Backend**: Located in the `bendif-be/` directory
 
 ## Technology Stack
 
@@ -79,32 +79,32 @@ Follow these steps to set up the project locally:
 ### Frontend Setup
 ```bash
 # Navigate to frontend directory
-cd webwallet-fe
+cd bendif-fe
 
 # Install dependencies
-npm install
+yarn install
 
 # Start development server
-npm run dev
+yarn dev
 ```
 
 ### Backend Setup
 ```bash
 # Navigate to backend directory
-cd webwallet-be
+cd bendif-be
 
 # Install dependencies
-npm install
+yarn install
 
 # Configure environment variables
 # Create a .env file with the following keys:
 # MONGO_URI=your_mongodb_connection_string
 # REDIS_URL=your_redis_connection_string
 # JWT_SECRET=your_jwt_secret_key
-# CLIENT_URL=http://localhost:5173
+# CLIENT_URL=http://localhost:7000
 
 # Start development server
-npm run dev
+yarn dev
 ```
 
 ## Usage
