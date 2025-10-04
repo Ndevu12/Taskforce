@@ -1,8 +1,8 @@
-# Project Name: Taskforce Wallet App
+# Project Name: Bendif Wallet App
 
 ## Description
 
-Taskforce Wallet is a web-based financial management platform designed to empower users to manage transactions, accounts, and budgets effectively. The application offers intuitive dashboards, advanced budget tracking, transaction management, and real-time updates via WebSocket. Users can generate reports, schedule periodic tasks, and maintain financial control seamlessly. The platform employs a modern tech stack for a robust, secure, and scalable system.
+Bendif Wallet is a web-based financial management platform designed to empower users to manage transactions, accounts, and budgets effectively. The application offers intuitive dashboards, advanced budget tracking, transaction management, and real-time updates via WebSocket. Users can generate reports, schedule periodic tasks, and maintain financial control seamlessly. The platform employs a modern tech stack for a robust, secure, and scalable system.
 
 ## Table of Contents
 
@@ -52,13 +52,13 @@ To install the project, follow these steps:
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/Ndevu12/Taskforce.git
+    git clone https://github.com/Ndevu12/Bendif.git
     ```
 
 2. Navigate to the project directory:
 
     ```bash
-    cd Taskforce
+    cd Bendif
     ```
 
 3. Install dependencies for both client and server:

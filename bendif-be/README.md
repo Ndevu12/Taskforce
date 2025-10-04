@@ -1,8 +1,8 @@
-# Taskforce Wallet App - Backend
+# Bendif Wallet App - Backend
 
 ## Description
 
-The backend of the **Taskforce Wallet App** is built using **Node.js** with **Express.js** and **TypeScript**, providing a robust and scalable API to manage financial operations such as accounts, transactions, budgets, and reports. It connects to a **MongoDB** database using **Mongoose** and integrates **Socket.IO** for real-time updates. This backend ensures secure user authentication and efficient data management.
+The backend of the **Bendif Wallet App** is built using **Node.js** with **Express.js** and **TypeScript**, providing a robust and scalable API to manage financial operations such as accounts, transactions, budgets, and reports. It connects to a **MongoDB** database using **Mongoose** and integrates **Socket.IO** for real-time updates. This backend ensures secure user authentication and efficient data management.
 
 ## Table of Contents
 
