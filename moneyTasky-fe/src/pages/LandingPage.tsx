@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import backgroundImage from '../assets/images/officialweb.png';
@@ -13,6 +13,55 @@ function LandingPage() {
   });
   const [formStatus, setFormStatus] = useState('');
   const [loading, setLoading] = useState(false);
+  const [backgroundLoaded, setBackgroundLoaded] = useState(false);
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  // Handle background image loading and responsive adjustments
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => setBackgroundLoaded(true);
+    img.src = backgroundImage;
+  }, []);
+
+  // Handle window resize for responsive image sizing
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Dynamic image sizing based on screen size and aspect ratio
+  const getImageStyle = () => {
+    const isMobile = windowSize.width < 768;
+    const isTablet = windowSize.width >= 768 && windowSize.width < 1024;
+    
+    // Calculate maximum width based on screen size
+    const maxWidth = isMobile ? '90%' : isTablet ? '85%' : '80%';
+    const maxHeight = isMobile ? '80%' : isTablet ? '85%' : '90%';
+    
+    // Calculate aspect ratio to prevent stretching
+    const aspectRatio = windowSize.width / windowSize.height;
+    const isWideScreen = aspectRatio > 1.5;
+    
+    return {
+      width: 'auto',
+      height: 'auto',
+      maxWidth: isWideScreen ? '70%' : maxWidth,
+      maxHeight: isWideScreen ? '95%' : maxHeight,
+      objectFit: 'contain' as const,
+      objectPosition: 'center center',
+      transform: isMobile ? 'scale(1.05)' : isTablet ? 'scale(1.02)' : 'scale(1)',
+    };
+  };
 
   const handleRegisterClick = () => {
     navigate('/register');
@@ -44,50 +93,136 @@ function LandingPage() {
       {/* Hero Section */}
       <section
         id="hero"
-        className="relative h-screen flex flex-col justify-center items-center"
+        className="relative h-screen flex flex-col justify-center items-center overflow-hidden"
       >
-        <div className="absolute inset-0 w-full h-full overflow-hidden">
-          <div
-            className="w-full h-full m-5 bg-cover bg-center transform scale-105"
-            style={{
-              backgroundImage: `url(${backgroundImage})`,
-              filter: 'brightness(0.8)',
+        {/* Background Image Container */}
+        <div className="absolute inset-0 w-full h-full">
+          {/* Main Background Image */}
+          <motion.div
+            className="absolute inset-0 w-full h-full flex items-center justify-center transition-all duration-1000 ease-out"
+            initial={{ opacity: 0, scale: 1.2 }}
+            animate={{ 
+              opacity: backgroundLoaded ? 1 : 0,
+              scale: backgroundLoaded ? 1 : 1.2
             }}
-          ></div>
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70"></div>
+            transition={{ duration: 1.5, ease: "easeOut" }}
+          >
+            {/* Image Container with controlled width */}
+            <div className="relative w-full h-full flex items-center justify-center">
+              <img
+                src={backgroundImage}
+                alt="Money Tasky Background"
+                className="object-contain filter brightness-75 saturate-110 contrast-105"
+                style={getImageStyle()}
+              />
+            </div>
+          </motion.div>
+          
+          {/* Parallax Overlay Layer */}
+          <motion.div
+            className="absolute inset-0 w-full h-full flex items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: backgroundLoaded ? 0.6 : 0 }}
+            transition={{ duration: 2, delay: 0.5 }}
+          >
+            <div className="relative w-full h-full flex items-center justify-center">
+              <img
+                src={backgroundImage}
+                alt="Money Tasky Background Overlay"
+                className="object-contain filter brightness-30 blur-sm"
+                style={{
+                  ...getImageStyle(),
+                  transform: `${getImageStyle().transform} translateY(5px)`,
+                  mixBlendMode: 'multiply' as const,
+                }}
+              />
+            </div>
+          </motion.div>
+          
+          {/* Dynamic Gradient Overlays */}
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 via-purple-900/30 to-black/60" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30" />
+          
+          {/* Animated Overlay Pattern */}
+          <div 
+            className="absolute inset-0 opacity-10"
+            style={{
+              backgroundImage: `radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+                               radial-gradient(circle at 80% 20%, rgba(147, 51, 234, 0.3) 0%, transparent 50%),
+                               radial-gradient(circle at 40% 80%, rgba(236, 72, 153, 0.3) 0%, transparent 50%)`,
+            }}
+          />
+          
+          {/* Loading State */}
+          {!backgroundLoaded && (
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center">
+              <motion.div
+                className="w-16 h-16 border-4 border-white/20 border-t-white rounded-full"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+              />
+            </div>
+          )}
         </div>
+        {/* Content Container with Enhanced Positioning */}
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+          {/* Background Text Glow Effect */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="text-8xl sm:text-9xl md:text-[12rem] font-black text-white/5 select-none">
+              MONEY TASKY
+            </div>
+          </div>
+          
           <motion.h1
-            className="text-4xl sm:text-5xl md:text-6xl text-white font-bold mb-6 drop-shadow-lg"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white font-bold mb-6 drop-shadow-2xl relative z-10"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
+            style={{
+              textShadow: '0 0 30px rgba(59, 130, 246, 0.3), 0 0 60px rgba(59, 130, 246, 0.1)',
+            }}
           >
             Welcome to Money Tasky App
           </motion.h1>
           <motion.p
-            className="text-lg sm:text-xl md:text-2xl text-white mb-10 max-w-2xl mx-auto drop-shadow-md"
+            className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/90 mb-10 max-w-3xl mx-auto drop-shadow-lg relative z-10"
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.5 }}
+            style={{
+              textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
+            }}
           >
             Manage your finances effortlessly with our secure and intuitive
             platform
           </motion.p>
-          <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6">
+          <div className="flex flex-col sm:flex-row justify-center space-y-4 sm:space-y-0 sm:space-x-6 relative z-10">
             <motion.button
-              className="bg-blue-600 hover:bg-blue-700 text-white py-3 px-8 rounded-lg text-lg font-medium shadow-lg transition-all duration-300"
-              whileHover={{ scale: 1.05 }}
+              className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white py-4 px-10 rounded-xl text-lg font-semibold shadow-2xl transition-all duration-300 border border-blue-500/20 backdrop-blur-sm"
+              whileHover={{ 
+                scale: 1.05,
+                boxShadow: "0 20px 40px rgba(59, 130, 246, 0.4)"
+              }}
               whileTap={{ scale: 0.95 }}
               onClick={handleRegisterClick}
+              style={{
+                textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+              }}
             >
               Register Now
             </motion.button>
             <Link to="/learn-more">
               <motion.button
-                className="bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white py-3 px-8 rounded-lg text-lg font-medium shadow-lg border border-white/30 transition-all duration-300"
-                whileHover={{ scale: 1.05 }}
+                className="bg-white/10 backdrop-blur-md hover:bg-white/20 text-white py-4 px-10 rounded-xl text-lg font-semibold shadow-2xl border border-white/30 transition-all duration-300"
+                whileHover={{ 
+                  scale: 1.05,
+                  boxShadow: "0 20px 40px rgba(255, 255, 255, 0.1)"
+                }}
                 whileTap={{ scale: 0.95 }}
+                style={{
+                  textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+                }}
               >
                 Learn More
               </motion.button>
