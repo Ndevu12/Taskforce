@@ -1,5 +1,6 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
+import logger from './utils/logger';
 
 dotenv.config();
 
@@ -7,14 +8,19 @@ const connectDB = async () => {
   try {
     const url = process.env.MONGO_URI;
     if (!url) {
-      console.debug('No Mongo URI provided');
-      throw new Error('Mongo URI is not provided');
+      logger.warn('MONGO_URI not provided, running without database connection');
+      return false;
     }
-    const conn = await mongoose.connect(url);
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
+    
+    const conn = await mongoose.connect(url, {
+      serverSelectionTimeoutMS: 5000, // 5 second timeout
+      connectTimeoutMS: 10000, // 10 second timeout
+    });
+    logger.info(`MongoDB Connected: ${conn.connection.host}`);
+    return true;
   } catch (error: any) {
-    console.error(`Error while connecting to DB: ${error.message}`);
-    // process.exit(1);
+    logger.warn(`MongoDB connection failed, continuing without database: ${error.message}`);
+    return false;
   }
 };
 

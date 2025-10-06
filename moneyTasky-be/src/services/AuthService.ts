@@ -23,7 +23,7 @@ export const authenticateUser = async (email: string, password: string) => {
         throw new Error('Please verify your email before logging in.');
     }
 
-    const token = await generateToken({ userId: user._id, email: user.email, name: user.name, role: user.role });
+    const token = generateToken({ userId: user._id, email: user.email, name: user.name, role: user.role });
     if (!token) {
         logger.debug('Failed to generate token.')
         return;
@@ -31,8 +31,8 @@ export const authenticateUser = async (email: string, password: string) => {
     return { token };
 };
 
-export const logoutUser = async (token: string) => {
-    await expireToken(token);
+export const logoutUser = (token: string) => {
+    expireToken(token);
 };
 
 /**

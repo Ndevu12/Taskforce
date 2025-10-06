@@ -33,8 +33,16 @@ const corsOptions = {
     credentials: true,
 };
 
-// Connect to MongoDB
-connectDB();
+// Connect to MongoDB (optional)
+connectDB().then((connected) => {
+  if (connected) {
+    logger.info('Database connection established');
+  } else {
+    logger.warn('Running without database connection');
+  }
+}).catch((error) => {
+  logger.warn('Database connection failed, continuing without database:', error);
+});
 
 app.use(cors(corsOptions));
 app.use(express.json());
@@ -52,7 +60,7 @@ app.get('/', (req, res) => {
 
 app.use(router);
 
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 5700;
 
 server.listen(PORT, () => {
     logger.info(`Server is running on http://localhost:${PORT}`);

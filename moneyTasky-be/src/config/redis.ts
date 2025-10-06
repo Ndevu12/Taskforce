@@ -1,41 +1,53 @@
-import { createClient } from "redis";
 import { getEnvVariable } from "./getVariable";
 import logger from "../utils/logger";
 
 const redisUrl = getEnvVariable("REDIS_URL");
-if (!redisUrl) {
-    throw new Error("No Redis URL provided");
-}
+let redisClient: any = null;
 
-const redisClient = createClient({
-    url: redisUrl,
-    socket: {
-        reconnectStrategy: (retries, cause) => {
-            if (retries >= 5) {
-                logger.info("Redis client reconnect failed after 5 attempts");
-                return false;
+if (redisUrl) {
+    try {
+        // Dynamic import to avoid loading Redis if not needed
+        const { createClient } = require("redis");
+        
+        redisClient = createClient({
+            url: redisUrl,
+            socket: {
+                reconnectStrategy: (retries: number, cause: any) => {
+                    if (retries >= 5) {
+                        logger.info("Redis client reconnect failed after 5 attempts");
+                        return false;
+                    }
+                    return 2000;
+                }
             }
-            return 2000;
-        }
+        });
+
+        redisClient.on("error", (err: any) => {
+            logger.error("Redis client error: " + err.message);
+        });
+
+        redisClient.on("reconnecting", () => {
+            logger.info("Redis client reconnecting");
+        });
+
+        redisClient.on("ready", () => {
+            logger.info("Redis client ready");
+        });
+
+        redisClient.on("end", () => {
+            logger.info("Redis client disconnected");
+        });
+
+        redisClient.connect().catch((err: any) => {
+            logger.warn("Redis connection failed, continuing without Redis:", err.message);
+            redisClient = null;
+        });
+    } catch (error) {
+        logger.warn("Redis not available, continuing without Redis:", error);
+        redisClient = null;
     }
-});
-
-redisClient.on("error", (err) => {
-  logger.error("Redis client error: " + err.message);
-});
-
-redisClient.on("reconnecting", () => {
-  logger.info("Redis client reconnecting");
-});
-
-redisClient.on("ready", () => {
-  logger.info("Redis client ready");
-});
-
-redisClient.on("end", () => {
-  logger.info("Redis client disconnected");
-});
-
-redisClient.connect();
+} else {
+    logger.info("Redis URL not provided, running without Redis");
+}
 
 export default redisClient;

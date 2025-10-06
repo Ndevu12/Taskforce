@@ -4,7 +4,8 @@ import { getEnvVariable } from '../config/getVariable';
 
 const SECRET = getEnvVariable("JWT_SECRET");
 if (!SECRET) {
-    throw new Error("No secret key provided");
+    logger.error("JWT_SECRET is required for password hashing. Please set it in your .env file");
+    throw new Error("JWT_SECRET is required");
 }
 
 export const comparePassword = async (password: string, hashedPassword: string) => {
