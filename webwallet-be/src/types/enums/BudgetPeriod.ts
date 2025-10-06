@@ -1,9 +1,0 @@
-export enum BudgetPeriod {
-  DAILY = 'DAILY',
-  WEEKLY = 'WEEKLY',
-  MONTHLY = 'MONTHLY',
-  QUARTERLY = 'QUARTERLY',
-  YEARLY = 'YEARLY',
-  CUSTOM = 'CUSTOM',
-  EXCEEDED = 'EXCEEDED'
-}
