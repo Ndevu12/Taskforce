@@ -30,7 +30,7 @@ export const logout = async (req: Request, res: Response) => {
            return res.status(401).json({ message: 'Bearer token is required' });
         }
         const token = authHeader.split(" ")[1];
-        await AuthService.logoutUser(token);
+        AuthService.logoutUser(token);
         res.status(200).json({ message: 'Logged out successfully' });
     } catch (error: any) {
         res.status(500).json({ message: error.message });

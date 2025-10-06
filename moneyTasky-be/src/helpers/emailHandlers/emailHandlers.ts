@@ -33,6 +33,11 @@ interface EmailOptions {
  */
 export const sendEmail = async (options: EmailOptions): Promise<boolean> => {
   try {
+    if (!transporter) {
+      logger.warn('Email transporter not available, email not sent');
+      return false;
+    }
+
     if (!options.text && !options.html) {
       throw new Error('Either text or html content must be provided');
     }

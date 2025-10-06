@@ -45,7 +45,7 @@ export const isAuth: RequestHandler = async (req, res, next) => {
         }
 
         // Verify JWT token
-        const decodedToken = await verifyToken(token) as JwtPayload;
+        const decodedToken = verifyToken(token) as JwtPayload;
         if (!decodedToken) {
             return res.status(401).json({ 
                 message: "Your session has expired or is invalid. Please log in again.",
@@ -154,7 +154,7 @@ export const isAdminAuth: RequestHandler = async (req, res, next) => {
         }
 
         // Use same token verification as regular auth
-        const decodedToken = await verifyToken(token) as JwtPayload;
+        const decodedToken = verifyToken(token) as JwtPayload;
 
         if (!decodedToken) {
             return res.status(401).json({ 
