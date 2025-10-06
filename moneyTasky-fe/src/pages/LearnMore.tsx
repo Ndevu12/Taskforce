@@ -1,59 +1,190 @@
-import React from 'react';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { FaArrowDown } from 'react-icons/fa';
 import moneyTaskyImage from '../assets/images/Web wallet.png';
 
 function LearnMore() {
+  const [backgroundLoaded, setBackgroundLoaded] = useState(false);
+  const [windowSize, setWindowSize] = useState({
+    width: window.innerWidth,
+    height: window.innerHeight,
+  });
+
+  // Handle background image loading and responsive adjustments
+  useEffect(() => {
+    const img = new Image();
+    img.onload = () => setBackgroundLoaded(true);
+    img.src = moneyTaskyImage;
+  }, []);
+
+  // Handle window resize for responsive image sizing
+  useEffect(() => {
+    const handleResize = () => {
+      setWindowSize({
+        width: window.innerWidth,
+        height: window.innerHeight,
+      });
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  // Dynamic image sizing based on screen size and aspect ratio
+  const getImageStyle = () => {
+    const isMobile = windowSize.width < 768;
+    const isTablet = windowSize.width >= 768 && windowSize.width < 1024;
+    
+    // Calculate maximum width based on screen size
+    const maxWidth = isMobile ? '90%' : isTablet ? '85%' : '80%';
+    const maxHeight = isMobile ? '80%' : isTablet ? '85%' : '90%';
+    
+    // Calculate aspect ratio to prevent stretching
+    const aspectRatio = windowSize.width / windowSize.height;
+    const isWideScreen = aspectRatio > 1.5;
+    
+    return {
+      width: 'auto',
+      height: 'auto',
+      maxWidth: isWideScreen ? '70%' : maxWidth,
+      maxHeight: isWideScreen ? '95%' : maxHeight,
+      objectFit: 'contain' as const,
+      objectPosition: 'center center',
+      transform: isMobile ? 'scale(1.05)' : isTablet ? 'scale(1.02)' : 'scale(1)',
+    };
+  };
+
   return (
     <div className="bg-background font-poppins">
       {/* Hero Section */}
-      <section className="relative h-screen flex flex-col justify-center items-center">
-        <div className="absolute inset-0 w-full h-full overflow-hidden">
-          <div
-            className="w-full h-full bg-cover bg-center transform scale-105"
-            style={{
-              backgroundImage: `url(${moneyTaskyImage})`,
-              filter: 'brightness(0.8)',
-            }}
-          ></div>
-          <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-black/70"></div>
-        </div>
-        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+      <section className="relative h-screen flex flex-col justify-center items-center overflow-hidden">
+        {/* Background Image Container */}
+        <div className="absolute inset-0 w-full h-full">
+          {/* Main Background Image */}
           <motion.div
-            className="mb-4"
+            className="absolute inset-0 w-full h-full flex items-center justify-center transition-all duration-1000 ease-out"
+            initial={{ opacity: 0, scale: 1.2 }}
+            animate={{ 
+              opacity: backgroundLoaded ? 1 : 0,
+              scale: backgroundLoaded ? 1 : 1.2
+            }}
+            transition={{ duration: 1.5, ease: "easeOut" }}
+          >
+            {/* Image Container with controlled width */}
+            <div className="relative w-full h-full flex items-center justify-center">
+              <img
+                src={moneyTaskyImage}
+                alt="Money Tasky Web Wallet"
+                className="object-contain filter brightness-80 saturate-110 contrast-105"
+                style={getImageStyle()}
+              />
+            </div>
+          </motion.div>
+          
+          {/* Parallax Overlay Layer */}
+          <motion.div
+            className="absolute inset-0 w-full h-full flex items-center justify-center"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: backgroundLoaded ? 0.6 : 0 }}
+            transition={{ duration: 2, delay: 0.5 }}
+          >
+            <div className="relative w-full h-full flex items-center justify-center">
+              <img
+                src={moneyTaskyImage}
+                alt="Money Tasky Web Wallet Overlay"
+                className="object-contain filter brightness-30 blur-sm"
+                style={{
+                  ...getImageStyle(),
+                  transform: `${getImageStyle().transform} translateY(5px)`,
+                  mixBlendMode: 'multiply' as const,
+                }}
+              />
+            </div>
+          </motion.div>
+          
+          {/* Dynamic Gradient Overlays */}
+          <div className="absolute inset-0 bg-gradient-to-br from-blue-900/40 via-purple-900/30 to-black/60" />
+          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/30 via-transparent to-black/30" />
+          
+          {/* Animated Overlay Pattern */}
+          <div 
+            className="absolute inset-0 opacity-10"
+            style={{
+              backgroundImage: `radial-gradient(circle at 20% 50%, rgba(59, 130, 246, 0.3) 0%, transparent 50%),
+                               radial-gradient(circle at 80% 20%, rgba(147, 51, 234, 0.3) 0%, transparent 50%),
+                               radial-gradient(circle at 40% 80%, rgba(236, 72, 153, 0.3) 0%, transparent 50%)`,
+            }}
+          />
+          
+          {/* Loading State */}
+          {!backgroundLoaded && (
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-blue-900 to-purple-900 flex items-center justify-center">
+              <motion.div
+                className="w-16 h-16 border-4 border-white/20 border-t-white rounded-full"
+                animate={{ rotate: 360 }}
+                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
+              />
+            </div>
+          )}
+        </div>
+        {/* Content Container with Enhanced Positioning */}
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative z-10 text-center">
+          {/* Background Text Glow Effect */}
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="text-8xl sm:text-9xl md:text-[12rem] font-black text-white/5 select-none">
+              LEARN MORE
+            </div>
+          </div>
+          
+          <motion.div
+            className="mb-4 relative z-10"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ delay: 0.2 }}
           >
-            <span className="inline-block px-4 py-1 rounded-full bg-primary/20 text-white font-medium text-sm">
+            <span className="inline-block px-4 py-1 rounded-full bg-primary/20 text-white font-medium text-sm backdrop-blur-sm border border-white/30">
               Learn More About Our Platform
             </span>
           </motion.div>
           <motion.h1
-            className="text-4xl sm:text-5xl md:text-6xl text-white font-bold mb-6 drop-shadow-lg"
+            className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl text-white font-bold mb-6 drop-shadow-2xl relative z-10"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
+            style={{
+              textShadow: '0 0 30px rgba(59, 130, 246, 0.3), 0 0 60px rgba(59, 130, 246, 0.1)',
+            }}
           >
             Master Your Finances with Confidence
           </motion.h1>
           <motion.p
-            className="text-lg sm:text-xl md:text-2xl text-white mb-10 max-w-3xl mx-auto drop-shadow-md"
+            className="text-lg sm:text-xl md:text-2xl lg:text-3xl text-white/90 mb-10 max-w-3xl mx-auto drop-shadow-lg relative z-10"
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
+            style={{
+              textShadow: '0 2px 10px rgba(0, 0, 0, 0.5)',
+            }}
           >
             Discover tools designed to help you track, budget, and grow your
             financial health with ease and precision.
           </motion.p>
-          <Link to="#benefits">
+          <Link to="#benefits" className="relative z-10">
             <motion.div
-              className="inline-block bg-white/20 backdrop-blur-sm text-white p-4 rounded-full cursor-pointer shadow-lg border border-white/30"
-              whileHover={{ y: 5, scale: 1.05 }}
+              className="inline-block bg-white/10 backdrop-blur-md text-white p-4 rounded-full cursor-pointer shadow-2xl border border-white/30 transition-all duration-300"
+              whileHover={{ 
+                y: 5, 
+                scale: 1.05,
+                boxShadow: "0 20px 40px rgba(255, 255, 255, 0.1)"
+              }}
               whileTap={{ scale: 0.95 }}
               animate={{ y: [0, 10, 0] }}
               transition={{ repeat: Infinity, duration: 2 }}
+              style={{
+                textShadow: '0 2px 4px rgba(0, 0, 0, 0.3)',
+              }}
             >
               <FaArrowDown className="text-2xl" />
             </motion.div>
