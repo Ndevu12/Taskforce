@@ -12,7 +12,7 @@
       ],
        "types": [
         "node",
-        "express",
+        "express"
       ],
       "allowJs": true, 
       "outDir": "./dist", 

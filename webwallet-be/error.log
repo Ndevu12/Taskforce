@@ -1,5 +1,0 @@
-{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-09 19:11:44"}
-{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-09 19:17:40"}
-{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-09 19:22:19"}
-{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-09 19:24:21"}
-{"level":"error","message":"Redis client error: Connection timeout","service":"user-service","timestamp":"2025-04-09 19:28:01"}

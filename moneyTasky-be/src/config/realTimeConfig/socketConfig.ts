@@ -44,7 +44,7 @@ export const configureSocketServer = (server: http.Server): Server => {
 
     try {
       // Use the predefined token validator
-      const decoded = await verifyToken(token);
+      const decoded = verifyToken(token);
       if (!decoded) {
         logger.warn('Socket connection attempt with invalid token');
         return next(new Error('Authentication failed - invalid token'));
